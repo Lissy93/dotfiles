@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+echo "Starting the Dot File Install Script..."
+
 set -e
 
 CONFIG=".install.conf.yaml"

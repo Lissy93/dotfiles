@@ -6,18 +6,19 @@
 - clean: ['~', '~/.config']
 
 - link:
-    ~/.bash:
-    ~/.bash_profile:
-    ~/.bashrc:
-    ~/.dotfiles: ''
-    ~/.gitconfig:
-    ~/.gitignore_global:
-    ~/.gnupg/gpg.conf:
-    ~/.tmux.conf:
-    ~/.vim:
-    ~/.vimrc:
-    ~/.zsh:
-    ~/.zshrc:
+
+    # vim
+    ~/.vim: vim
+    ~/.vimrc: vim/vimrc
+
+    # bash
+    ~/.bash: bash
+    ~/.bash_profile: bash/bash_profile
+    ~/.bashrc: bash/bashrc
+    
+    # zsh
+
+    # git
 
 - shell:
   - git submodule sync --recursive
