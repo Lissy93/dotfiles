@@ -1,0 +1,28 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+
+- clean: ['~', '~/.config']
+
+- link:
+    ~/.bash:
+    ~/.bash_profile:
+    ~/.bashrc:
+    ~/.dotfiles: ''
+    ~/.gitconfig:
+    ~/.gitignore_global:
+    ~/.gnupg/gpg.conf:
+    ~/.tmux.conf:
+    ~/.vim:
+    ~/.vimrc:
+    ~/.zsh:
+    ~/.zshrc:
+
+- shell:
+  - git submodule sync --recursive
+  - git update-submodules
+  - >
+    git cleanall -f
+    vim/pack/vendor/start/
+    zsh/plugins/
