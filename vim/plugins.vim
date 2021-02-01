@@ -1,121 +1,68 @@
 scriptencoding utf-8
 
-" Copyright 2018-2020 @ kornicameister
+" © Alicia Sykes <https://aliciasykes.com> 2021 Licensed under MIT
 
-" define the plugins
+" Initiate Plugins
 call plug#begin('~/.vim/plugged')
 
-" vim compatibility
-if !has('nvim')
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-endif
-
-" theme
-Plug 'dracula/vim', { 'as': 'dracula' }
-
-" fzf
+" Layout and Navigation
+Plug 'vim-airline/vim-airline'
+Plug 'preservim/nerdtree'
+Plug 'andymass/vim-matchup'
+Plug 'preservim/tagbar'
+Plug 'ludovicchabant/vim-gutentags'
 Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
-
-" git plugins
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'octref/rootignore'
-Plug 'rhysd/committia.vim'
-Plug 'tpope/vim-git'
-
-" ale plugin
-Plug 'vim-scripts/dbext.vim', { 'for': ['sql'] }
-Plug 'dense-analysis/ale'
-Plug 'da-x/depree', { 'do': './rebuild.sh' }
-
-" deoplete
+Plug 'psliwka/vim-smoothie'
+Plug 'ryanoasis/vim-devicons'
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
   Plug 'Shougo/deoplete.nvim', { 'do': '!pip install --user --upgrade neovim' }
 endif
 
-Plug 'Shougo/neoinclude.vim'
-Plug 'Shougo/neco-vim', { 'for': ['vim', 'viminfo'] }
-Plug 'deoplete-plugins/deoplete-jedi', { 'for': ['python'] }
-Plug 'deoplete-plugins/deoplete-tag'
-Plug 'deoplete-plugins/deoplete-docker'
-Plug 'deoplete-plugins/deoplete-zsh', { 'for': ['zsh'] }
-
-" asynchronous execution library
-Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
-
-" general editor related plugins
-Plug 'luochen1990/rainbow'
-Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'vim-airline/vim-airline'
+" Text Operations
+Plug 'preservim/nerdcommenter'
+Plug 'dense-analysis/ale'
 Plug 'tpope/vim-surround'
-Plug 'scrooloose/nerdcommenter'
-Plug 'psliwka/vim-smoothie'
+Plug 'haya14busa/incsearch.vim'
+Plug 'mg979/vim-visual-multi'
+Plug 'triglav/vim-visual-increment'
+Plug 'janko/vim-test'
+Plug 'vim-syntastic/syntastic'
 
-" javascript & typescript plugins
+" Git
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'rhysd/committia.vim'
+Plug 'tpope/vim-git'
+
+" Specific File Types
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
-Plug 'mxw/vim-jsx', { 'for' : ['jsx'] }
 Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
-
-" docker
-Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile', 'docker-compose', 'Dockerfile'], 'do': 'make install' }
-
-" elm
-" per recommendation at: https://github.com/elm-tooling/elm-vim/blob/master/README.md
-Plug 'andys8/vim-elm-syntax', {'for': ['elm']}
-
-" python
-Plug 'tmhedberg/SimpylFold', {'for': ['python']}
-Plug 'lambdalisue/vim-pyenv', {'for': ['python']}
+Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['jsx', 'tsx'] }
+Plug 'ap/vim-css-color', { 'for': ['css', 'scss', 'sass'] }
+Plug 'mustache/vim-mustache-handlebars', {'for': ['mustache', 'handlebars', 'html']}
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'vim-scripts/indentpython.vim', {'for': ['python']}
+Plug 'tmhedberg/SimpylFold', {'for': ['python']}
+Plug 'lervag/vimtex', { 'for': ['tex'] }
+Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile', 'docker-compose', 'Dockerfile'], 'do': 'make install' }
+Plug 'elzr/vim-json', {'for': ['json']}
 Plug 'raimon49/requirements.txt.vim', {'for': ['requirements']}
+Plug 'gabrielelana/vim-markdown', {'for': ['markdown']}
+Plug 'zinit-zsh/zinit-vim-syntax'
+Plug 'chr4/nginx.vim'
 if has('nvim')
-    Plug 'kalekseev/vim-coverage.py', { 'do': ':UpdateRemotePlugins', 'for': ['python'] }
-    Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
-else
-    Plug 'kalekseev/vim-coverage.py', { 'do': '!pip install --user --upgrade neovim', 'for': ['python']}
+    Plug 'numirias/semshi', {'for': ['python'], 'do': ':UpdateRemotePlugins' }
 endif
 
-" go
-Plug 'arp242/gopher.vim', { 'for': ['go'] }
-Plug 'deoplete-plugins/deoplete-go', { 'for': ['go'], 'do': 'make' }
-
-" json
-Plug 'elzr/vim-json', {'for': ['json']}
-
-" markdown
-Plug 'gabrielelana/vim-markdown', {'for': ['markdown']}
-Plug 'mzlogin/vim-markdown-toc', {'for': ['markdown']}
-
-" tex
-Plug 'lervag/vimtex', { 'for': ['tex'] }
-
-" various
-Plug 'wakatime/vim-wakatime'                        " track what I am doing when using vim
-Plug 'ryanoasis/vim-devicons'                       " cool icons
-Plug 'haya14busa/incsearch.vim'                     " incremental searching
-Plug 'ap/vim-css-color'                             " colors for colors
-Plug 'farmergreg/vim-lastplace'                     " open editor where it was
-Plug 'zinit-zsh/zinit-vim-syntax'                   " zinit power
-Plug 'mustache/vim-mustache-handlebars'
-Plug 'triglav/vim-visual-increment'
-
-" nginx
-Plug 'chr4/nginx.vim'
-
-" tags
-Plug 'majutsushi/tagbar'                            " visiting tags as pro
-Plug 'ludovicchabant/vim-gutentags'
-
-" testing made fun
-Plug 'janko/vim-test'
+" Themes
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 call plug#end()
 
-" Plugin Customizations
+" Plugin Configuration
 " =====================
 
 augroup vim_test_settings
@@ -123,7 +70,7 @@ augroup vim_test_settings
   let g:test#strategy = 'neovim'
   let g:test#neovim#term_position = 'vertical'
 
-  " integrate with coverage tool
+  " Integrate with coverage tool
   let g:test#python#pytest#options = '--cov-branch --cov-context=test'
 
   " disable vim-projectionist
@@ -180,8 +127,6 @@ augroup tagbar_plugin_settins
     nmap <F8> :TagbarToggle<CR>
 augroup END
 
-" always color brackets
-let g:rainbow_active = 1
 
 if has_key(g:plugs, 'vim-airline')
   augroup airline_plugin_settings
@@ -202,13 +147,7 @@ if has_key(g:plugs, 'vim-airline')
   augroup END
 endif
 
-augroup elm_plugin_settings
-  autocmd!
-  let g:elm_setup_keybindings = 0
-  let g:elm_format_autosave = 0
-augroup END
-
-" commit msg - very nerdy
+" Commit Msg
 let g:committia_hooks = {}
 function! g:committia_hooks.edit_open(info)
     " Scroll the diff window from insert mode
@@ -217,12 +156,12 @@ function! g:committia_hooks.edit_open(info)
     imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 endfunction
 
-" python
+" Python
 let python_highlight_all = 1
 let g:pyenv#auto_create_ctags = 1
 let g:pyenv#auto_assign_ctags = 1
 
-" gutter
+" Gutter
 augroup gitgutter_options
     autocmd!
     let g:gitgutter_diff_args = '-w'    " ignore whitespace changes
@@ -278,18 +217,6 @@ augroup gutentags_options
   \ }
 augroup END
 
-augroup vim_go_options
-    autocmd!
-    let g:gopher_highlight = ['string-spell', 'string-fmt']
-    let g:gometalinter_fast = ''
-          \ . ' --enable=vet'
-          \ . ' --enable=errcheck'
-          \ . ' --enable=ineffassign'
-          \ . ' --enable=goimports'
-          \ . ' --enable=misspell'
-          \ . ' --enable=lll --line-length=120'
-    let g:ale_go_gometalinter_options = '--disable-all --tests' . g:gometalinter_fast . ' --enable=golint'
-augroup END
 
 if has_key(g:plugs, 'fzf.vim')
   augroup fzf_settings
@@ -338,6 +265,16 @@ if has_key(g:plugs, 'fzf.vim')
     nmap <F3> <Plug>(ale_hover)
     nmap <F4> <Plug>(ale_go_to_definition)
 
+    if has('nvim')
+      autocmd VimEnter *
+        \ set updatetime=1000 |
+        \ let g:ale_lint_on_text_changed = 0
+      autocmd CursorHold * call ale#Queue(0)
+      autocmd CursorHoldI * call ale#Queue(0)
+      autocmd InsertEnter * call ale#Queue(0)
+      autocmd InsertLeave * call ale#Queue(0)
+    endif
   augroup END
 endif
+
 
