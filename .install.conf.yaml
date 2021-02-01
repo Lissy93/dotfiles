@@ -12,9 +12,12 @@
     ~/.vimrc: vim/vimrc
 
     # bash
-    ~/.bash: bash
-    ~/.bash_profile: bash/bash_profile
-    ~/.bashrc: bash/bashrc
+    ~/.bash:
+      force: true
+      path: bash
+    ~/.bashrc: 
+      force: true
+      path: bash/bashrc
     
     # zsh
 
@@ -22,8 +25,3 @@
 
 - shell:
   - git submodule sync --recursive
-  - git update-submodules
-  - >
-    git cleanall -f
-    vim/pack/vendor/start/
-    zsh/plugins/
