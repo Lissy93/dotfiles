@@ -291,36 +291,6 @@ augroup vim_go_options
     let g:ale_go_gometalinter_options = '--disable-all --tests' . g:gometalinter_fast . ' --enable=golint'
 augroup END
 
-" deoplete settings
-if has_key(g:plugs, 'deoplete.nvim')
-  augroup deoplete_options
-      autocmd!
-
-      let g:deoplete#enable_at_startup = 1
-      let g:deoplete#enable_fefresh_always = 1
-
-      call deoplete#custom#var('omni', 'input_patterns', {})
-      call deoplete#custom#option({
-          \ 'auto_complete_delay': 50,
-          \ 'smart_case': v:true,
-          \ 'max_list': 50,
-          \ })
-
-      let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-      let g:deoplete#sources#go#source_importer = 0      " that one is deprecated
-      let g:deoplete#sources#go#builtin_objects = 1      " might be useful
-      let g:deoplete#sources#go#sort_class = [
-            \ 'package',
-            \ 'func',
-            \ 'type',
-            \ 'var',
-            \ 'const'
-      \]                                                  " sorting matters
-      let g:deoplete#sources#go#pointer = 1               " Enable completing of go pointers
-      let g:deoplete#sources#go#unimported_packages = 1   " autocomplete unimported packages
-  augroup END
-endif
-
 if has_key(g:plugs, 'fzf.vim')
   augroup fzf_settings
     autocmd!
@@ -368,17 +338,6 @@ if has_key(g:plugs, 'fzf.vim')
     nmap <F3> <Plug>(ale_hover)
     nmap <F4> <Plug>(ale_go_to_definition)
 
-    if has('nvim')
-      autocmd VimEnter *
-        \ set updatetime=1000 |
-        \ let g:ale_lint_on_text_changed = 0
-      autocmd CursorHold * call ale#Queue(0)
-      autocmd CursorHoldI * call ale#Queue(0)
-      autocmd InsertEnter * call ale#Queue(0)
-      autocmd InsertLeave * call ale#Queue(0)
-    else
-      echoerr 'only neovim can handle kornicameister dotfiles'
-    endif
   augroup END
 endif
 
