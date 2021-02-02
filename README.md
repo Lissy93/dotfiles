@@ -46,10 +46,31 @@ To only install certain parts of the config, pass the `--only` flag to the insta
 - [git](https://git-scm.com/) - Version control system
 
 Ubuntu: `sudo apt install -y zsh vim tmux ranger git`
+
 Arch Linux:  `sudo pacman -S zsh vim tmux ranger git`
+
+Depending on your setup, `make`, `ctags` and `python3-pip` may also be needed
 
 ---
 ## Details
+
+
+### Tmux
+
+Fairly standard Tmux configuration, strongly based off Tmux-sensible. Configuration is defined in [`.tmux.conf`](https://github.com/Lissy93/dotfiles/blob/master/tmux/tmux.conf)
+
+Tmux plugins are managed using [TMP](https://github.com/tmux-plugins/tpm) and defined in [`.tmux.conf`](https://github.com/Lissy93/dotfiles/blob/master/tmux/tmux.conf). To install them from GitHub, run `prefix` + <kbd>I</kbd> from within Tmux, and they will be cloned int `~/.tmux/plugins/`.
+
+#### Plugins
+
+- **[Tmux-sensible](https://github.com/tmux-plugins/tmux-sensible)**: `tmux-plugins/tmux-sensible` - General, sensible Tmux config
+- **[Tmux-continuum](https://github.com/tmux-plugins/tmux-continuum)**: `tmux-plugins/tmux-continuum` - Continuously saves and environment with automatic restore
+- **[Tmux-yank](https://github.com/tmux-plugins/tmux-yank)**: `tmux-plugins/tmux-yank` - Allows access to system clipboard
+- **[Tmux-prefix-highlight](https://github.com/tmux-plugins/tmux-prefix-highlight)**: `tmux-plugins/tmux-prefix-highlight` - Highlight Tmux prefix key when pressed
+- **[Tmux-online-status](https://github.com/tmux-plugins/tmux-online-status)**: `tmux-plugins/tmux-online-status` - Displays network status
+- **[Tmux-open](https://github.com/tmux-plugins/tmux-open)**: `tmux-plugins/tmux-open` - Bindings for quick opening selected path/ url
+- **[Tmux-mem-cpu-load](https://github.com/thewtex/tmux-mem-cpu-load)**: `thewtex/tmux-mem-cpu-load` - Shows system resources
+
 ### Vim
 
 The entry point for the Vim config is the [`vimrc`](https://github.com/Lissy93/dotfiles/blob/master/vim/vimrc), but the main editor settings are defined in [`vim/editor.vim`](https://github.com/Lissy93/dotfiles/blob/master/vim/editor.vim)

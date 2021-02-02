@@ -11,6 +11,9 @@
     ~/.vim: vim
     ~/.vimrc: vim/vimrc
 
+    # Tmux
+    ~/.tmux.conf: tmux/tmux.conf
+
     # bash
     ~/.bash:
       force: true
