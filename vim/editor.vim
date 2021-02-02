@@ -66,6 +66,8 @@ command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 " Normal OS clipboard interaction
 set clipboard+=unnamedplus
 
+" Remember info about open buffers on close
+set viminfo^=
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -200,6 +202,13 @@ set nobackup
 set nowb
 set noswapfile
 
+" Persistent undo, for making more 'u' operations
+if has('persistent_undo')
+  set undodir=~/.vim/undodir
+  set undofile
+  set undolevels=1000
+  set undoreload=10000
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related

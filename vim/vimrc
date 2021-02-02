@@ -7,7 +7,5 @@ source ~/.vim/editor.vim
 " Handle conditions based on file type
 source ~/.vim/filetype.vim
 
-" Session managment
-source ~/.vim/session.vim
 
 
