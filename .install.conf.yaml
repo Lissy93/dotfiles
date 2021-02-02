@@ -13,6 +13,7 @@
 
     # Tmux
     ~/.tmux.conf: tmux/tmux.conf
+    ~/.tmux/plugins/tpm: tmux/tpm
 
     # bash
     ~/.bash:
