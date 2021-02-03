@@ -18,6 +18,7 @@
 
     #ZSH
     ~/.zshrc: zsh/zshrc
+    ~/.zsh/antigen: zsh/antigen
     ~/.oh-my-zsh/themes: zsh/themes
 
     # bash
