@@ -16,6 +16,10 @@
     ~/.tmux/plugins: tmux/plugins
     ~/.tmux/plugins/tpm: tmux/tpm
 
+    #ZSH
+    ~/.zshrc: zsh/zshrc
+    ~/.oh-my-zsh/themes: zsh/themes
+
     # bash
     ~/.bash:
       force: true
@@ -23,10 +27,7 @@
     ~/.bashrc: 
       force: true
       path: bash/bashrc
-    
-    # zsh
 
-    # git
 
 - shell:
   - git submodule sync --recursive

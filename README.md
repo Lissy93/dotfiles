@@ -6,6 +6,16 @@
 /_____/\____/\__/_/ /_/_/\___/____/       
 ```
 
+- [Intro](#intro)
+- [Setup](#setup)
+- [Configuring](#configuring)
+- [Dependencies](#dependencies)
+- [Documentation](#documentation)
+    - [Tmux](#tmux)
+    - [ZSH](#zsh)
+    - [Vim](#vim)
+    - [Ranger](#ranger)
+
 ## Intro
 
 My personal dot files, that I use to quickly configure a Linux environment on desktop and server instances.
@@ -39,22 +49,24 @@ To only install certain parts of the config, pass the `--only` flag to the insta
 
 ## Dependencies
 
+These dot files make use of the following packages, and hence they are required
+
 - [zsh](https://www.zsh.org/) - Interactive Shell
 - [vim](https://www.vim.org/) - Fast, solid customizable text editor
 - [tmux](https://github.com/tmux/tmux) - Detachable terminal multiplexer
 - [ranger](https://ranger.github.io/) - CLI-based file manager with VI bindings
 - [git](https://git-scm.com/) - Version control system
 
-Ubuntu: `sudo apt install -y zsh vim tmux ranger git`
+They can be easily installed/ updated with your package manger, e.g:
+- Ubuntu Server: `sudo apt install -y zsh vim tmux ranger git`
+- Arch Linux:  `sudo pacman -S zsh vim tmux ranger git`
 
-Arch Linux:  `sudo pacman -S zsh vim tmux ranger git`
-
-Depending on your setup, `make`, `ctags` and `python3-pip` may also be needed
+Depending on your setup, the following utils may also be required: `make`, `ctags`, `fzf` and `python3-pip`
 
 ---
-## Details
+## Documentation
 
-
+The following section briefly explains the configuration and plug-ins for the main components (Tmux, Vim and Zsh) 
 ### Tmux
 
 Fairly standard Tmux configuration, strongly based off Tmux-sensible. Configuration is defined in [`.tmux.conf`](https://github.com/Lissy93/dotfiles/blob/master/tmux/tmux.conf)
