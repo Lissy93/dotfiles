@@ -171,6 +171,10 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
+" Set font to Hack
+set guifont=Hack:h20
+set guifont=Monospace:h20
+
 " Set color schemes, when availible
 augroup colorscheme_customization
   au!
@@ -179,7 +183,7 @@ augroup colorscheme_customization
   endif
 
   if has_key(g:plugs, 'dracula')
-    let g:dracula_bold = 1
+    let g:_bold = 1
     let g:dracula_italic = 1
     let g:dracula_colorterm = 0
 
@@ -192,6 +196,8 @@ augroup colorscheme_customization
 
   endif
 augroup END
+
+colorscheme synthwave
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
