@@ -18,8 +18,11 @@
 
     #ZSH
     ~/.zshrc: zsh/zshrc
+    ~/.p10k.zsh: zsh/p10k.zsh
     ~/.zsh/antigen: zsh/antigen
-    ~/.oh-my-zsh/themes: zsh/themes
+    ~/.zsh/themes: zsh/themes
+    ~/.zsh/aliases: zsh/aliases
+    ~/.zsh/plugins: zsh/plugins
 
     # bash
     ~/.bash:

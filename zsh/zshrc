@@ -1,23 +1,48 @@
+# Enable Powerlevel10k Prompt 
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
-ZSH_BASE=$HOME/dotfiles
 
-source ~/.zsh/antigen/antigen.zsh
+# Specify directory for Antigen bundles
+ADOTDIR=$HOME/.zsh/antigen-bundles
+
+# Include Antigen Script
+source $HOME/.zsh/antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
 
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle git
-antigen bundle heroku
-antigen bundle pip
-antigen bundle lein
-antigen bundle command-not-found
+# Import local plugins
+source $HOME/.zsh/plugins/colored-man-pages.zsh
+source $HOME/.zsh/plugins/colorize.zsh
+source $HOME/.zsh/plugins/docker-auto-complete.zsh
+source $HOME/.zsh/plugins/interactive-cd.zsh
 
-# Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
+# Import local aliases
+source $HOME/.zsh/aliases/ansible-aliases.zsh
+source $HOME/.zsh/aliases/common-aliases.zsh
+#source $HOME/.zsh/aliases/git-aliases.zsh
+source $HOME/.zsh/aliases/lol-aliases.zsh
+source $HOME/.zsh/aliases/npm-aliases.zsh
+source $HOME/.zsh/aliases/tmux-aliases.zsh
+
+
+# Add plugins to bundle
+antigen bundles <<EOBUNDLES
+	command-not-found
+	zsh-users/zsh-autosuggestions
+	zsh-users/zsh-syntax-highlighting
+	psprint/zsh-navigation-tools
+EOBUNDLES
+
 
 # Load the theme.
-antigen theme robbyrussell
+antigen theme romkatv/powerlevel10k
 
-# Tell Antigen that you're done.
+
+# I'm done- let's go
 antigen apply
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
