@@ -1,3 +1,4 @@
+#!/bin/bash
 # Script that shows a welcome message and prints system info for user
 # Licensed under MIT, (C) Alicia Sykes 2021: https://aliciasykes.com
 
