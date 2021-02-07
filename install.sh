@@ -1,6 +1,19 @@
 #!/usr/bin/env bash
 
-echo "Starting the Dot File Install Script..."
+# Variables
+CYAN_BOLD='\033[1;96m'
+RED_BOLD='\033[1;31m'
+PLAIN_BOLD='\033[1;37m'
+
+# Print Welcome Message
+printf "${CYAN_BOLD}"
+printf "╭──────────────────────╮\n"
+printf "│ "
+printf "${PLAIN_BOLD}"
+printf "Dotfile Setup Script "
+printf "${CYAN_BOLD}"
+printf "│\n"
+printf "╰──────────────────────╯\n"
 
 set -e
 
