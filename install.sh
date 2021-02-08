@@ -2,6 +2,7 @@
 
 # Variables
 CYAN_BOLD='\033[1;96m'
+YELLOW_BOLD='\033[1;93m'
 RED_BOLD='\033[1;31m'
 PLAIN_BOLD='\033[1;37m'
 
@@ -14,6 +15,26 @@ printf "Dotfile Setup Script "
 printf "${CYAN_BOLD}"
 printf "│\n"
 printf "╰──────────────────────╯\n"
+
+# Checks if a given package is installed
+command_exists () {
+  hash "$1" 2> /dev/null
+}
+
+# Shows warning if required modules are missing
+system_verify () {
+
+  if ! command_exists $1; then
+    printf "${YELLOW_BOLD}Warning:"
+    printf "${PLAIN_BOLD} $1 is not installed\n"
+  fi
+}
+
+system_verify "zsh"
+system_verify "vim"
+system_verify "git"
+system_verify "tmux"
+
 
 set -e
 
