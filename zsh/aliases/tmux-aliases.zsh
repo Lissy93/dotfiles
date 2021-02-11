@@ -79,10 +79,13 @@ function _zsh_tmux_plugin_run() {
   fi
 }
 
-# Use the completions for tmux for our function
-compdef _tmux _zsh_tmux_plugin_run
-# Alias tmux to our wrapper function.
-alias tmux=_zsh_tmux_plugin_run
+if hash compdef 2>/dev/null; then
+  # Use the completions for tmux for our function
+  compdef _tmux _zsh_tmux_plugin_run
+  # Alias tmux to our wrapper function.
+  alias tmux=_zsh_tmux_plugin_run
+fi
+
 
 # Autostart if not already in tmux and enabled.
 if [[ -z "$TMUX" && "$ZSH_TMUX_AUTOSTART" == "true" && -z "$INSIDE_EMACS" && -z "$EMACS" && -z "$VIM" ]]; then

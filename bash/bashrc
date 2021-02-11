@@ -39,3 +39,8 @@ set_bash_prompt(){
 }
 ## Done, now just set the PS1 prompt :)
 PROMPT_COMMAND=set_bash_prompt
+
+##
+if hash zsh 2>/dev/null; then
+  zsh
+fi

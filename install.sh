@@ -23,7 +23,6 @@ command_exists () {
 
 # Shows warning if required modules are missing
 system_verify () {
-
   if ! command_exists $1; then
     printf "${YELLOW_BOLD}Warning:"
     printf "${PLAIN_BOLD} $1 is not installed\n"
