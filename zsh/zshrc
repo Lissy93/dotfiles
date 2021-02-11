@@ -3,7 +3,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-
 # Specify directory for Antigen bundles
 ADOTDIR=$HOME/.zsh/antigen-bundles
 
@@ -16,8 +15,8 @@ antigen use oh-my-zsh
 # Import local plugins
 source $HOME/.zsh/plugins/colored-man-pages.zsh
 source $HOME/.zsh/plugins/colorize.zsh
-source $HOME/.zsh/plugins/docker-auto-complete.zsh
 source $HOME/.zsh/plugins/interactive-cd.zsh
+#source $HOME/.zsh/plugins/docker-auto-complete.zsh # Requires Docker
 
 # Import local aliases
 source $HOME/.zsh/aliases/ansible-aliases.zsh
@@ -27,7 +26,6 @@ source $HOME/.zsh/aliases/lol-aliases.zsh
 source $HOME/.zsh/aliases/npm-aliases.zsh
 source $HOME/.zsh/aliases/tmux-aliases.zsh
 
-
 # Add plugins to bundle
 antigen bundles <<EOBUNDLES
 	command-not-found
@@ -36,10 +34,12 @@ antigen bundles <<EOBUNDLES
 	psprint/zsh-navigation-tools
 EOBUNDLES
 
+# Enable autocomplete
+autoload -Uz compinit
+compinit
 
 # Load the theme.
 antigen theme romkatv/powerlevel10k
-
 
 # I'm done- let's go
 antigen apply
