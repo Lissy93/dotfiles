@@ -28,10 +28,11 @@ source $HOME/.zsh/aliases/tmux-aliases.zsh
 
 # Add plugins to bundle
 antigen bundles <<EOBUNDLES
-	command-not-found
-	zsh-users/zsh-autosuggestions
-	zsh-users/zsh-syntax-highlighting
-	psprint/zsh-navigation-tools
+    command-not-found
+    zsh-users/zsh-autosuggestions
+    zsh-users/zsh-syntax-highlighting
+    psprint/zsh-navigation-tools
+    StackExchange/blackbox
 EOBUNDLES
 
 # Enable autocomplete
