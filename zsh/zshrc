@@ -18,6 +18,10 @@ source $HOME/.zsh/plugins/colorize.zsh
 source $HOME/.zsh/plugins/interactive-cd.zsh
 #source $HOME/.zsh/plugins/docker-auto-complete.zsh # Requires Docker
 
+# Enable autocomplete
+autoload -Uz compinit
+compinit
+
 # Import local aliases
 source $HOME/.zsh/aliases/ansible-aliases.zsh
 source $HOME/.zsh/aliases/common-aliases.zsh
@@ -34,10 +38,6 @@ antigen bundles <<EOBUNDLES
     psprint/zsh-navigation-tools
     StackExchange/blackbox
 EOBUNDLES
-
-# Enable autocomplete
-autoload -Uz compinit
-compinit
 
 # Load the theme.
 antigen theme romkatv/powerlevel10k

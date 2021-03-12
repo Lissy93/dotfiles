@@ -10,7 +10,9 @@
                  2>/dev/null)
     IFS=$si
   }
-  compdef _npm_completion npm
+  if type "compdef" > /dev/null; then
+    compdef _npm_completion npm
+  fi
 }
 
 # Install dependencies globally

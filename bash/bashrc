@@ -44,3 +44,4 @@ PROMPT_COMMAND=set_bash_prompt
 if hash zsh 2>/dev/null; then
   zsh
 fi
+source "$HOME/.cargo/env"
