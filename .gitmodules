@@ -8,3 +8,6 @@
 [submodule "zsh/antigen"]
 	path = zsh/antigen
 	url = https://github.com/zsh-users/antigen.git
+[submodule "espanso"]
+	path = espanso
+	url = git@github.com:Lissy93/espanso-config.git
