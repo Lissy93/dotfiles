@@ -15,6 +15,8 @@ export BROWSER="firefox"
 export PAGER="less"
 
 ## Respect XDG directories
+export ADOTDIR="${XDG_DATA_HOME}/zsh/antigen"
+export ANTIGEN_LOG="${XDG_CACHE_HOME}/zsh/antigen"
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
 export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
 export KDEHOME="${XDG_CONFIG_HOME}/kde"
@@ -29,3 +31,10 @@ export XSERVERRC="${XDG_CONFIG_HOME}/X11/xserverrc"
 export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 export ZLIB="${ZDOTDIR}/lib"
 
+# ZSH History
+export HISTFILE="${XDG_CACHE_HOME}/zsh/.zsh_history"
+export HISTSIZE=10000
+export SAVEHIST=10000
+setopt appendhistory
+
+# source $XDG_CONFIG_HOME/zsh/.zshrc
