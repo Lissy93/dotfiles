@@ -1,1 +1,0 @@
-/home/alicia/.config/zsh/.zshenv
