@@ -3,16 +3,15 @@
 # For docs and dotfiles, see: https://github.com/lissy93/dotfiles
 # Licensed under MIT - (C) Alicia Sykes, 2022 <https://aliciasykes.com>
 
-# Paths and Settings
-YADM_REPO_NAME="Lissy93/Dotfiles"
-YADM_REPO="https://github.com/${YADM_REPO_NAME}.git"
-# https://github.com/Lissy93/Dotfiles.git
-# git@github.com:${YADM_REPO}.git
-DOTFILES_DIR="/home/alicia/Documents/personal-projects/dotfiles"
-# DOTFILES_DIR="~/dotfiles"
-YADM_DATA="$HOME/.local/share/yadm"
-BIN_PATH="$HOME/.local/bin"
-YADM_BIN="$BIN_PATH/yadm"
+set -e
+
+REPO_NAME="Lissy93/Dotfiles"
+REPO_PATH="https://github.com/${REPO_NAME}.git"
+
+CONFIG=".install.conf.yaml"
+DOTBOT_DIR="dotbot"
+DOTBOT_BIN="bin/dotbot"
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TITLE='🧰 Lissy93/Dotfiles Setup'
 
 # Color Variables
@@ -31,7 +30,7 @@ system_type=$(uname -s)
 
 # Function that prints important text in a banner with colored border
 # First param is the text to output, then optional color and padding
-make_banner () {
+make_banner () {  
   bannerText=$1
   lineColor="${2:-$CYAN_B}"
   padding="${3:-0}"
@@ -58,10 +57,10 @@ terminate () {
 system_verify () {
   if ! command_exists $1; then
     if $2; then
-      echo -e "🚫 ${RED_B}Error:${PLAIN_B} $1 is not installed"
+      echo -e "🚫 ${RED_B}Error:${PLAIN_B} $1 is not installed${RESET}"
       terminate
     else
-      echo -e "⚠️  ${YELLOW_B}Warning:${PLAIN_B} $1 is not installed"
+      echo -e "⚠️  ${YELLOW_B}Warning:${PLAIN_B} $1 is not installed${RESET}"
     fi
   fi
 }
@@ -74,7 +73,7 @@ system_verify "zsh" false
 system_verify "vim" false
 system_verify "git" true
 system_verify "tmux" false
-system_verify "yadm" false
+system_verify "antigen" false
 
 # If on Mac, offer to install Brew
 if [ "$system_type" = "Darwin" ] && ! command_exists brew; then
@@ -86,38 +85,15 @@ if [ "$system_type" = "Darwin" ] && ! command_exists brew; then
   fi
 fi
 
-# Offer to install YADM if not setup
-if ! command_exists yadm && ! [ -a "${YADM_BIN}" ]; then
-  read -p "Install YDAM now? (y/N)" -n 1 -r
-  echo
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
-    if command_exists brew && [ "$system_type" = "Darwin" ]; then
-      brew install yadm
-    else
-      echo "Installing YADM into ${YADM_DATA}\n"
-      git clone https://github.com/TheLocehiliosan/yadm.git $YADM_DATA
-      mkdir -p $BIN_PATH; ln -s $YADM_DATA/yadm $YADM_BIN
-    fi
-  else
-    echo "🚫 YDAM is required, exiting setup..." && exit 1
-  fi
-fi
-
-# If YADM alias not set, then point it to yadm binary
-if ! command_exists yadm; then
-  shopt -s expand_aliases
-  alias yadm=$YADM_BIN
-fi
-
-# Download / update dotfiles repo with YADM
+# Download / update dotfiles repo with Chezmoi
 if [[ ! -d "$DOTFILES_DIR" ]]
 then
-  echo "Dotfiles not yet present. Will download ${YADM_REPO_NAME} into ${DOTFILES_DIR}"
+  echo "Dotfiles not yet present. Will download ${REPO_NAME} into ${DOTFILES_DIR}"
   mkdir -p "${DOTFILES_DIR}"
-  cd "${DOTFILES_DIR}" && yadm clone ${YADM_REPO}
+  git clone --recursive ${REPO_PATH} ${DOTFILES_DIR}
 else
-  echo -e "Pulling changes from ${YADM_REPO_NAME} into ${DOTFILES_DIR}"
-  cd "${DOTFILES_DIR}" && yadm pull
+  echo -e "Pulling changes from ${REPO_NAME} into ${DOTFILES_DIR}"
+  cd "${DOTFILES_DIR}" && git pull
 fi
 
 # If git clone / pull failed, then exit with error
@@ -128,12 +104,22 @@ then
     terminate
 fi
 
-# If on Mac, update Brew bundle
+# # If on Mac, update Brew bundle
 if [ "$system_type" = "Darwin" ] && command_exists brew && [ -f "$HOME/.Brewfile" ]
 then
   echo "Updating homebrew bundle"
   brew bundle --global
 fi
+
+# Set up symlinks with dotbo
+cd "${DOTFILES_DIR}"
+git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
+git submodule update --init --recursive "${DOTBOT_DIR}"
+
+"${DOTFILES_DIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${DOTFILES_DIR}" -c "${CONFIG}" "${@}"
+
+# Update source to ZSH entry point
+source "${HOME}/.zshenv"
 
 # Print success message, and time taken
 total_time=$((`date +%s`-start_time))
