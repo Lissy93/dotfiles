@@ -1,0 +1,13 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+
+- clean: ['~', '~/.config']
+
+- link:
+    ~/.zshenv: zsh/.zshenv
+    ~/.config/zsh: zsh
+
+- shell:
+  - git submodule sync --recursive
