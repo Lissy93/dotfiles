@@ -1,5 +1,0 @@
-
-#  ~/.zlogin
-
-clear
-reset
