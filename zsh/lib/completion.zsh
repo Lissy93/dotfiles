@@ -36,30 +36,11 @@ zstyle ':completion:*:man:*'                menu                yes select
 zstyle ':completion:*:manuals'              separate-sections   yes
 zstyle ':completion:*:manuals.*'            insert-sections     yes
 
-################################################################################
-#  INITIALIZE & OPTIMIZE COMPLETION SYSTEM
-################################################################################
-#
-# Performance tweaking of compinit based on information from the following
-# sources.
-#   - https://carlosbecker.com/posts/speeding-up-zsh
-#   - https://gist.github.com/ctechols/ca1035271ad134841284
-#
-# On slow systems, checking the cached .zcompdump file to see if it must be
-# regenerated adds a noticable delay to Zsh startup. The solution below
-# restricts it to once a day.
-#
-# See below for infromation on the globbing used.
-#   '#q' : Explicit glob qualifier that makes globbing work within Zsh's [[ ]]
-#          construct.
-#   'N'  : Makes the glob pattern evaluate to nothing when it does not match,
-#          rather than throwing a globbing error.
-#   '.'  : Match "regular files".
-#   'm1' : Match files (or directories or whatever) that are older than 1 day.
+# Make zsh know about hosts already accessed by SSH
+zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' \
+    hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
 
-# Autoload completion functions.
-#   -U : Mark the fucntion for autoloading and suppress alias expansion.
-#   -z : Use Zsh instead of Korn shell style functions.
+# Initialize and optimize completion
 autoload -Uz compinit
 
 # Enable extended globbing.
