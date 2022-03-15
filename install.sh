@@ -73,7 +73,6 @@ system_verify "zsh" false
 system_verify "vim" false
 system_verify "git" true
 system_verify "tmux" false
-system_verify "antigen" false
 
 # If on Mac, offer to install Brew
 if [ "$system_type" = "Darwin" ] && ! command_exists brew; then

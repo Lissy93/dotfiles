@@ -6,8 +6,13 @@
 - clean: ['~', '~/.config']
 
 - link:
-    ~/.zshenv: zsh/.zshenv
+    ~/.zshenv:
+      path: zsh/.zshenv
+      force: true
     ~/.config/zsh: zsh
-
+    ~/.tmux.conf: tmux/.tmux.conf
+    ~/.config/bash: bash
+    ~/.local/share/tmux: tpm
+    # ~/.config/tmux/plugins: tpm
 - shell:
   - git submodule sync --recursive
