@@ -10,9 +10,11 @@
       path: zsh/.zshenv
       force: true
     ~/.config/zsh: zsh
-    ~/.tmux.conf: tmux/.tmux.conf
+    ~/.config/vim: vim
+    ~/.config/nvim: vim
     ~/.config/bash: bash
+    ~/.tmux.conf: tmux/.tmux.conf
     ~/.local/share/tmux: tpm
-    # ~/.config/tmux/plugins: tpm
 - shell:
   - git submodule sync --recursive
+  
