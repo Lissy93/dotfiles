@@ -11,7 +11,8 @@ REPO_PATH="https://github.com/${REPO_NAME}.git"
 CONFIG=".install.conf.yaml"
 DOTBOT_DIR="dotbot"
 DOTBOT_BIN="bin/dotbot"
-DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DOTFILES_DIR="/home/$USER/Documents/config/dotfiles"
 TITLE='🧰 Lissy93/Dotfiles Setup'
 
 # Color Variables
@@ -69,9 +70,9 @@ system_verify () {
 make_banner "${TITLE}" "${CYAN_B}" 1
 
 # Verify required packages are installed
+system_verify "git" true
 system_verify "zsh" false
 system_verify "vim" false
-system_verify "git" true
 system_verify "tmux" false
 
 # If on Mac, offer to install Brew
@@ -84,7 +85,7 @@ if [ "$system_type" = "Darwin" ] && ! command_exists brew; then
   fi
 fi
 
-# Download / update dotfiles repo with Chezmoi
+# Download / update dotfiles repo with git
 if [[ ! -d "$DOTFILES_DIR" ]]
 then
   echo "Dotfiles not yet present. Will download ${REPO_NAME} into ${DOTFILES_DIR}"
@@ -110,7 +111,7 @@ then
   brew bundle --global
 fi
 
-# Set up symlinks with dotbo
+# Set up symlinks with dotbot
 cd "${DOTFILES_DIR}"
 git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
