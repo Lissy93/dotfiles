@@ -6,8 +6,9 @@ zsh_dir=${${ZDOTDIR}:-$HOME/.config/zsh}
 [[ $- != *i* ]] && return
 
 # Import alias files
-source ${zsh_dir}/aliases/git.zsh
 source ${zsh_dir}/aliases/general.zsh
+source ${zsh_dir}/aliases/git.zsh
+source ${zsh_dir}/aliases/yarn.zsh
 
 # Setup Antigen bundle manager
 source ${zsh_dir}/helpers/setup-antigen.zsh
