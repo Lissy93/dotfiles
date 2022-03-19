@@ -46,13 +46,18 @@ autoload -Uz compinit
 # Enable extended globbing.
 setopt extendedglob
 
+# Location for completions
+zcompdump="${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/.zcompdump"
+
+# If completions present, then load them
+if [ -f $zsh_dump_file ]; then
+    compinit -d $zcompdump
+fi
+
 # Perform compinit only once a day.
-if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.m1) ]]; then
-    compinit
-    echo "Initializing completions..."
-else
-    # Skip compinit security check entirely.
-    compinit -c
+if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]];
+then
+    zcompile "$zcompdump"
 fi
 
 # Disable extended globbing so that ^ will behave as normal.
