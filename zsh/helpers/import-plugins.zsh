@@ -24,8 +24,5 @@ antigen bundle supercrabtree/k
 # Syntax highlighting for cat
 antigen bundle colorize
 
-# Tons of helper functions for git repos
-antigen bundle unixorn/git-extra-commands
-
 # Tell antigen that you're done
 antigen apply
