@@ -10,21 +10,26 @@ utils_dir=~/.config/utils
 source ${zsh_dir}/aliases/general.zsh
 source ${zsh_dir}/aliases/git.zsh
 source ${zsh_dir}/aliases/node-js.zsh
+source ${zsh_dir}/aliases/alias-tips.zsh
 
 # Setup Antigen, and import plugins
 source ${zsh_dir}/helpers/setup-antigen.zsh
 source ${zsh_dir}/helpers/import-plugins.zsh
 
 # Configure ZSH stuff
-source ${zsh_dir}/lib/history.zsh
 source ${zsh_dir}/lib/colors.zsh
+source ${zsh_dir}/lib/cursor.zsh
+source ${zsh_dir}/lib/history.zsh
+source ${zsh_dir}/lib/surround.zsh
 source ${zsh_dir}/lib/completion.zsh
 source ${zsh_dir}/lib/term-title.zsh
 source ${zsh_dir}/lib/navigation.zsh
+source ${zsh_dir}/lib/expansions.zsh
 source ${zsh_dir}/lib/key-bindings.zsh
 
 # Import utility functions
 source ${utils_dir}/transfer.sh
+source ${utils_dir}/matrix.sh
 source ${utils_dir}/hr.sh
 
 # Left over tasks
