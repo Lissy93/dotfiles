@@ -126,6 +126,71 @@ function gfetchrebase {
 
 alias gfrb="gfetchrebase"
 
+# Fork a GitHub repo
+ghfork() {
+  gitURL=${1:-"$(git config --get remote.origin.url)"}
+  gitURL="${gitURL%.git}" # Remove .git from the end of the git URL
+  if [[ $gitURL =~ ^git@ ]]; then
+      gitURL="$(echo $gitURL | sed 's/git@//')" # Remove git@ from the start of the git URL
+      repo="$(echo $gitURL | sed 's/.*\///')" # Pull the repo name from the git URL
+  elif [[ $gitURL =~ ^https?:// ]]; then
+      repo="$(echo $gitURL | sed 's/.*\.com\///' | sed 's/.*\///')" # Pull the repo name from the git URL
+  elif [[ ! -z $1 && ! -z $2 && "$1" != *\/*  ]]; then
+      repo="$2"
+  else
+      repo="$(echo $1 | sed 's/.*\///')"
+  fi
+  github "$@"
+  echo "🍴 Click 'Fork'"
+  user=$(whoami)
+  print -z clone "$user" "$repo"
+}
+
+# Helper function to return URL of current repo (based on origin)
+get-repo-url() {
+  git_base_url='https://github.com'
+  # Get origin from git repo + remove .git
+  git_url=${$(git config --get remote.origin.url)%.git}
+  # Process URL, and append branch / working origin 
+  if [[ $git_url =~ ^git@ ]]; then
+    branch=${1:-"$(git symbolic-ref --short HEAD)"}
+    branchExists="$(git ls-remote --heads $git_url $branch | wc -l)"
+    github="$(echo $git_url | sed 's/git@//')" # Remove git@ from the start
+    github="$(echo $github | sed 's/\:/\//')" # Replace : with /
+    if [[ $branchExists == "       1" ]]; then
+        git_url="http://$github/tree/$branch"
+    else
+        git_url="http://$github"
+    fi
+  elif [[ $git_url =~ ^https?:// ]]; then
+    branch=${1:-"$(git symbolic-ref --short HEAD)"}
+    branchExists="$(git ls-remote --heads $git_url $branch | wc -l)"
+    if [[ $branchExists == "       1" ]]; then
+        git_url="$git_url/tree/$branch"
+    else
+        git_url="$git_url"
+    fi
+  fi
+  # Return URL
+  echo $git_url
+}
+
+# Helper function that gets supported open method for system
+launch-url() {
+  if hash open 2> /dev/null; then
+    open_command=open
+  elif hash xdg-open 2> /dev/null; then
+    open_command=xdg-open
+  elif hash lynx 2> /dev/null; then
+    open_command=lynx
+  else
+    echo -e "\033[0;33mUnable to launch browser, open manually instead"
+    echo -e "\033[1;96m🌐 URL: \033[0;96m\e[4m$1\e[0m"
+    return;
+  fi
+  echo $open_command
+}
+
 # Opens the current repo + branch in GitHub
 open-github() {
   git_base_url='https://github.com' # Modify this if using GH enterprise
@@ -133,53 +198,36 @@ open-github() {
     # User specified a repo
     git_url=$git_base_url/$1/$2
   elif git rev-parse --git-dir > /dev/null 2>&1; then
-    # Use current repo
-    git_url=${$(git config --get remote.origin.url)%.git}
-    # Process URL, and append branch / working origin 
-    if [[ $git_url =~ ^git@ ]]; then
-      branch=${1:-"$(git symbolic-ref --short HEAD)"}
-      branchExists="$(git ls-remote --heads $git_url $branch | wc -l)"
-      github="$(echo $git_url | sed 's/git@//')" # Remove git@ from the start
-      github="$(echo $github | sed 's/\:/\//')" # Replace : with /
-      if [[ $branchExists == "       1" ]]; then
-          git_url="http://$github/tree/$branch"
-      else
-          git_url="http://$github"
-      fi
-    elif [[ $git_url =~ ^https?:// ]]; then
-      branch=${1:-"$(git symbolic-ref --short HEAD)"}
-      branchExists="$(git ls-remote --heads $git_url $branch | wc -l)"
-      if [[ $branchExists == "       1" ]]; then
-          git_url="$git_url/tree/$branch"
-      else
-          git_url="$git_url"
-      fi
-    fi
+    # Get URL from current repo's origin
+    git_url=$(get-repo-url)
   else
     # Not in repo, and nothing specified, open homepage
     git_url=$git_base_url
   fi
-
   # Determine which open commands supported
-  if hash open 2> /dev/null; then
-    open_command=open
-  elif hash xdg-open 2> /dev/null; then
-    open_command=xdg-open
-  elif hash lynx 2> /dev/null; then
-    open_command=lynx
-  elif hash w3m 2> /dev/null; then
-    open_command=w3m
-  else
-    echo -e "\033[0;33mUnable to launch browser, open manually instead"
-    echo -e "\033[1;96m🐙 GitHub URL: \033[0;96m\e[4m$git_url\e[0m"
-    return;
-  fi
-
+  open_command=$(launch-url $git_url)
   # Print messages
   echo -e "\033[1;96m🐙 Opening in browser: \033[0;96m\e[4m$git_url\e[0m"
-  
   # And launch!
   $open_command $git_url
 }
 
 alias gho='open-github'
+
+# Opens pull request tab for the current GH repo
+open-github-pulls() {
+  # Get Repo URL
+  if git rev-parse --git-dir > /dev/null 2>&1; then
+    git_url=$(get-repo-url)
+  else
+    git_url='https://github.com'
+  fi
+  git_url="$git_url/pulls"
+  # Get open command
+  open_command=$(launch-url $git_url)
+  # Print message, and launch!
+  echo -e "\033[1;96m🐙 Opening in browser: \033[0;96m\e[4m$git_url\e[0m"
+  $open_command $git_url
+}
+
+alias ghp='open-github-pulls'
