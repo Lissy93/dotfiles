@@ -27,6 +27,7 @@ alias gch="git checkout" # Switch the HEAD to <branch>
 alias gb="git branch" # Create a new <branch> from HEAD
 alias gd="git diff" # Show all changes to untracked files
 alias gtree="git log --graph --oneline --decorate" # Show branch tree
+alias gl='git log'
 
 # Tags
 alias gt="git tag" # Tag the current commit, 1 param
@@ -48,6 +49,17 @@ alias gu="git reset" # Reset HEAD pointer to a <commit>, perserves changes
 alias gua="git reset --hard HEAD" # Resets all uncommited changes
 alias gnewmsg="git commit --amend -m" # Update <message> of previous commit
 alias gclean="git clean -df" # Remove all untracked files
+
+# Git LFS
+alias glfsi='git lfs install'
+alias glfst='git lfs track'
+alias glfsls='git lfs ls-files'
+alias glfsmi='git lfs migrate import --include='
+
+# Push LFS changes to current branch
+function gplfs() {
+  git lfs push origin "$(git_current_branch)" --all
+}
 
 # Shorthand clone (e.g. $ clone lissy93/dotfiles)
 function clone {
@@ -126,24 +138,26 @@ function gfetchrebase {
 
 alias gfrb="gfetchrebase"
 
-# Fork a GitHub repo
-ghfork() {
-  gitURL=${1:-"$(git config --get remote.origin.url)"}
-  gitURL="${gitURL%.git}" # Remove .git from the end of the git URL
-  if [[ $gitURL =~ ^git@ ]]; then
-      gitURL="$(echo $gitURL | sed 's/git@//')" # Remove git@ from the start of the git URL
-      repo="$(echo $gitURL | sed 's/.*\///')" # Pull the repo name from the git URL
-  elif [[ $gitURL =~ ^https?:// ]]; then
-      repo="$(echo $gitURL | sed 's/.*\.com\///' | sed 's/.*\///')" # Pull the repo name from the git URL
-  elif [[ ! -z $1 && ! -z $2 && "$1" != *\/*  ]]; then
-      repo="$2"
+# Integrates with gitignore.io to auto-populate .gitignore file
+function gignore() {
+  curl -fLw '\n' https://www.gitignore.io/api/"${(j:,:)@}"
+}
+_gitignoreio_get_command_list() {
+  curl -sfL https://www.gitignore.io/api/list | tr "," "\n"
+}
+_gitignoreio () {
+  compset -P '*,'
+  compadd -S '' `_gitignoreio_get_command_list`
+}
+# Downloads specific git ignore template to .gitignore
+gignore-apply () {
+  if [ -n $search_term ]; then
+    gignore $1 >> .gitignore
   else
-      repo="$(echo $1 | sed 's/.*\///')"
+    echo "Expected a template to be specified. Run:"
+    echo "  $ gignore list to view all options"
+    echo "  $ gignore [template] to preview"
   fi
-  github "$@"
-  echo "🍴 Click 'Fork'"
-  user=$(whoami)
-  print -z clone "$user" "$repo"
 }
 
 # Helper function to return URL of current repo (based on origin)
