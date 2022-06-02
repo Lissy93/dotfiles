@@ -1,7 +1,15 @@
 
 #!/bin/bash
-# Bash functions for launching a web search
-# Licensed under MIT, (C) Alicia Sykes 2022
+
+##############################################
+# Bash functions for launching a web search  #
+#                                            #
+# Usage:                                     #
+# -Either source this file, or run directley #
+# -Run with --help for full list of options  #
+#                                            #
+# Licensed under MIT, (C) Alicia Sykes 2022  #
+##############################################
 
 # URL encodes the users search string
 ws_url_encode() {
@@ -24,6 +32,7 @@ ws_launch_url() {
     open $1
   elif command_exists xdg-open; then
     xdg-open $1
+    echo -e "\033[0;32m🌐 Launching \033[4;32m$1\033[0;90m\nPress [Enter] to exit\e[0m"
   elif command_exists lynx; then
     lynx -vikeys -accept_all_cookies $1
   elif command_exists browsh; then
@@ -144,7 +153,7 @@ fi
 # Prints usage options
 show_ws_help() {
   echo -e '\033[1;95mCLI Web Search\e[0m'
-  echo -e '\033[0;95m\e[3mA set of functions for searching the web from the command line.\e[0m'
+  echo -e '\033[0;95m\x1b[2mA set of functions for searching the web from the command line.\e[0m'
   echo
   echo -e '\033[0;95m\e[4mExample Usage:\033[0;35m'
   echo -e '  (1) View menu, select search engine by index, then enter a search term'
@@ -160,14 +169,14 @@ show_ws_help() {
   echo -e '  You can also use the `ws` alias instead of typing `web-search`'
   echo
   echo -e '\033[0;95m\e[4mSupported Search Engines:\033[0;35m'
-  echo -e '  \033[0;35mDuckDuckGo: \e[3m$ ws duckduckgo (or $ wsddg)\e[0m'
-  echo -e '  \033[0;35mWikipedia: \e[3m$ ws wikipedia or ($ wswiki)\e[0m'
-  echo -e '  \033[0;35mGitHub: \e[3m$ ws github or ($ wsgh)\e[0m'
-  echo -e '  \033[0;35mStackOverflow: \e[3m$ ws stackoverflow or ($ wsso)\e[0m'
-  echo -e '  \033[0;35mWolframalpha: \e[3m$ ws wolframalpha or ($ wswa)\e[0m'
-  echo -e '  \033[0;35mReddit: \e[3m$ ws reddit or ($ wsrdt)\e[0m'
-  echo -e '  \033[0;35mMaps: \e[3m$ ws maps or ($ wsmap)\e[0m'
-  echo -e '  \033[0;35mGoogle: \e[3m$ ws google or ($ wsggl)\e[0m'
+  echo -e '  \033[0;35mDuckDuckGo: \x1b[2m$ ws duckduckgo (or $ wsddg)\e[0m'
+  echo -e '  \033[0;35mWikipedia: \x1b[2m$ ws wikipedia or ($ wswiki)\e[0m'
+  echo -e '  \033[0;35mGitHub: \x1b[2m$ ws github or ($ wsgh)\e[0m'
+  echo -e '  \033[0;35mStackOverflow: \x1b[2m$ ws stackoverflow or ($ wsso)\e[0m'
+  echo -e '  \033[0;35mWolframalpha: \x1b[2m$ ws wolframalpha or ($ wswa)\e[0m'
+  echo -e '  \033[0;35mReddit: \x1b[2m$ ws reddit or ($ wsrdt)\e[0m'
+  echo -e '  \033[0;35mMaps: \x1b[2m$ ws maps or ($ wsmap)\e[0m'
+  echo -e '  \033[0;35mGoogle: \x1b[2m$ ws google or ($ wsggl)\e[0m'
   echo -e '\e[0m'
 }
 
