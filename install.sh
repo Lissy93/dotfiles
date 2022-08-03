@@ -12,7 +12,7 @@ CONFIG=".install.conf.yaml"
 DOTBOT_DIR="dotbot"
 DOTBOT_BIN="bin/dotbot"
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-DOTFILES_DIR="/home/$USER/Documents/config/dotfiles"
+DOTFILES_DIR="${DOTFILES_DIR:-$HOME/Documents/config/dotfiles}"
 TITLE='🧰 Lissy93/Dotfiles Setup'
 
 # Color Variables
