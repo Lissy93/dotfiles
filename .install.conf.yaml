@@ -16,6 +16,7 @@
     ~/.tmux.conf: tmux/.tmux.conf
     ~/.local/share/tmux: tpm
     ~/.config/utils: utils
+    ~/.gitconfig: git/.gitconfig
 - shell:
   - git submodule sync --recursive
   
