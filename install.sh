@@ -31,7 +31,7 @@ system_type=$(uname -s)
 
 # Function that prints important text in a banner with colored border
 # First param is the text to output, then optional color and padding
-make_banner () {  
+make_banner () {
   bannerText=$1
   lineColor="${2:-$CYAN_B}"
   padding="${3:-0}"
@@ -85,6 +85,15 @@ if [ "$system_type" = "Darwin" ] && ! command_exists brew; then
   fi
 fi
 
+# If ZSH not the default shell, ask user if they'd like to set it
+if [[ $SHELL != *"zsh"* ]] && command_exists zsh; then
+  read -p "Would you like to set ZSH as your default shell? (y/N)" -n 1 -r
+  echo
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    chsh -s $(which zsh) $USER
+  fi
+fi
+
 # Download / update dotfiles repo with git
 if [[ ! -d "$DOTFILES_DIR" ]]
 then
@@ -93,7 +102,7 @@ then
   git clone --recursive ${REPO_PATH} ${DOTFILES_DIR}
 else
   echo -e "Pulling changes from ${REPO_NAME} into ${DOTFILES_DIR}"
-  cd "${DOTFILES_DIR}" && git pull
+  cd "${DOTFILES_DIR}" && git pull && git submodule update --recursive
 fi
 
 # If git clone / pull failed, then exit with error
@@ -115,7 +124,7 @@ fi
 cd "${DOTFILES_DIR}"
 git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
-
+chmod +x  dotbot/bin/dotbot
 "${DOTFILES_DIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${DOTFILES_DIR}" -c "${CONFIG}" "${@}"
 
 # Update source to ZSH entry point
