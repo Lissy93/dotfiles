@@ -10,6 +10,7 @@ utils_dir=~/.config/utils
 source ${zsh_dir}/aliases/general.zsh
 source ${zsh_dir}/aliases/git.zsh
 source ${zsh_dir}/aliases/node-js.zsh
+source ${zsh_dir}/aliases/flutter.zsh
 source ${zsh_dir}/aliases/alias-tips.zsh
 
 # Setup Antigen, and import plugins
@@ -31,6 +32,8 @@ source ${zsh_dir}/lib/key-bindings.zsh
 source ${utils_dir}/transfer.sh
 source ${utils_dir}/matrix.sh
 source ${utils_dir}/hr.sh
+source ${utils_dir}/web-search.sh
+source ${utils_dir}/am-i-online.sh
 
 # Left over tasks
 source ${zsh_dir}/helpers/misc-stuff.zsh
