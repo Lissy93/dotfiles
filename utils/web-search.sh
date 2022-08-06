@@ -91,6 +91,9 @@ ws_reddit() {
 ws_maps() {
   ws_make_search 'https://www.google.com/maps/search/' $@
 }
+ws_grepapp() {
+  ws_make_search 'https://grep.app/search?q=' $@
+}
 
 # Lists availible search options
 web_search() {
@@ -106,6 +109,7 @@ web_search() {
     [[ $@ == "reddit"* ]] && ws_reddit "${@/reddit/}" && return
     [[ $@ == "maps"* ]] && ws_maps "${@/maps/}" && return
     [[ $@ == "google"* ]] && ws_google "${@/google/}" && return
+    [[ $@ == "grepapp"* ]] && ws_grepapp "${@/grepapp/}" && return
   fi
   # Otherwise show menu input for search engines
   choices=(
@@ -124,6 +128,7 @@ web_search() {
       wolframalpha) ws_wolframalpha $@; return;;
       reddit) ws_reddit $@; return;;
       maps) ws_maps $@; return;;
+      grepapp) ws_grepapp $@; return;;
       help) show_ws_help;;
       quit) break ;;
       *)
@@ -144,6 +149,7 @@ alias wswa='ws_wolframalpha'
 alias wsrdt='ws_reddit'
 alias wsmap='ws_maps'
 alias wsggl='ws_google'
+alias wsgra='ws_grepapp'
 
 # Set ws alias, only if not used by another program
 if ! hash ws 2> /dev/null; then
@@ -177,14 +183,15 @@ show_ws_help() {
   echo -e '  \033[0;35mReddit: \x1b[2m$ ws reddit or ($ wsrdt)\e[0m'
   echo -e '  \033[0;35mMaps: \x1b[2m$ ws maps or ($ wsmap)\e[0m'
   echo -e '  \033[0;35mGoogle: \x1b[2m$ ws google or ($ wsggl)\e[0m'
+  echo -e '  \033[0;35mGoogle: \x1b[2m$ ws grepapp or ($ wsgra)\e[0m'
   echo -e '\e[0m'
 }
 
 # Determine if file is being run directly or sourced
 ([[ -n $ZSH_EVAL_CONTEXT && $ZSH_EVAL_CONTEXT =~ :file$ ]] || 
- [[ -n $KSH_VERSION && $(cd "$(dirname -- "$0")" &&
+  [[ -n $KSH_VERSION && $(cd "$(dirname -- "$0")" &&
     printf '%s' "${PWD%/}/")$(basename -- "$0") != "${.sh.file}" ]] || 
- [[ -n $BASH_VERSION ]] && (return 0 2>/dev/null)) && sourced=1 || sourced=0
+  [[ -n $BASH_VERSION ]] && (return 0 2>/dev/null)) && sourced=1 || sourced=0
 
 # If running directly, then show menu, or help
 if [ $sourced -eq 0 ]; then

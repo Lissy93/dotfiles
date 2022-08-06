@@ -13,6 +13,7 @@ if !filereadable(expand(vim_plug_location))
   echom "Vim Plug not found, downloading to '" . vim_plug_location . "'"
   execute '!curl -o ' . vim_plug_location . ' --create-dirs' .
   \ ' https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  echom "Next, run :PlugInstall to install all plugins"
 endif
 
 " If Plugins directory not yet exist, create it
