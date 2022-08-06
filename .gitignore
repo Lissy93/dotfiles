@@ -1,4 +1,12 @@
 
+# Submodules
+tmp/*
+dotbot/*
+
+# Auto-generated files
+zsh/.zcompcache/*
+zsh/*/*.zwc
+
 # Linux
 *~
 .fuse_hidden*
