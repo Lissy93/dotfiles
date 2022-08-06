@@ -27,6 +27,7 @@ transfer-directory () {
 # Determine the type of transfer, and call appropriate function
 transfer () {
   FILE_TRANSFER_SERVICE="${FILE_TRANSFER_SERVICE:=https://transfer.sh}"
+  if [[ $@ == *"--help" ]] transfer-help && return
   TMP_FILE="/tmp/file-transfer-$(date +%s).zip"
   if [ -z "$1" ]; then
     transfer-help
@@ -53,9 +54,9 @@ transfer-help () {
 
 # Determine if file is being run directly or sourced
 ([[ -n $ZSH_EVAL_CONTEXT && $ZSH_EVAL_CONTEXT =~ :file$ ]] || 
- [[ -n $KSH_VERSION && $(cd "$(dirname -- "$0")" &&
+  [[ -n $KSH_VERSION && $(cd "$(dirname -- "$0")" &&
     printf '%s' "${PWD%/}/")$(basename -- "$0") != "${.sh.file}" ]] || 
- [[ -n $BASH_VERSION ]] && (return 0 2>/dev/null)) && sourced=1 || sourced=0
+  [[ -n $BASH_VERSION ]] && (return 0 2>/dev/null)) && sourced=1 || sourced=0
 
 # If script being called directly, invoke transfer or show help
 if [ $sourced -eq 0 ]; then
