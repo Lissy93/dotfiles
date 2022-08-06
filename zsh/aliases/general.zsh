@@ -3,8 +3,19 @@ command_exists () {
   hash "$1" 2> /dev/null
 }
 
+# Frequently used basics
+alias a='alias'
+alias c='clear'
+alias e='exit'
+alias f='find'
+alias l='ls'
+alias m='man'
+alias p='pwd'
+alias s='sudo'
+alias t='touch'
+alias v='vim'
+
 # File listing options
-alias l='ls' # Quick ls
 alias la='ls -A' # List all files/ includes hidden
 alias ll='ls -lAFh' # List all files, with full details
 alias lm='ls -tA -1' # List files sorted by last modified
@@ -24,6 +35,60 @@ if command_exists exa ; then
     alias tree='f() { exa -aF --tree -L=${1:-2} --icons };f'
 fi
 
+# List contents of packed file, depending on type
+ls-archive () {
+  if [ -z "$1" ]; then
+    echo "No archive specified"
+    return;
+  fi
+  if [[ ! -f $1 ]]; then
+    echo "File not found"
+    return;
+  fi
+  ext="${1##*.}"
+  if [ $ext = 'zip' ]; then
+    unzip -l $1
+  elif [ $ext = 'rar' ]; then
+    unrar l $1
+  elif [ $ext = 'tar' ]; then
+    tar tf $1
+  elif [ $ext = 'tar.gz' ]; then
+    echo $1
+  elif [ $ext = 'ace' ]; then
+    unace l $1
+  else
+    echo "Unknown Archive Format"
+  fi
+}
+
+alias lz='ls-archive'
+
+# Make directory, and cd into it
+mkcd() {
+  local dir="$*";
+  local mkdir -p "$dir" && cd "$dir";
+}
+
+# Make dir and copy
+mkcp() {
+  local dir="$2"
+  local tmp="$2"; tmp="${tmp: -1}"
+  [ "$tmp" != "/" ] && dir="$(dirname "$2")"
+  [ -d "$dir" ] ||
+    mkdir -p "$dir" &&
+    cp -r "$@"
+}
+
+# Move dir and move into it
+mkmv() {
+  local dir="$2"
+  local tmp="$2"; tmp="${tmp: -1}"
+  [ "$tmp" != "/" ] && dir="$(dirname "$2")"
+  [ -d "$dir" ] ||
+      mkdir -p "$dir" &&
+      mv "$@"
+}
+
 # Getting outa directories
 alias c~='cd ~'
 alias c.='cd ..'
@@ -42,6 +107,7 @@ alias ff='find . -type f -name' # Find a file by name within current directory
 # Command line history
 alias h='history' # Shows full history
 alias h-search='fc -El 0 | grep' # Searchses for a word in terminal history
+alias top-history='history 0 | awk '{print $2}' | sort | uniq -c | sort -n -r | head' 
 
 # Clearing terminal
 if command_exists hr ; then
@@ -73,29 +139,32 @@ alias as='alias | grep' # Search aliases
 alias ar='unalias' # Remove given alias
 
 # System Monitoring
-alias meminfo='free -m -l -t'
-alias psmem='ps auxf | sort -nr -k 4' # Show top memory eater
-alias psmem10='ps auxf | sort -nr -k 4 | head -10' # Top 10 memory eaters
-alias pscpu='ps auxf | sort -nr -k 3' # Show top CPU eater
-alias pscpu10='ps auxf | sort -nr -k 3 | head -10' # Top 10 CPU eaters
+alias meminfo='free -m -l -t' # Show free and used memory
+alias memhog='ps -eo pid,ppid,cmd,%mem --sort=-%mem | head' # Processes consuming most mem
+alias cpuhog='ps -eo pid,ppid,cmd,%cpu --sort=-%cpu | head' # Processes consuming most cpu
 alias cpuinfo='lscpu' # Show CPU Info
 alias distro='cat /etc/*-release' # Show OS info
+
+# App Specific
+if command_exists code ; then
+  alias vsc='code .' # Open VS Code in current dir
+fi
 
 # Utilities
 alias myip='curl icanhazip.com'
 alias weather='curl wttr.in'
 alias weather-short='curl "wttr.in?format=3"'
+alias cheat='curl cheat.sh/'
+alias tinyurl='curl -s "http://tinyurl.com/api-create.php?url='
 alias ports='netstat -tulanp'
-if command_exists cointop ; then
-  alias crypto='cointop'
-fi
+if command_exists cointop ; then; alias crypto='cointop'; fi
+if command_exists gotop ; then; alias gto='gotop'; fi
 
-# Random
+# Random lolz
 alias cls='clear;ls' # Clear and ls
 alias plz="fc -l -1 | cut -d' ' -f2- | xargs sudo" # Re-run last cmd as root
 alias yolo='git add .; git commit -m "YOLO"; git push origin master'
 alias when='date' # Show date
 alias whereami='pwd'
 alias dog='cat'
-alias simonsays='sudo'
 alias gtfo='exit'

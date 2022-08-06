@@ -34,9 +34,12 @@ source ${utils_dir}/matrix.sh
 source ${utils_dir}/hr.sh
 source ${utils_dir}/web-search.sh
 source ${utils_dir}/am-i-online.sh
+source ${utils_dir}/welcome-banner.sh
 
 # Left over tasks
 source ${zsh_dir}/helpers/misc-stuff.zsh
 
 # Import P10k config for command prompt, run `p10k configure` or edit
 [[ ! -f ${zsh_dir}/.p10k.zsh ]] || source ${zsh_dir}/.p10k.zsh
+
+welcome

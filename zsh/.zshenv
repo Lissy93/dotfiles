@@ -16,7 +16,7 @@ export PAGER="less"
 
 ## Respect XDG directories
 export ADOTDIR="${XDG_CACHE_HOME}/zsh/antigen"
-# export ANTIGEN_LOG="${XDG_CACHE_HOME}/zsh/antigen"
+export OPENSSL_DIR="/usr/local/ssl"
 export ANTIBODY_HOME=${XDG_DATA_HOME}/antibody
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
 export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"

@@ -46,6 +46,9 @@ autoload -Uz compinit
 # Enable extended globbing.
 setopt extendedglob
 
+# Allow SSH tab completion for mosh hostnames
+compdef mosh=ssh
+
 # Location for completions
 zcompdump="${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/.zcompdump"
 
