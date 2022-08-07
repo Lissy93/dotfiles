@@ -22,6 +22,7 @@ RED_B='\033[1;31m'
 GREEN_B='\033[1;32m'
 PLAIN_B='\033[1;37m'
 RESET='\033[0m'
+PURPLE='\033[0;35m'
 
 # Start timer
 start_time=`date +%s`
@@ -73,6 +74,7 @@ make_banner "${TITLE}" "${CYAN_B}" 1
 system_verify "git" true
 system_verify "zsh" false
 system_verify "vim" false
+system_verify "nvim" false
 system_verify "tmux" false
 
 # If on Mac, offer to install Brew
@@ -97,11 +99,11 @@ fi
 # Download / update dotfiles repo with git
 if [[ ! -d "$DOTFILES_DIR" ]]
 then
-  echo "Dotfiles not yet present. Will download ${REPO_NAME} into ${DOTFILES_DIR}"
+  echo "${PURPLE}Dotfiles not yet present. Will download ${REPO_NAME} into ${DOTFILES_DIR}"
   mkdir -p "${DOTFILES_DIR}"
   git clone --recursive ${REPO_PATH} ${DOTFILES_DIR}
 else
-  echo -e "Pulling changes from ${REPO_NAME} into ${DOTFILES_DIR}"
+  echo -e "${PURPLE}Pulling changes from ${REPO_NAME} into ${DOTFILES_DIR}"
   cd "${DOTFILES_DIR}" && git pull && git submodule update --recursive
 fi
 
@@ -109,7 +111,7 @@ fi
 ret=$?
 if ! test "$ret" -eq 0
 then
-    echo >&2 "Failed to fetch dotfiels $ret"
+    echo >&2 "${RED_B}Failed to fetch dotfiels $ret${RESET}"
     terminate
 fi
 
