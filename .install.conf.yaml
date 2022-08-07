@@ -16,7 +16,9 @@
     ~/.tmux.conf: tmux/.tmux.conf
     ~/.local/share/tmux: tpm
     ~/.config/utils: utils
-    ~/.gitconfig: git/.gitconfig
+    ~/.gitconfig: configs/.gitconfig
+    ~/.macos:
+      if: '[ `uname` = Darwin ]'
+      path: configs/.macos
 - shell:
   - git submodule sync --recursive
-  
