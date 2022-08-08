@@ -20,6 +20,7 @@ export OPENSSL_DIR="/usr/local/ssl"
 export ANTIBODY_HOME=${XDG_DATA_HOME}/antibody
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
 export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
+export GIT_CONFIG="${XDG_CONFIG_HOME}/git/.gitconfig"
 export KDEHOME="${XDG_CONFIG_HOME}/kde"
 export LESSHISTFILE="-" # Disable less history.
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME}/pass"
@@ -33,3 +34,8 @@ export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 export ZLIB="${ZDOTDIR}/lib"
 
 # source $XDG_CONFIG_HOME/zsh/.zshrc
+
+# Add Brew to path, if installed and on MacOS
+if [ "$(uname -s)" = "Darwin" ] && [[ -d /opt/homebrew/bin ]]; then
+    export PATH=/opt/homebrew/bin:$PATH
+fi
