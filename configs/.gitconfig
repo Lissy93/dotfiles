@@ -7,6 +7,8 @@
 	username = lissy93
 [init]
 	defaultBranch = master
+[pull]
+	rebase = false
 [core]
 	editor = nvim
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
