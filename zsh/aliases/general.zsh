@@ -3,17 +3,26 @@ command_exists () {
   hash "$1" 2> /dev/null
 }
 
-# Frequently used basics
-alias a='alias'
-alias c='clear'
-alias e='exit'
-alias f='find'
-alias l='ls'
-alias m='man'
-alias p='pwd'
-alias s='sudo'
-alias t='touch'
-alias v='vim'
+alias_not_used () {
+  ! alias "$1" >/dev/null && ! hash "$1" 2> /dev/null
+}
+
+# Single-letter aliases, for frequently used basics, only if not already set
+if alias_not_used a; then; alias a='alias'; fi
+if alias_not_used c; then; alias c='clear'; fi
+if alias_not_used d; then; alias c='date'; fi
+if alias_not_used e; then; alias e='exit'; fi
+if alias_not_used f; then; alias f='find'; fi
+if alias_not_used g; then; alias g='grep'; fi
+if alias_not_used h; then; alias h='history'; fi
+if alias_not_used i; then; alias i='id'; fi
+if alias_not_used j; then; alias j='jobs'; fi
+if alias_not_used l; then; alias l='ls'; fi
+if alias_not_used m; then; alias m='man'; fi
+if alias_not_used p; then; alias p='pwd'; fi
+if alias_not_used s; then; alias s='sudo'; fi
+if alias_not_used t; then; alias t='touch'; fi
+if alias_not_used v; then; alias v='vim'; fi
 
 # File listing options
 alias la='ls -A' # List all files/ includes hidden
@@ -168,3 +177,6 @@ alias when='date' # Show date
 alias whereami='pwd'
 alias dog='cat'
 alias gtfo='exit'
+
+# Alias for install script
+alias dotfiles="sh ${DOTFILES_DIR:-$HOME/Documents/config/dotfiles}/install.sh"

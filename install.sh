@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
-# Bash script to setup or update my dotfiles
-# For docs and dotfiles, see: https://github.com/lissy93/dotfiles
+
+# Dotfile setup script
+# Fetches latest changes, symlinks files, and installs dependencies
+# For docs and more info, see: https://github.com/lissy93/dotfiles
 # Licensed under MIT - (C) Alicia Sykes, 2022 <https://aliciasykes.com>
+
+# IMPORTANT: Before running, read through everything, and confirm it's what you want!
 
 set -e
 
+# Configuration Params
 REPO_NAME="Lissy93/Dotfiles"
 REPO_PATH="https://github.com/${REPO_NAME}.git"
-
 CONFIG=".install.conf.yaml"
 DOTBOT_DIR="dotbot"
 DOTBOT_BIN="bin/dotbot"
@@ -48,7 +52,7 @@ command_exists () {
   hash "$1" 2> /dev/null
 }
 
-# Displays death banner, and terminates app with exit code 1
+# On error, displays death banner, and terminates app with exit code 1
 terminate () {
   make_banner "Installation failed. Terminating..." ${RED_B}
   exit 1
@@ -67,6 +71,7 @@ system_verify () {
   fi
 }
 
+# Prints welcome banner, verifies that requirements are met
 function pre_setup_tasks () {
   # Show starting banner
   make_banner "${TITLE}" "${CYAN_B}" 1
@@ -79,6 +84,7 @@ function pre_setup_tasks () {
   system_verify "tmux" false
 }
 
+# Downloads / updates dotfiles and symlinks them
 function setup_dot_files () {
 
   # If ZSH not the default shell, ask user if they'd like to set it
@@ -105,8 +111,8 @@ function setup_dot_files () {
   ret=$?
   if ! test "$ret" -eq 0
   then
-      echo >&2 "${RED_B}Failed to fetch dotfiels $ret${RESET}"
-      terminate
+    echo >&2 "${RED_B}Failed to fetch dotfiels $ret${RESET}"
+    terminate
   fi
 
   # Set up symlinks with dotbot
@@ -117,26 +123,34 @@ function setup_dot_files () {
   "${DOTFILES_DIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${DOTFILES_DIR}" -c "${CONFIG}" "${@}"
 }
 
+# Based on system type, uses appropriate package manager to install / updates apps
 function install_packages () {
-  # If on Mac, offer to install Brew
-  if [ "$system_type" = "Darwin" ] && ! command_exists brew; then
-    read -p "Would you like to install Homebrew? (y/N)" -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-      echo -en "🍺 ${YELLOW_B}Installing Homebrew...${RESET}\n"
-      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      export PATH=/opt/homebrew/bin:$PATH
+    # Mac OS
+    if [ "$system_type" = "Darwin" ]; then
+      # Homebrew not installed, ask user if they'd like to download it now
+      if ! command_exists brew; then
+        read -p "Would you like to install Homebrew? (y/N)" -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+          echo -en "🍺 ${YELLOW_B}Installing Homebrew...${RESET}\n"
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          export PATH=/opt/homebrew/bin:$PATH
+        fi
+      fi
+      # Update / Install the Homebrew packages in ~/.Brewfile
+      if command_exists brew && [ -f "$HOME/.Brewfile" ]
+      then
+        echo -e "${PURPLE}Updating homebrew and packages...${RESET}"
+        brew update
+        brew upgrade
+        BREW_PREFIX=$(brew --prefix)
+        brew bundle --global --file $HOME/.Brewfile
+        brew cleanup
+      fi
     fi
-  fi
-
-  # If on Mac, update Brew bundle
-  if [ "$system_type" = "Darwin" ] && command_exists brew && [ -f "$HOME/.Brewfile" ]
-  then
-    echo -e "${PURPLE}Updating homebrew bundle${RESET}"
-    brew bundle --global
-  fi
 }
 
+# Updates current session, and outputs summary
 function finishing_up () {
   # Update source to ZSH entry point
   source "${HOME}/.zshenv"
@@ -149,7 +163,7 @@ function finishing_up () {
 
 # Begin!
 pre_setup_tasks   # Print start message, and check requirements are met
-setup_dot_files   # Clone / updatae dotfiles, and setup symlinks
-install_packages  # Prompt to install / update OS-dependant packages
+setup_dot_files   # Clone / updatae dotfiles, and create the symlinks
+install_packages  # Prompt to install / update OS-specific packages
 finishing_up      # Re-source .zshenv, and print summary
 # All done!

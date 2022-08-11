@@ -6,6 +6,8 @@ dotbot/*
 # Auto-generated files
 zsh/.zcompcache/*
 zsh/*/*.zwc
+zsh/.zsh_sessions/*
+installs/.Brewfile.lock.json
 
 # Linux
 *~

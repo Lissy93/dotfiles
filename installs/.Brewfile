@@ -3,10 +3,16 @@
 # List of packages to be installed / updated via Homebrew
 # Apps are sorted by category, and arranged alphabetically
 # Be sure to delete / comment out anything you do not need
+# Usage, run: $ brew bundle --global --file $HOME/.Brewfile
 # See brew docs for more info: https://docs.brew.sh/Manpage
 
 # Options
 cask_args appdir: '~/Applications', require_sha: true
+
+# Taps
+tap 'homebrew/bundle'
+tap 'homebrew/core'
+tap 'homebrew/services'
 
 # CLI Essentials
 brew 'git'
@@ -33,7 +39,6 @@ brew 'lolcat'
 brew 'neofetch'
 
 # Development
-brew 'gh'
 cask 'android-studio'
 cask 'boop'
 brew 'gradle'
@@ -42,6 +47,10 @@ cask 'postman'
 cask 'sourcetree'
 cask 'utm'
 cask 'visual-studio-code'
+
+# Development Utils
+brew 'gh'
+cask 'ngrok'
 
 # Languages and Compilers
 brew 'docker'
@@ -54,14 +63,15 @@ brew 'openjdk'
 brew 'python'
 brew 'rust'
 
-# Security + Network Testing Tools
-brew 'nmap'
-brew 'wireshark'
+# Network and Security Testing
+cask 'wireshark'
 brew 'wrk'
 cask 'owasp-zap'
 
 # Security Utilities
+brew 'bcrypt'
 cask 'gpg-suite'
+brew 'openssl'
 cask 'veracrypt'
 
 # Fonts
@@ -91,8 +101,10 @@ cask 'espanso'
 brew 'handbrake'
 cask 'audacity'
 cask 'gimp'
+cask 'inkscape'
 cask 'obs'
-cask 'spotify'
+cask 'shotcut'
+cask 'spotify', args: { require_sha: false }
 cask 'transmission'
 cask 'vlc'
 
