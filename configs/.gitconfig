@@ -1,5 +1,4 @@
 # Global Git Configuration
-# Heavily inspired by pksunkara's https://gist.github.com/pksunkara/988716
 
 [user]
 	name = Alicia Sykes
@@ -13,6 +12,7 @@
 	editor = nvim
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
 	pager = delta
+	excludesfile = ~/.config/.gitignore_global
 [web]
 	browser = firefox
 [instaweb]

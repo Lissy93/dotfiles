@@ -17,6 +17,7 @@
     ~/.local/share/tmux: tpm
     ~/.config/utils: utils
     ~/.gitconfig: configs/.gitconfig
+    ~/.config/.gitignore_global: configs/.gitignore_global
     ~/.config/curl/.curlrc: configs/.curlrc
     ~/.Brewfile:
       if: '[ `uname` = Darwin ]'
