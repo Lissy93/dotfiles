@@ -16,11 +16,8 @@ function welcome() {
   COLOR_P="\033[1;36m"
   COLOR_S="\033[0;36m"
 
-  # Format user's name
-  name=$(echo "$USER" | sed 's/.*/\u&/')
-
   # Make welcome message
-  WELCOME_MSG="$greeting $name!"
+  WELCOME_MSG="$greeting $USER!"
 
   # Print welcome message, using figlet & lolcat if availible
   if hash lolcat 2>/dev/null && hash figlet 2>/dev/null; then
@@ -41,23 +38,21 @@ function welcome() {
 
   timeout=0.5
 
-  echo -e "\033[1;34mToday\n------"
+  echo "\033[1;34mToday\n------"
 
   # Print date time
-  echo -e "$COLOR_S$(date '+🗓️  Date: %A, %B %d, %Y at %H:%M') \033[0m"
+  echo "$COLOR_S$(date '+🗓️  Date: %A, %B %d, %Y at %H:%M')"
 
   # Print local weather
-  echo -en $COLOR_S
   curl -s -m $timeout "wttr.in?format=%cWeather:+%C+%t,+%p+%w"
   echo -e "\033[0m"
 
   # Print IP address
-  ip_address=$(ip route get 8.8.8.8 | awk -F"src " 'NR==1{split($2,a," ");print a[1]}')
-  ip_interface=$(ip route get 8.8.8.8 | awk -F"dev " 'NR==1{split($2,a," ");print a[1]}')
-  echo -en "$COLOR_S🌐 IP: "
-  curl -s -m $timeout "https://ipinfo.io/ip"
-  echo -en " (${ip_address} on ${ip_interface})\033[0m\n"
-
+  if hash ip 2>/dev/null; then
+    ip_address=$(ip route get 8.8.8.8 | awk -F"src " 'NR==1{split($2,a," ");print a[1]}')
+    ip_interface=$(ip route get 8.8.8.8 | awk -F"dev " 'NR==1{split($2,a," ");print a[1]}')
+    echo "${COLOR_S}🌐 IP: $(curl -s -m $timeout 'https://ipinfo.io/ip') (${ip_address} on ${ip_interface})\033[0m\n"
+  fi
 }
 
 # Determine if file is being run directly or sourced

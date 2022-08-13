@@ -42,4 +42,7 @@ source ${zsh_dir}/helpers/misc-stuff.zsh
 # Import P10k config for command prompt, run `p10k configure` or edit
 [[ ! -f ${zsh_dir}/.p10k.zsh ]] || source ${zsh_dir}/.p10k.zsh
 
-welcome
+# If not running in nested shell, then show welcome message :)
+if [[ "${SHLVL}" -lt 2 ]]; then
+  welcome
+fi

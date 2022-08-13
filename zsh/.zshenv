@@ -1,5 +1,6 @@
 #  ~/.zshenv
 # Core envionmental variables
+# Locations configured here are requred for all other files to be correctly imported
 
 # Set XDG directories
 export XDG_CONFIG_HOME="${HOME}/.config"
@@ -19,7 +20,9 @@ export ADOTDIR="${XDG_CACHE_HOME}/zsh/antigen"
 export OPENSSL_DIR="/usr/local/ssl"
 export ANTIBODY_HOME=${XDG_DATA_HOME}/antibody
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
+export CURL_HOME="${XDG_CONFIG_HOME}/curl"
 export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
+export GIT_CONFIG="${XDG_CONFIG_HOME}/git/.gitconfig"
 export KDEHOME="${XDG_CONFIG_HOME}/kde"
 export LESSHISTFILE="-" # Disable less history.
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME}/pass"
@@ -33,3 +36,13 @@ export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 export ZLIB="${ZDOTDIR}/lib"
 
 # source $XDG_CONFIG_HOME/zsh/.zshrc
+
+# Encodings, languges and misc settings
+export LANG='en_GB.UTF-8';
+export LC_ALL='en_GB.UTF-8';
+export PYTHONIOENCODING='UTF-8';
+
+# Add Brew to path, if installed and on MacOS
+if [ "$(uname -s)" = "Darwin" ] && [[ -d /opt/homebrew/bin ]]; then
+    export PATH=/opt/homebrew/bin:$PATH
+fi

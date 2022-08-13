@@ -61,6 +61,9 @@ function gplfs() {
   git lfs push origin "$(git_current_branch)" --all
 }
 
+# Navigate back to project root (where .git is)
+alias gx='cd $(git rev-parse --show-toplevel)'
+
 # Shorthand clone (e.g. $ clone lissy93/dotfiles)
 function clone {
   default_service='github.com' # Used if full URL isn't specified

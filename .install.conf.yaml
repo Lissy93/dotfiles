@@ -17,8 +17,16 @@
     ~/.local/share/tmux: tpm
     ~/.config/utils: utils
     ~/.gitconfig: configs/.gitconfig
+    ~/.config/.gitignore_global: configs/.gitignore_global
+    ~/.config/curl/.curlrc: configs/.curlrc
+    ~/.Brewfile:
+      if: '[ `uname` = Darwin ]'
+      path: installs/.Brewfile
     ~/.macos:
       if: '[ `uname` = Darwin ]'
       path: configs/.macos
+    ~/.finicky.js:
+      if: '[ `uname` = Darwin ]'
+      path: configs/.finicky.js
 - shell:
   - git submodule sync --recursive
