@@ -55,4 +55,7 @@ RUN \
   # git remote set-url origin git@${vcsprovider}:${vcsowner}/${userspace} && \
   # cd /home/${user}/.dotfiles && \
   # git remote set-url origin git@${vcsprovider}:${vcsowner}/${dotfiles}
-  
+
+ENV HISTFILE=/config/.history
+
+CMD []
