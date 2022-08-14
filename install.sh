@@ -15,7 +15,7 @@ REPO_PATH="https://github.com/${REPO_NAME}.git"
 CONFIG=".install.conf.yaml"
 DOTBOT_DIR="dotbot"
 DOTBOT_BIN="bin/dotbot"
-CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CURRENT_DIR=$(cd "$(dirname ${BASH_SOURCE[0]})" && pwd)
 DOTFILES_DIR="${DOTFILES_DIR:-$HOME/Documents/config/dotfiles}"
 TITLE='🧰 Lissy93/Dotfiles Setup'
 
@@ -147,6 +147,10 @@ function install_packages () {
         brew bundle --global --file $HOME/.Brewfile
         brew cleanup
       fi
+    fi
+    # Windows (WIP)
+    if [ "$system_type" = "WindowsNT" ] || [ "$OSTYPE" = "msys" ] || [ "$OSTYPE" = "cygwin" ]; then
+      "${DOTFILES_DIR}/installs/windows.sh"
     fi
 }
 
