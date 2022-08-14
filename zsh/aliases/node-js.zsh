@@ -126,6 +126,8 @@ install_nvm () {
   fi
   # All done, import / re-import NVM script
   source "${NVM_DIR}/nvm.sh"
+  # Then install Node LTS
+  nvm install v16.16.0
 }
 
 # NVM commands
