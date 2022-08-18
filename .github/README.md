@@ -343,27 +343,148 @@ Alias | Description
 
 <details>
 
-<summary><b>XXX Aliases</b></summary>
+<summary><b>General Aliases</b></summary>
 
-> [`zsh/aliases/xxx.zsh`](https://github.com/Lissy93/dotfiles/blob/master/zsh/aliases/xxx.zsh)
-
-Alias | Description
----|---
-
-</details>
+> [`zsh/aliases/general.zsh`](https://github.com/Lissy93/dotfiles/blob/master/zsh/aliases/general.zsh)
 
 
-
-<details>
-
-<summary><b>XXX Aliases</b></summary>
-
-> [`zsh/aliases/xxx.zsh`](https://github.com/Lissy93/dotfiles/blob/master/zsh/aliases/xxx.zsh)
+##### Single-Letter Frequently-Used Commands (only set if not already in use)
 
 Alias | Description
 ---|---
+`a` | alias`
+`c` | `clear`
+`d` | `date`
+`e` | `exit`
+`f` | `find`
+`g` | `grep`
+`h` | `history`
+`i` | `id`
+`j` | `jobs`
+`l` | `ls`
+`m` | `man`
+`p` | `pwd`
+`s` | `sudo`
+`t` | `touch`
+`v` | `vim`
+
+##### File listing options
+
+Alias | Description
+---|---
+`la` | `ls -A` - List all files/ includes hidden
+`ll` | `ls -lAFh` - List all files, with full details
+`lm` | `ls -tA -1` - List files sorted by last modified
+`lb` | `ls -lhSA` - List all files sorted by biggest
+`lr` | `ls -R` - List files in sub-directories, recursivley
+`lf` | `ls -A \| grep` - Use grep to find files
+`ln` | `find . -type f \| wc -l` - Shows number of files
+`ld` | `ls -l \| grep "^d"` - List directories only
+`la` | `exa -aF --icons` - List all files, including hidden (only if `exa` is installed)
+`ll` | `exa -laF --icons` - Show files with all details (only if `exa` is installed)
+`lm` | `exa -lahr --color-scale --icons -s=modified` - Sort by date modified, most revent first (only if `exa` is installed)
+`lb` | `exa -lahr --color-scale --icons -s=size` - Sort by size largest first (only if `exa` is installed)
+`tree` | `f() { exa -aF --tree -L=${1:-2} --icons };f` - List files as tree (only if `exa` is installed)
+`lz` | List the contents of a specified compressed archive. Supported formats include zip, rar, tar, tar.gz and ace
+
+##### Getting Around
+
+Alias | Description
+---|---
+`mkcd` | Create new directory, and cd into it. Takes new directory name as param
+`mkcp` | Copies a directory, and navigates into it
+`mkmv` | Moves a directory, and navigates into it
+
+# Getting outa directories
+
+Alias | Description
+---|---
+`c~` | Navigate to ~
+`c.` | Go up 1 directory
+`c..` | Go up 2 directories
+`c...` | Go up 3 directories
+`c....` | Go up 4 directories
+`c.....` | Go up 5 directories
+`cg` | Navigate to base of git project
+
+##### Finding files and directories
+
+Alias | Description
+---|---
+`dud` | `du -d 1 -h` - List sizes of files within directory
+`duf` | `du -sh *` - List total size of current directory
+`ff` | `find . -type f -name` - Find a file by name within current directory
+`fd` | `find . -type d -name` - Find direcroy by name
+
+##### Command line history
+
+Alias | Description
+---|---
+`h` | `history` - Shows full history
+`h-search` | `fc -El 0 \| grep` - Searchses for a word in terminal history
+`top-history` | `history 0 \| awk '{print $2}' \| sort \| uniq -c \| sort -n -r \| head` - Most used
+
+##### Head / tail shortcuts
+
+Alias | Description
+---|---
+`H` | `\| head` - Pipes output to head (the first part of a file)
+`T` | `\| tail` - Pipes output to tail (the last part of a file)
+`G` | `\| grep` - Pipes output to grep to search for some word
+`L` | `\| less` - Pipes output to less, useful for paging
+`M` | `\| most` - Pipes output to more, useful for paging
+`LL` | `2>&1 \| less` - Writes stderr to stdout and passes it to less
+`CA` | `2>&1 \| cat -A` - Writes stderr to stdout and passes it to cat
+`NE` | `2> /dev/null` - Silences stderr
+`NUL` | `> /dev/null 2>&1` - Silences both stdout and stderr
+`P` | `2>&1\| pygmentize -l pytb` - Writes stderr to stdout, and passes to pygmentize
+
+##### Find + manage aliases
+
+Alias | Description
+---|---
+`al` | `alias \| less` - List all aliases
+`as` | `alias \| grep` - Search aliases
+`ar` | `unalias` - Remove given alias
+
+##### System Monitoring
+
+Alias | Description
+---|---
+`meminfo` | `free -m -l -t` - Show free and used memory
+`memhog` | `ps -eo pid,ppid,cmd,%mem --sort=-%mem \| head` - Processes consuming most mem
+`cpuhog` | `ps -eo pid,ppid,cmd,%cpu --sort=-%cpu \| head` - Processes consuming most cpu
+`cpuinfo` | `lscpu` - Show CPU Info
+`distro` | `cat /etc/*-release` - Show OS info
+
+##### Utilities
+
+Alias | Description
+---|---
+`myip` | `curl icanhazip.com` - Fetches and displays public IP
+`weather` | `curl wttr.in` - Fetches and displays local weather
+`weather-short` | `curl "wttr.in?format=3"`
+`cheat` | `curl cheat.sh/` - Gets manual for a Linux command
+`tinyurl` | `curl -s "http://tinyurl.com/api-create.php?url=` - URL shortening
+`ports` | `netstat -tulanp` - List currently used ports
+`crypto` | `cointop` - Launch cointop (only registered if installed)
+`gto` | `gotop` - Launch gotop (only registered if installed)
+
+##### Random lolz
+
+Alias | Description
+---|---
+`cls` | `clear;ls` - Clear and ls
+`plz` | `fc -l -1 | cut -d' ' -f2- | xargs sudo` - Re-run last cmd as root
+`yolo` | `git add .; git commit -m "YOLO"; git push origin master` - Why not..
+`when` | `date` - Show date
+`whereami` | `pwd` - Just show current path
+`dog` | `cat` - I don't know why...
+`gtfo` | `exit` - This just feels better than exit
+
 
 </details>
+
 
 
 ---
