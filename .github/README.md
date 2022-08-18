@@ -13,16 +13,16 @@
     - [Applying Dotfiles](#applying-dotfiles)
     - [Containerized Userspace](#containerized-userspace)
     - [Security](#security)
-- [My Dots]()
-    - [Setup]()
-    - [Aliases]()
-    - [Utilities]()
-    - [Packages]()
-    - [ZSH]()
-    - [Vim]()
-    - [Tmux]()
-    - [Git]()
-    
+- [My Dots](#my-dots)
+    - [Setup](#setup)
+    - [Aliases](#aliases)
+    - [Utilities](#utilities)
+    - [Packages](#packages)
+    - [ZSH](#zsh)
+    - [Vim](#vim)
+    - [Tmux](#tmux)
+    - [Git](#git)
+    - [Dependencies](#dependencies)
 ---
 
 ## Intro
@@ -491,6 +491,8 @@ Alias | Description
 
 ### Utilities
 
+// TODO
+
 ---
 
 ### Packages
@@ -511,68 +513,18 @@ The list of software is stored in the [`installs/`]() directory, and the file th
 
 ### ZSH
 
----
-
-### Vim
+// TODO
 
 ---
-
-### Tmux
-
----
-
-### Git
-
-
-
-
----
-
-## Dependencies
-
-These dot files make use of the following packages, and hence they are required
-
-- [zsh](https://www.zsh.org/) - Interactive Shell
-- [vim](https://www.vim.org/) - Fast, solid customizable text editor
-- [tmux](https://github.com/tmux/tmux) - Detachable terminal multiplexer
-- [ranger](https://ranger.github.io/) - CLI-based file manager with VI bindings
-- [git](https://git-scm.com/) - Version control system
-
-They can be easily installed/ updated with your package manger, e.g:
-- Ubuntu Server: `sudo apt install -y zsh vim tmux ranger git`
-- Arch Linux:  `sudo pacman -S zsh vim tmux ranger git`
-
-Depending on your setup, the following utils may also be required: `make`, `ctags`, `fzf` and `python3-pip`
-
----
-## Documentation
-
-The following section briefly explains the configuration and plug-ins for the main components (Tmux, Vim and Zsh) 
-### Tmux
-
-Fairly standard Tmux configuration, strongly based off Tmux-sensible. Configuration is defined in [`.tmux.conf`](https://github.com/Lissy93/dotfiles/blob/master/tmux/tmux.conf)
-
-Tmux plugins are managed using [TMP](https://github.com/tmux-plugins/tpm) and defined in [`.tmux.conf`](https://github.com/Lissy93/dotfiles/blob/master/tmux/tmux.conf). To install them from GitHub, run `prefix` + <kbd>I</kbd> from within Tmux, and they will be cloned int `~/.tmux/plugins/`.
-
-#### Plugins
-
-- **[Tmux-sensible](https://github.com/tmux-plugins/tmux-sensible)**: `tmux-plugins/tmux-sensible` - General, sensible Tmux config
-- **[Tmux-continuum](https://github.com/tmux-plugins/tmux-continuum)**: `tmux-plugins/tmux-continuum` - Continuously saves and environment with automatic restore
-- **[Tmux-yank](https://github.com/tmux-plugins/tmux-yank)**: `tmux-plugins/tmux-yank` - Allows access to system clipboard
-- **[Tmux-prefix-highlight](https://github.com/tmux-plugins/tmux-prefix-highlight)**: `tmux-plugins/tmux-prefix-highlight` - Highlight Tmux prefix key when pressed
-- **[Tmux-online-status](https://github.com/tmux-plugins/tmux-online-status)**: `tmux-plugins/tmux-online-status` - Displays network status
-- **[Tmux-open](https://github.com/tmux-plugins/tmux-open)**: `tmux-plugins/tmux-open` - Bindings for quick opening selected path/ url
-- **[Tmux-mem-cpu-load](https://github.com/thewtex/tmux-mem-cpu-load)**: `thewtex/tmux-mem-cpu-load` - Shows system resources
 
 ### Vim
 
 The entry point for the Vim config is the [`vimrc`](https://github.com/Lissy93/dotfiles/blob/master/vim/vimrc), but the main editor settings are defined in [`vim/editor.vim`](https://github.com/Lissy93/dotfiles/blob/master/vim/editor.vim)
 
-#### Plugins
+##### Plugins
 
 Vim plugins are managed using [Plug](https://github.com/junegunn/vim-plug) defined in [`vim/plugins.vim`](https://github.com/Lissy93/dotfiles/blob/master/vim/plugins.vim).
 To install them from GitHub, run `:PlugInstall` (see [options](https://github.com/junegunn/vim-plug#commands)) from within Vim.
-
 
 Layout & Navigation:
 - **[Airline](https://github.com/vim-airline/vim-airline)**: `vim-airline/vim-airline` - A very nice status line at the bottom of each window, displaying useful info
@@ -620,3 +572,52 @@ File-Type Plugins:
 - **[Nginx](https://github.com/chr4/nginx.vim)**:`chr4/nginx.vim` *(Nginx)* - Integer matching, hichlight syntax and IPv4/ IPv6, mark insecure protocols and more
 
 Themes:
+
+
+---
+
+### Tmux
+
+
+Fairly standard Tmux configuration, strongly based off Tmux-sensible. Configuration is defined in [`.tmux.conf`](https://github.com/Lissy93/dotfiles/blob/master/tmux/tmux.conf)
+
+Tmux plugins are managed using [TMP](https://github.com/tmux-plugins/tpm) and defined in [`.tmux.conf`](https://github.com/Lissy93/dotfiles/blob/master/tmux/tmux.conf). To install them from GitHub, run `prefix` + <kbd>I</kbd> from within Tmux, and they will be cloned int `~/.tmux/plugins/`.
+
+##### Plugins
+
+- [Tmux-sensible](https://github.com/tmux-plugins/tmux-sensible): `tmux-plugins/tmux-sensible` - General, sensible Tmux config
+- [Tmux-continuum](https://github.com/tmux-plugins/tmux-continuum): `tmux-plugins/tmux-continuum` - Continuously saves and environment with automatic restore
+- [Tmux-yank](https://github.com/tmux-plugins/tmux-yank): `tmux-plugins/tmux-yank` - Allows access to system clipboard
+- [Tmux-prefix-highlight](https://github.com/tmux-plugins/tmux-prefix-highlight): `tmux-plugins/tmux-prefix-highlight` - Highlight Tmux prefix key when pressed
+- [Tmux-online-status](https://github.com/tmux-plugins/tmux-online-status): `tmux-plugins/tmux-online-status` - Displays network status
+- [Tmux-open](https://github.com/tmux-plugins/tmux-open): `tmux-plugins/tmux-open` - Bindings for quick opening selected path/ url
+- [Tmux-mem-cpu-load](https://github.com/thewtex/tmux-mem-cpu-load): `thewtex/tmux-mem-cpu-load` - Shows system resources
+
+
+---
+
+### Git
+
+// TODO
+
+
+---
+
+## Dependencies
+
+These dot files make use of the following packages, and hence they are required
+
+- [zsh](https://www.zsh.org/) - Interactive Shell
+- [nvim](http://neovim.io/) - Extensible Vim-based text editor
+- [tmux](https://github.com/tmux/tmux) - Detachable terminal multiplexer
+- [ranger](https://ranger.github.io/) - CLI-based file manager with VI bindings
+- [git](https://git-scm.com/) - Version control system
+
+They can be easily installed/ updated with your package manger, e.g:
+- Ubuntu Server: `sudo apt install -y zsh neovim tmux ranger git`
+- Arch Linux:  `sudo pacman -S zsh neovim tmux ranger git`
+- Alpine: `apk add zsh neovim tmux ranger git`
+- MacOS: `brew install zsh neovim tmux ranger git`
+
+Depending on your setup, the following utils may also be required: `make`, `ctags`, `fzf` and `python3-pip`
+
