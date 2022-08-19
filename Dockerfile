@@ -37,6 +37,8 @@ RUN \
     neovim \
     git git-doc \
     zsh \
+    vim \
+    tmux \
     docker \
     docker-compose
 
@@ -46,16 +48,18 @@ RUN \
   addgroup ${user} docker
 
 COPY ./ /home/${user}/.userspace/
+
 RUN \
   git clone --recursive https://${vcsprovider}/${vcsowner}/${dotfiles} /home/${user}/.dotfiles && \
   chown -R ${user}:${group} /home/${user}/.dotfiles && \
   chown -R ${user}:${group} /home/${user}/.userspace
-  # For advanced configuration where you would do ssh-agent and gpg-agent passthrough
-  # cd /home/${user}/.userspace && \
-  # git remote set-url origin git@${vcsprovider}:${vcsowner}/${userspace} && \
-  # cd /home/${user}/.dotfiles && \
-  # git remote set-url origin git@${vcsprovider}:${vcsowner}/${dotfiles}
 
-ENV HISTFILE=/config/.history
+RUN chmod u+x /home/${user}/.dotfiles/install.sh
+
+USER ${user}
+
+RUN cd $HOME/.dotfiles && ./install.sh
+
+ENV HISTFILE=/home/${user}/.cache/.zsh_history
 
 CMD []
