@@ -65,7 +65,11 @@ print_node_versions () {
   versions=''
   get_version () {
     if hash $1 2> /dev/null || command -v $1 >/dev/null; then
+<<<<<<< Updated upstream
       versions="$versions\e[36m\e[1m $2: \033[0m$($1 --version)\n\033[0m"
+=======
+      versions="$versions\e[36m\e[1m $2: \033[0m$($1 --version)\n"
+>>>>>>> Stashed changes
     else
       versions="$versions\e[33m\e[1m $2: \033[0m\033[3m Not installed\n\033[0m"
     fi
