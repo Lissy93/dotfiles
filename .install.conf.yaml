@@ -3,22 +3,45 @@
       create: true
       relink: true
 
-- clean: ['~', '~/.config']
+- clean: ['~', '${XDG_CONFIG_HOME}']
+
+- shell:
+  - description: Check that $XDG_CONFIG_HOME is set
+    command: >
+      if [ -z ${XDG_CONFIG_HOME+x} ]; then; \
+        echo "XDG_CONFIG_HOME is not yet set. Will use ~/.config"; \
+        XDG_CONFIG_HOME="${HOME}/.config"; \
+      fi
+    stdin: false
+    stdout: true
+    stderr: true
+    quiet: true
+  - description: Check that $XDG_DATA_HOME is set
+    command: >
+      if [ -z ${XDG_DATA_HOME+x} ]; then; \
+        echo "XDG_DATA_HOME is not yet set. Will use ~/.local/share"; \
+        XDG_DATA_HOME="${HOME}/.local/share"; \
+      fi
+    stdin: false
+    stdout: true
+    stderr: true
+    quiet: true
+
 
 - link:
     ~/.zshenv:
       path: zsh/.zshenv
       force: true
-    ~/.config/zsh: zsh
-    ~/.config/vim: vim
-    ~/.config/nvim: vim
-    ~/.config/bash: bash
-    ~/.tmux.conf: tmux/.tmux.conf
-    ~/.local/share/tmux: tpm
-    ~/.config/utils: utils
+    ${XDG_CONFIG_HOME}/zsh: zsh
+    ${XDG_CONFIG_HOME}/vim: vim
+    ${XDG_CONFIG_HOME}/nvim: vim
+    ${XDG_CONFIG_HOME}/bash: bash
+    ${XDG_CONFIG_HOME}/tmux/tmux.conf: tmux/tmux.conf
+    ${XDG_DATA_HOME}/tmux: tpm
+    ${XDG_CONFIG_HOME}/utils: utils
     ~/.gitconfig: configs/.gitconfig
-    ~/.config/.gitignore_global: configs/.gitignore_global
-    ~/.config/curl/.curlrc: configs/.curlrc
+    ${XDG_CONFIG_HOME}/.gitignore_global: configs/.gitignore_global
+    # ${XDG_CONFIG_HOME}/curl/.curlrc: configs/.curlrc
     ~/.Brewfile:
       if: '[ `uname` = Darwin ]'
       path: installs/.Brewfile
@@ -28,5 +51,8 @@
     ~/.finicky.js:
       if: '[ `uname` = Darwin ]'
       path: configs/.finicky.js
-- shell:
-  - git submodule sync --recursive
+
+- create:
+    - ~/Downloads
+    - ~/Documents
+    - ~/Applications
