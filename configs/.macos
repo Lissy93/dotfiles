@@ -20,7 +20,7 @@ sudo scutil --set HostName "$COMPUTER_NAME"
 sudo scutil --set LocalHostName "$COMPUTER_NAME"
 sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$COMPUTER_NAME"
 
-# Set highlight color to aqua
+# Set highlight color
 defaults write NSGlobalDomain AppleHighlightColor -string "${HIGHLIGHT_COLOR}"
 
 # Configure sidebars, scrollbars and window resizers
@@ -201,6 +201,31 @@ defaults write com.apple.dock autohide-delay -float 0.05
 defaults write com.apple.dock autohide-time-modifier -float 0.05
 defaults write com.apple.dock showhidden -bool true
 defaults write com.apple.dock show-recents -bool false
+
+# If DockUtil installed, then use it to remove default dock items, and add useful ones
+if hash dockutil 2> /dev/null; then
+  apps_to_remove_from_dock=(
+    'App Store'  'Calendar' 'Contacts' 'FaceTime'
+    'Keynote' 'Mail' 'Maps' 'Messages' 'Music'
+    'News' 'Notes' 'Numbers'
+    'Pages' 'Photos' 'Podcasts'
+    'Reminders' 'TV'
+  )
+  apps_to_add_to_dock=(
+    'iTerm' 'Firefox' 'Standard Notes' 'Visual Studio Code'
+  )
+  IFS=""
+  # Removes useless apps from dock
+  for app in ${apps_to_remove_from_dock[@]}; do
+    dockutil --remove ~/Applications/${app}.app
+  done
+  # Adds useful apps to dock, if installed
+  for app in ${apps_to_add_to_dock[@]}; do
+    if [[ -d "~/Applications/${app}.app" ]]; then
+      dockutil --add ~/Applications/${app}.app
+    fi
+  done
+fi
 
 # Add iOS & Watch Simulator to Launchpad
 sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app" "/Applications/Simulator.app"

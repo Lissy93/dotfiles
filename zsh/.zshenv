@@ -46,3 +46,12 @@ export PYTHONIOENCODING='UTF-8';
 if [ "$(uname -s)" = "Darwin" ] && [[ -d /opt/homebrew/bin ]]; then
     export PATH=/opt/homebrew/bin:$PATH
 fi
+
+# And Android SDK to path, if within Library direcroty
+if [ "$(uname -s)" = "Darwin" ] && [[ -d ~/Library/Android/ ]]; then
+    export PATH="/Users/alicia/Library/Android/sdk/emulator:${PATH}"
+    export ANDROID_HOME="~/Library/Android/sdk"
+    export ANDROID_SDK_ROOT="~/Library/Android/sdk"
+    export ANDROID_AVD_HOME="~/.android/avd"
+    export NODE_BINARY=node
+fi

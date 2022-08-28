@@ -61,8 +61,31 @@ function gplfs() {
   git lfs push origin "$(git_current_branch)" --all
 }
 
-# Navigate back to project root (where .git is)
 alias gx='cd $(git rev-parse --show-toplevel)'
+
+# Navigate back to project root (where .git is)
+function jump-to-git-root {
+  local _root_dir="$(git rev-parse --show-toplevel 2>/dev/null)"
+  if [[ $? -gt 0 ]]; then
+    >&2 echo '\033[1;93m Not a Git repo\033[0m'
+    exit 1
+  fi
+  local _pwd=$(pwd)
+  if [[ $_pwd = $_root_dir ]]; then
+    # Handle submodules
+    _root_dir="$(git -C $(dirname $_pwd) rev-parse --show-toplevel 2>/dev/null)"
+    if [[ $? -gt 0 ]]; then
+      echo "\033[0;96m Already at Git repo root.\033[0m"
+      return 0
+    fi
+  fi
+  # Make `cd -` work.
+  OLDPWD=$_pwd
+  echo "\033[0;96m Git repo root: $_root_dir\033[0m"
+  cd $_root_dir
+}
+
+alias gj='jump-to-git-root'
 
 # Shorthand clone (e.g. $ clone lissy93/dotfiles)
 function clone {
