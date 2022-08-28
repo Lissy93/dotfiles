@@ -7,8 +7,6 @@
 
 # IMPORTANT: Before running, read through everything, and confirm it's what you want!
 
-# set -e
-
 # Configuration Params
 REPO_NAME="Lissy93/Dotfiles"
 REPO_PATH="https://github.com/${REPO_NAME}.git"
@@ -93,11 +91,11 @@ function setup_dot_files () {
   # Download / update dotfiles repo with git
   if [[ ! -d "$DOTFILES_DIR" ]]
   then
-    echo "${PURPLE}Dotfiles not yet present. Will download ${REPO_NAME} into ${DOTFILES_DIR}"
+    echo -e "${PURPLE}Dotfiles not yet present. Will download ${REPO_NAME} into ${DOTFILES_DIR}${RESET}"
     mkdir -p "${DOTFILES_DIR}"
     git clone --recursive ${REPO_PATH} ${DOTFILES_DIR}
   else
-    echo -e "${PURPLE}Pulling changes from ${REPO_NAME} into ${DOTFILES_DIR}"
+    echo -e "${PURPLE}Pulling changes from ${REPO_NAME} into ${DOTFILES_DIR}${RESET}"
     cd "${DOTFILES_DIR}" && git pull origin master && git submodule update --recursive
   fi
 
@@ -110,6 +108,7 @@ function setup_dot_files () {
   fi
 
   # Set up symlinks with dotbot
+  echo -e "${PURPLE}Setting up Symlinks${RESET}"
   cd "${DOTFILES_DIR}"
   git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
   git submodule update --init --recursive "${DOTBOT_DIR}"
@@ -122,24 +121,33 @@ function apply_preferences () {
 
   # If ZSH not the default shell, ask user if they'd like to set it
   if [[ $SHELL != *"zsh"* ]] && command_exists zsh; then
-    read -t $PROMPT_TIMEOUT -p "Would you like to set ZSH as your default shell? (y/N)" -n 1 -r
+    read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)Would you like to set ZSH as your default shell? (y/N)" -n 1 -r
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
+      echo -e "${PURPLE}Setting ZSH as default shell${RESET}"
       chsh -s $(which zsh) $USER
     fi
   fi
 
   # Install / update vim plugins with Plug
+  echo -e "${PURPLE}Installing Vim Plugins${RESET}"
   vim +PlugInstall +qall
 
   # Install / update Tmux plugins with TPM
+  echo -e "${PURPLE}Installing TMUX Plugins${RESET}"
   chmod ug+x "${XDG_DATA_HOME}/tmux/tpm"
+  sh "${XDG_DATA_HOME}/tmux/plugins/tpm/bin/install_plugins"
+  
+
+  # Install / update ZSH plugins with Antigen
+  echo -e "${PURPLE}Installing ZSH Plugins${RESET}"
+  /bin/zsh -i -c "antigen update && antigen-apply"
 }
 
 # Based on system type, uses appropriate package manager to install / updates apps
 function install_packages () {
 
-  read -t $PROMPT_TIMEOUT -p "Would you like to install / update system packages? (y/N) " -n 1 -r
+  read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)Would you like to install / update system packages? (y/N) " -n 1 -r
   if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     echo -e "\n${PURPLE}Skipping package installs${RESET}"
     return
@@ -149,7 +157,7 @@ function install_packages () {
   if [ "$system_type" = "Darwin" ]; then
     # Homebrew not installed, ask user if they'd like to download it now
     if ! command_exists brew; then
-      read -t $PROMPT_TIMEOUT -p "Would you like to install Homebrew? (y/N)" -n 1 -r
+      read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)Would you like to install Homebrew? (y/N)" -n 1 -r
       echo
       if [[ $REPLY =~ ^[Yy]$ ]]; then
         echo -en "🍺 ${YELLOW_B}Installing Homebrew...${RESET}\n"
