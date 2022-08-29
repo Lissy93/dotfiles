@@ -152,6 +152,9 @@ Another solution, is to encrypt sensitive info. A great tool for this is [`pass`
 
 ## My Dotfiles
 
+> **Note**
+> This repo is still a work in progress
+
 ### Setup
 
 > **Warning**
@@ -395,7 +398,7 @@ Alias | Description
 `mkcp` | Copies a directory, and navigates into it
 `mkmv` | Moves a directory, and navigates into it
 
-# Getting outa directories
+##### Getting outa directories
 
 Alias | Description
 ---|---
@@ -523,10 +526,14 @@ The entry point for the Vim config is the [`vimrc`](https://github.com/Lissy93/d
 
 ##### Plugins
 
-Vim plugins are managed using [Plug](https://github.com/junegunn/vim-plug) defined in [`vim/plugins.vim`](https://github.com/Lissy93/dotfiles/blob/master/vim/plugins.vim).
+Vim plugins are managed using [Plug](https://github.com/junegunn/vim-plug) defined in [`vim/plugins.vim`](https://github.com/Lissy93/dotfiles/blob/master/vim/setup-vim-plug.vim).
 To install them from GitHub, run `:PlugInstall` (see [options](https://github.com/junegunn/vim-plug#commands)) from within Vim.
 
-Layout & Navigation:
+
+<details>
+
+<summary><b>Layout & Navigation</b></summary>
+
 - **[Airline](https://github.com/vim-airline/vim-airline)**: `vim-airline/vim-airline` - A very nice status line at the bottom of each window, displaying useful info
 - **[Nerd-tree](https://github.com/preservim/nerdtree)**: `preservim/nerdtree` - Alter files in larger projects more easily, with a nice tree-view pain
 - **[Matchup](https://github.com/andymass/vim-matchup)**: `andymass/vim-matchup` - Better % naviagtion, to highlight and jump between open and closing blocks
@@ -537,7 +544,13 @@ Layout & Navigation:
 - **[Smoothie](https://github.com/psliwka/vim-smoothie)**: `psliwka/vim-smoothie` - Smooth scrolling, supporting `^D`, `^U`, `^F` and `^B`
 - **[DevIcons](https://github.com/ryanoasis/vim-devicons)**: `ryanoasis/vim-devicons` - Adds file-type icons to Nerd-tree and other plugins
 
-Operations:
+</details>
+
+
+<details>
+
+<summary><b>Operations</b></summary>
+
 - **[Nerd-Commenter](https://github.com/preservim/nerdcommenter)**: `preservim/nerdcommenter` - For auto-commenting code blocks
 - **[Ale](https://github.com/dense-analysis/ale)**: `dense-analysis/ale` - Checks syntax asynchronously, with lint support
 - **[Surround](https://github.com/tpope/vim-surround)**: `tpope/vim-surround` - Easily surround selected text with brackets, quotes, tags etc
@@ -547,13 +560,25 @@ Operations:
 - **[Vim-Test](https://github.com/janko/vim-test)**: `janko/vim-test` - A wrapper for running tests on different granularities
 - **[Syntastic](https://github.com/vim-syntastic/syntastic)**: `vim-syntastic/syntastic` - Syntax checking that warns in the gutter when there's an issue
 
-Git:
+</details>
+
+
+<details>
+
+<summary><b>Git</b></summary>
+
 - **[Git-Gutter](https://github.com/airblade/vim-gitgutter)**: `airblade/vim-gitgutter` - Shows git diff markers in the gutter column
 - **[Vim-fugitive](https://github.com/tpope/vim-fugitive)**: `tpope/vim-fugitive` - A git wrapper for git that lets you call a git command using `:Git`
 - **[Committia](https://github.com/rhysd/committia.vim)**: `rhysd/committia.vim` - Shows a diff, status and edit window for git commits
 - **[Vim-Git](https://github.com/tpope/vim-git)**: `tpope/vim-git` - Runtime files for git in vim, for  git, gitcommit, gitconfig, gitrebase, and gitsendemail
 
-File-Type Plugins:
+</details>
+
+
+<details>
+
+<summary><b>File-Type Plugins</b></summary>
+
 - **[Vim-JavaScript](https://github.com/pangloss/vim-javascript)**: `pangloss/vim-javascript` *(JavaScript)* - Syntax highlighting and improved indentation for JS files
 - **[Yats](https://github.com/HerringtonDarkholme/yats.vim)**: `HerringtonDarkholme/yats.vim` *(TypeScript)* - Syntax highlighting and snippets for TypeScript files
 - **[Vim-jsx-pretty](https://github.com/MaxMEllon/vim-jsx-pretty)**: `MaxMEllon/vim-jsx-pretty` *(React)* - Highlighting and indentation for React .tsx and .jsx files
@@ -571,8 +596,15 @@ File-Type Plugins:
 - **[Zinit](https://github.com/zinit-zsh/zinit-vim-syntax)**: `zinit-zsh/zinit-vim-syntax` *(ZSH)* - syntax definition for Zinit commands in any file of type zsh
 - **[Nginx](https://github.com/chr4/nginx.vim)**:`chr4/nginx.vim` *(Nginx)* - Integer matching, hichlight syntax and IPv4/ IPv6, mark insecure protocols and more
 
-Themes:
+</details>
 
+
+<details>
+
+<summary><b>Themes</b></summary>
+
+
+</details>
 
 ---
 
