@@ -7,8 +7,6 @@
 
 # IMPORTANT: Before running, read through everything, and confirm it's what you want!
 
-set -e
-
 # Configuration Params
 REPO_NAME="Lissy93/Dotfiles"
 REPO_PATH="https://github.com/${REPO_NAME}.git"
@@ -27,6 +25,9 @@ GREEN_B='\033[1;32m'
 PLAIN_B='\033[1;37m'
 RESET='\033[0m'
 PURPLE='\033[0;35m'
+
+# Other params
+PROMPT_TIMEOUT=15 # When user is prompted for input, skip after x seconds
 
 # Start timer
 start_time=`date +%s`
@@ -87,24 +88,15 @@ function pre_setup_tasks () {
 # Downloads / updates dotfiles and symlinks them
 function setup_dot_files () {
 
-  # If ZSH not the default shell, ask user if they'd like to set it
-  if [[ $SHELL != *"zsh"* ]] && command_exists zsh; then
-    read -p "Would you like to set ZSH as your default shell? (y/N)" -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-      chsh -s $(which zsh) $USER
-    fi
-  fi
-
   # Download / update dotfiles repo with git
   if [[ ! -d "$DOTFILES_DIR" ]]
   then
-    echo "${PURPLE}Dotfiles not yet present. Will download ${REPO_NAME} into ${DOTFILES_DIR}"
+    echo -e "${PURPLE}Dotfiles not yet present. Will download ${REPO_NAME} into ${DOTFILES_DIR}${RESET}"
     mkdir -p "${DOTFILES_DIR}"
     git clone --recursive ${REPO_PATH} ${DOTFILES_DIR}
   else
-    echo -e "${PURPLE}Pulling changes from ${REPO_NAME} into ${DOTFILES_DIR}"
-    cd "${DOTFILES_DIR}" && git pull && git submodule update --recursive
+    echo -e "${PURPLE}Pulling changes from ${REPO_NAME} into ${DOTFILES_DIR}${RESET}"
+    cd "${DOTFILES_DIR}" && git pull origin master && git submodule update --recursive
   fi
 
   # If git clone / pull failed, then exit with error
@@ -116,6 +108,7 @@ function setup_dot_files () {
   fi
 
   # Set up symlinks with dotbot
+  echo -e "${PURPLE}Setting up Symlinks${RESET}"
   cd "${DOTFILES_DIR}"
   git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
   git submodule update --init --recursive "${DOTBOT_DIR}"
@@ -123,35 +116,66 @@ function setup_dot_files () {
   "${DOTFILES_DIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${DOTFILES_DIR}" -c "${CONFIG}" "${@}"
 }
 
+# Applies application-specific preferences, and runs some setup tasks
+function apply_preferences () {
+
+  # If ZSH not the default shell, ask user if they'd like to set it
+  if [[ $SHELL != *"zsh"* ]] && command_exists zsh; then
+    read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)Would you like to set ZSH as your default shell? (y/N)" -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      echo -e "${PURPLE}Setting ZSH as default shell${RESET}"
+      chsh -s $(which zsh) $USER
+    fi
+  fi
+
+  # Install / update vim plugins with Plug
+  echo -e "${PURPLE}Installing Vim Plugins${RESET}"
+  vim +PlugInstall +qall
+
+  # Install / update Tmux plugins with TPM
+  echo -e "${PURPLE}Installing TMUX Plugins${RESET}"
+  chmod ug+x "${XDG_DATA_HOME}/tmux/tpm"
+  sh "${XDG_DATA_HOME}/tmux/plugins/tpm/bin/install_plugins"
+  
+
+  # Install / update ZSH plugins with Antigen
+  echo -e "${PURPLE}Installing ZSH Plugins${RESET}"
+  /bin/zsh -i -c "antigen update && antigen-apply"
+}
+
 # Based on system type, uses appropriate package manager to install / updates apps
 function install_packages () {
-    # Mac OS
-    if [ "$system_type" = "Darwin" ]; then
-      # Homebrew not installed, ask user if they'd like to download it now
-      if ! command_exists brew; then
-        read -p "Would you like to install Homebrew? (y/N)" -n 1 -r
-        echo
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
-          echo -en "🍺 ${YELLOW_B}Installing Homebrew...${RESET}\n"
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          export PATH=/opt/homebrew/bin:$PATH
-        fi
-      fi
-      # Update / Install the Homebrew packages in ~/.Brewfile
-      if command_exists brew && [ -f "$HOME/.Brewfile" ]
-      then
-        echo -e "${PURPLE}Updating homebrew and packages...${RESET}"
-        brew update
-        brew upgrade
-        BREW_PREFIX=$(brew --prefix)
-        brew bundle --global --file $HOME/.Brewfile
-        brew cleanup
+
+  read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)Would you like to install / update system packages? (y/N) " -n 1 -r
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo -e "\n${PURPLE}Skipping package installs${RESET}"
+    return
+  fi
+
+  # Mac OS
+  if [ "$system_type" = "Darwin" ]; then
+    # Homebrew not installed, ask user if they'd like to download it now
+    if ! command_exists brew; then
+      read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)Would you like to install Homebrew? (y/N)" -n 1 -r
+      echo
+      if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo -en "🍺 ${YELLOW_B}Installing Homebrew...${RESET}\n"
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        export PATH=/opt/homebrew/bin:$PATH
       fi
     fi
-    # Windows (WIP)
-    if [ "$system_type" = "WindowsNT" ] || [ "$OSTYPE" = "msys" ] || [ "$OSTYPE" = "cygwin" ]; then
-      "${DOTFILES_DIR}/installs/windows.sh"
+    # Update / Install the Homebrew packages in ~/.Brewfile
+    if command_exists brew && [ -f "$HOME/.Brewfile" ]
+    then
+      echo -e "${PURPLE}Updating homebrew and packages...${RESET}"
+      brew update
+      brew upgrade
+      BREW_PREFIX=$(brew --prefix)
+      brew bundle --global --file $HOME/.Brewfile
+      brew cleanup
     fi
+  fi
 }
 
 # Updates current session, and outputs summary
@@ -168,6 +192,7 @@ function finishing_up () {
 # Begin!
 pre_setup_tasks   # Print start message, and check requirements are met
 setup_dot_files   # Clone / updatae dotfiles, and create the symlinks
+apply_preferences # Set settings for individual applications
 install_packages  # Prompt to install / update OS-specific packages
 finishing_up      # Re-source .zshenv, and print summary
 # All done!
