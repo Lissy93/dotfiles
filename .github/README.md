@@ -23,6 +23,7 @@
     - [Tmux](#tmux)
     - [Git](#git)
     - [Dependencies](#dependencies)
+        
 ---
 
 ## Intro
@@ -160,13 +161,26 @@ Another solution, is to encrypt sensitive info. A great tool for this is [`pass`
 > **Warning**
 > Prior to running the setup script, read through everything and confirm it's what you want.
 
-To set everything up, just recursivley clone the repo, cd into it, allow execution of `install.sh` then run it to install.
+Let's Go!
+
+```bash
+bash <(curl -s https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh)
+```
+
+This will execute the quick setup script (in [`lets-go.sh`](https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh)), which just clones the repo (if not yet present), then executes the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. You can re-run this at anytime to update the dotfiles. You can also optionally pass in some variables to change the install location (`DOTFILES_DIR`) and source repo (`DOTFILES_REPO`).
+
+_Alternatively, you can clone the repo yourself, cd into it, allow execution of [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) then run it to install or update._
+
+<details>
+<summary>Example</summary>
 
 ```bash
 git clone --recursive git@github.com:Lissy93/dotfiles.git ~/.dotfiles
 chmod +x ~/.dotfiles/install.sh
 ~/.dotfiles/install.sh
 ```
+
+</details>
 
 ---
 
