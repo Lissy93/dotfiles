@@ -6,6 +6,8 @@
 - clean: ['~', '${XDG_CONFIG_HOME}']
 
 - shell:
+  - description: Set XDG environmental variables
+    command: source ./zsh/.zshenv
   - description: Check that $XDG_CONFIG_HOME is set
     command: >
       if [ -z ${XDG_CONFIG_HOME+x} ]; then; \
@@ -36,8 +38,8 @@
     ${XDG_CONFIG_HOME}/vim: vim
     ${XDG_CONFIG_HOME}/nvim: vim
     ${XDG_CONFIG_HOME}/bash: bash
+    ${XDG_DATA_HOME}/tmux/plugins/tpm: tpm
     ${XDG_CONFIG_HOME}/tmux/tmux.conf: tmux/tmux.conf
-    ${XDG_DATA_HOME}/tmux: tpm
     ${XDG_CONFIG_HOME}/utils: utils
     ~/.gitconfig: configs/.gitconfig
     ${XDG_CONFIG_HOME}/.gitignore_global: configs/.gitignore_global
