@@ -167,12 +167,15 @@ Let's Go!
 bash <(curl -s https://raw.githubusercontent.com/Lissy93/dotfiles/master/lets-go.sh)
 ```
 
-This will execute the quick setup script (in [`lets-go.sh`](https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh)), which just clones the repo (if not yet present), then executes the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. You can re-run this at anytime to update the dotfiles. You can also optionally pass in some variables to change the install location (`DOTFILES_DIR`) and source repo (`DOTFILES_REPO`).
+This will execute the quick setup script (in [`lets-go.sh`](https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh)), which just clones the repo (if not yet present), then executes the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. You can re-run this at anytime to update the dotfiles. You can also optionally pass in some variables to change the install location (`DOTFILES_DIR`) and source repo (`DOTFILES_REPO`) to use your fork.
+
+The install script is idempotent, it can be run multiple times without changing the result, beyond the initial application. It will take care of checking that all dependencies are present, and will prompt the user to install missing packages, using the appropriate package manager (currently supports brew, pacman, apt and pkg). The install script takes care of installing / updating ZSH, Tmux and Vim all plugins.
 
 _Alternatively, you can clone the repo yourself, cd into it, allow execution of [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) then run it to install or update._
 
 <details>
 <summary>Example</summary>
+
 
 ```bash
 git clone --recursive git@github.com:Lissy93/dotfiles.git ~/.dotfiles
@@ -180,13 +183,17 @@ chmod +x ~/.dotfiles/install.sh
 ~/.dotfiles/install.sh
 ```
 
+You'll probably want to fork the repo, then clone your fork instead, so update the above commands with the path to your repo, and optioanlly change the clone location on your disk.
+
+Once the repo is cloned, you can modify whatever files you like before running the install script. The [Directory Structure](#directory-structure) section provides an overview of where each file is located. Then see the [Configuring](#configuring) section for setting file paths and symlink locations. 
+
 </details>
 
 ---
 
 ### Configuring
 
-The locations for all symlinks are defined in [`.install.conf.yaml`](https://github.com/Lissy93/dotfiles/blob/master/.install.conf.yaml). These are managed using [Dotbot](https://github.com/anishathalye/dotbot), and will be applied whenever you run the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. 
+The locations for all symlinks are defined in [`.install.conf.yaml`](https://github.com/Lissy93/dotfiles/blob/master/.install.conf.yaml). These are managed using [Dotbot](https://github.com/anishathalye/dotbot), and will be applied whenever you run the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. The symlinks set locations based on XDG paths, all of which are defined in [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/zsh/.zshenv).
 
 The bootstrap configurations are idempotent (and so the installer can be run multiple times without causing any problems). To only install certain parts of the config, pass the `--only` flag to the install.sh script, similarly `--except` can be used to exclude certain directives.
 
@@ -196,16 +203,19 @@ The bootstrap configurations are idempotent (and so the installer can be run mul
 
 #### Into to Aliases
 
-An alias is simply a command shortcut. These are very useful for long or frequently used commands.
+An alias is simply a command shortcut. These are very useful for shortening long or frequently used commands.
 
-For example, if you frequently find yourself typing `git add .` you could add an alias like `alias gaa='git add .'`, then just type `gaa`. You can also override existing commands, for example to always show hidden files with `ls` you could set `alias ls='ls -a'`.
+For example, if you often find yourself typing `git add .` you could add an alias like `alias gaa='git add .'`, then just type `gaa`. You can also override existing commands, for example to always show hidden files with `ls` you could set `alias ls='ls -a'`.
 
 Aliases should almost always be created at the user-level, and then sourced from your shell config file (usually `.bashrc` or `.zshrc`). System-wide aliases would be sourced from `/etc/profile`. Don't forget that for your changes to take effect, you'll need to restart your shell, or re-source the file containing your aliases, e.g. `source ~/.zshrc`.
 
 You can view a list of defined aliases by running `alias`, or search for a specific alias with `alias | grep 'search-term'`. The `unalias` command is used for removing aliases.
 
-The following section lists the aliases used in my dotfiles.
+#### My Aliases
 
+All aliases in my dotfiles are categorised into files located in [`zsh/aliases/`](https://github.com/Lissy93/dotfiles/blob/master/zsh/aliases/) which are imported in [`zsh/.zshrc`](https://github.com/Lissy93/dotfiles/blob/master/zsh/.zshrc#L9-L14).
+
+The following section lists all (or most) the aliases by category:
 
 <details>
 
@@ -538,11 +548,12 @@ The list of software is stored in the [`installs/`]() directory, and the file th
 
 The entry point for the Vim config is the [`vimrc`](https://github.com/Lissy93/dotfiles/blob/master/vim/vimrc), but the main editor settings are defined in [`vim/editor.vim`](https://github.com/Lissy93/dotfiles/blob/master/vim/editor.vim)
 
-##### Plugins
+#### Vim Plugins
 
 Vim plugins are managed using [Plug](https://github.com/junegunn/vim-plug) defined in [`vim/plugins.vim`](https://github.com/Lissy93/dotfiles/blob/master/vim/setup-vim-plug.vim).
-To install them from GitHub, run `:PlugInstall` (see [options](https://github.com/junegunn/vim-plug#commands)) from within Vim.
+To install them from GitHub, run `:PlugInstall` (see [options](https://github.com/junegunn/vim-plug#commands)) from within Vim. They will also be installed or updated when you run the main dotfiles setup script ([`install.sh`](https://github.com/Lissy93/dotfiles/blob/d4b8426629e7fbbd6d17d0b87f0bb863d6618bfd/install.sh#L132-L134)).
 
+The following plugins are being used:
 
 <details>
 
