@@ -164,7 +164,7 @@ Another solution, is to encrypt sensitive info. A great tool for this is [`pass`
 Let's Go!
 
 ```bash
-bash <(curl -s https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh)
+bash <(curl -s https://raw.githubusercontent.com/Lissy93/dotfiles/master/lets-go.sh)
 ```
 
 This will execute the quick setup script (in [`lets-go.sh`](https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh)), which just clones the repo (if not yet present), then executes the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. You can re-run this at anytime to update the dotfiles. You can also optionally pass in some variables to change the install location (`DOTFILES_DIR`) and source repo (`DOTFILES_REPO`).
