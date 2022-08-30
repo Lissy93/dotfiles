@@ -3,9 +3,9 @@
 # Dotfile setup script
 # Fetches latest changes, symlinks files, and installs dependencies
 # For docs and more info, see: https://github.com/lissy93/dotfiles
-# Licensed under MIT - (C) Alicia Sykes, 2022 <https://aliciasykes.com>
+# Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com>
 
-# IMPORTANT: Before running, read through everything, and confirm it's what you want!
+# IMPORTANT: Before running, read through everything very carefully!
 
 # Configuration Params
 REPO_NAME="Lissy93/Dotfiles"
@@ -24,6 +24,7 @@ RED_B='\033[1;31m'
 GREEN_B='\033[1;32m'
 PLAIN_B='\033[1;37m'
 RESET='\033[0m'
+GREEN='\033[0;32m'
 PURPLE='\033[0;35m'
 
 # Other params
@@ -60,7 +61,7 @@ terminate () {
 }
 
 # Checks if command / package (in $1) exists and then shows
-# warning or error + terminates depending if required ($2)
+# either shows a warning or error, depending if package required ($2)
 system_verify () {
   if ! command_exists $1; then
     if $2; then
@@ -136,6 +137,7 @@ function apply_preferences () {
   # Install / update Tmux plugins with TPM
   echo -e "${PURPLE}Installing TMUX Plugins${RESET}"
   chmod ug+x "${XDG_DATA_HOME}/tmux/tpm"
+  sh "${TMUX_PLUGIN_MANAGER_PATH}/tpm/bin/install_plugins"
   sh "${XDG_DATA_HOME}/tmux/plugins/tpm/bin/install_plugins"
   
 
@@ -152,7 +154,7 @@ function install_packages () {
     echo -e "\n${PURPLE}Skipping package installs${RESET}"
     return
   fi
-
+  echo
   # Mac OS
   if [ "$system_type" = "Darwin" ]; then
     # Homebrew not installed, ask user if they'd like to download it now
@@ -174,6 +176,19 @@ function install_packages () {
       BREW_PREFIX=$(brew --prefix)
       brew bundle --global --file $HOME/.Brewfile
       brew cleanup
+    fi
+    # Check for MacOS software updates, and ask user if they'd like to install
+    echo -e "${PURPLE}Checking for software updates...${RESET}"
+    pending_updates=$(softwareupdate -l 2>&1)
+    if [[ ! $pending_updates == *"No new software available."* ]]; then
+      read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)A new macOS software update is available.\
+      Would you like to install it now?$(echo -e $RESET) (y/N)" -n 1 -r
+      if [[ $REPLY =~ ^[Yy]$ ]]; then
+        softwareupdate -i -a
+      fi
+    else
+      echo -e "${GREEN}System is up-to-date."\
+      "Running $(sw_vers -productName) version $(sw_vers -productVersion)${RESET}"
     fi
   fi
 }
