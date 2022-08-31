@@ -518,7 +518,84 @@ Alias | Description
 
 ### Utilities
 
-// TODO
+
+The dotfiles also contains several handy bash scripts to carry out useful tasks with slightly more ease.
+
+Each of these scripts is standalone, without any dependencies, and can be executed directly to use. 
+Alternatively, they can be sourced from within a .zshrc / .bashrc, for use anywhere via their alias.
+
+For usage instructions about any of them, just append the `--help` flag.
+
+- [Transfer]() - Quickly transfer files or folders to the internet
+- [Web Search]() - Open a specific search engine with a given query
+- [QR Code]() - Generates a QR code for a given string, to transfer data to mobile device
+- [Weather]() - Shows current and forecasted weather for your location
+- [Color Map]() - Just outputs your terminal emulators supported color pallete
+- [Welcome]() - Used for first login, prints personalised greeting, system info, and other handy info
+- [Online]() - Checks if you are connected to the internet
+
+
+
+#### Transfer
+
+Quickly transfer a file, group of files or directory via the transfer.sh service.<br>
+To get started, run `transfer <file(s) / folder>`, for more info, run `transfer --help`
+
+If multiple files are passed in, they will automatically be compressed into an archive.
+You can change the file transfer service, or use a self-hosted instance by setting the URL in `FILE_TRANSFER_SERVICE`
+The file can be either run directly, or sourced in your `.zshrc` and used via the `transfer` alias.
+
+> For info, run `transfer --help`<br>
+> Source: [`utils/transfer.sh`](https://github.com/Lissy93/dotfiles/blob/master/utils/transfer.sh)
+
+#### Web Search
+
+Quickly open web search results for a given query using a selected search engine. To get started, run `web-search`, or `web-search --help` for more info.
+
+Usage:
+
+All parameters are optional, to get started just run `web-search` or `web-search <search provider (optional)> <query (optional)>`, the `ws` alias can also be used. If a search engine isn't specified, you'll be prompted to select one from the list. Similarly, if a query hasn't been included you'll be asked for that too.
+
+- `web-search` - Opens interactive menu, you'll be prompted to select a search engine from the list then enter your query
+- `web-search <search term>` - Specify a search term, and you'll be prompted to select the search engine
+  - For example, `web-search Hello World!`
+- `web-search <search engine>` - Specify a search engine, and you'll be prompted for your search term
+  - For example, `web-search duckduckgo`
+- `web-search <search engine> <search engine>` - Specify both a search engine and query, and results will open immediately 
+  - For example, `web-search wikipedia Matrix Defense`
+
+<details>
+
+<summary><b>Supported Search Providers</b></summary>
+
+The following search engines are supported by default:
+- DuckDuckGo: `ws duckduckgo` (or `wsddg`)
+- Wikipedia: `ws wikipedia` or (`wswiki`)
+- GitHub: `ws github` (or `wsgh`)
+- StackOverflow: `ws stackoverflow` (or `wsso`)
+- Wolframalpha: `ws wolframalpha` (or `wswa`)
+- Reddit: `ws reddit` (or `wsrdt`)
+- Maps: `ws maps` (or `wsmap`)
+- Google: `ws google` (or `wsggl`)
+- Grep App: `ws grepapp` (or `wsgra`)
+
+</details>
+
+The alias `ws` will also resolve to `web-search`, if it's not already in use. You can either run the script directly, e.g.`~/.config/utils/web-search.sh` (don't forget to `chmod +x` the file first, to make it executable), or use the `web-search` / `ws` alias anywhere, once it has been source'd from your .zshrc. 
+
+> For info, run `web-search --help`<br>
+> Source: [`utils/web-search.sh`](https://github.com/Lissy93/dotfiles/blob/master/utils/web-search.sh)
+
+<details>
+
+<summary>Try now!</summary>
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/Lissy93/dotfiles/master/utils/web-search.sh)
+```
+
+</details>
+
 
 ---
 
