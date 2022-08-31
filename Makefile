@@ -1,0 +1,3 @@
+
+install:
+	'./install.sh'
