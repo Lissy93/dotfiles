@@ -5,46 +5,54 @@
 # Can be either source'd then call`transfer` function, or invoked directly
 # Licensed under MIT, (C) Alicia Sykes 2022: https://aliciasykes.com
 
+# Once upload is complete, checks response is correct and prints to console
+output_secret_link() {
+  echo -e "\033[1;96m\nTransfer Complete 📤\033[0m"
+  echo -e "\033[4;36m${1}\033[0m"
+}
+
 # Uploads file to file share service
-transfer-file () {
-  curl --upload-file $1 $FILE_TRANSFER_SERVICE
+transfer_file () {
+  output_secret_link $(curl --upload-file $1 $FILE_TRANSFER_SERVICE)
 }
 
 # Combines files into an archive, uploads it, then removes
-transfer-files () {
+transfer_files () {
   zip $TMP_FILE $@
-  curl --upload-file $TMP_FILE $FILE_TRANSFER_SERVICE
+  output_secret_link $(curl --upload-file $TMP_FILE $FILE_TRANSFER_SERVICE)
   rm $TMP_FILE
 }
 
 # Zips directory up, uploads it, then removes it
-transfer-directory () {
+transfer_directory () {
   zip -r $TMP_FILE $1
-  curl --upload-file $TMP_FILE $FILE_TRANSFER_SERVICE
+  output_secret_link $(curl --upload-file $TMP_FILE $FILE_TRANSFER_SERVICE)
   rm $TMP_FILE
 }
 
 # Determine the type of transfer, and call appropriate function
 transfer () {
   FILE_TRANSFER_SERVICE="${FILE_TRANSFER_SERVICE:=https://transfer.sh}"
-  if [[ $@ == *"--help" ]] transfer-help && return
+  if [[ $@ == *"--help" ]]; then
+    transfer_help && return
+  fi
   TMP_FILE="/tmp/file-transfer-$(date +%s).zip"
   if [ -z "$1" ]; then
-    transfer-help
+    transfer_help
     return
   fi
   if [[ -f $1 ]] && [ "$#" -eq 1 ]; then
-    transfer-file $@
+    transfer_file $@
   elif [ -d $1 ] && [ "$#" -eq 1 ]; then
-    transfer-directory $@
+    transfer_directory $@
   elif [ "$#" -gt 1 ]; then
-    transfer-files $@
+    transfer_files $@
   fi
   unset TMP_FILE
 }
 
 # Shows usage instructions
-transfer-help () {
+transfer_help () {
   welcome_msg="\033[1;33mHelper script for transfering files via transfer.sh\n"
   welcome_msg="$welcome_msg\033[0;33mInvoke script with file(s) or a directory to upload\n"
   welcome_msg="$welcome_msg\033[1;33mE.g.\033[0;93m\n   $ transfer hello.txt\n"
@@ -61,7 +69,7 @@ transfer-help () {
 # If script being called directly, invoke transfer or show help
 if [ $sourced -eq 0 ]; then
   if [ ! -n "${1+set}" ] || [[ $@ == *"--help"* ]]; then
-    transfer-help
+    transfer_help
   else
     transfer $@
   fi

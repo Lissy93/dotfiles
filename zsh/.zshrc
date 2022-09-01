@@ -11,7 +11,7 @@ source ${zsh_dir}/aliases/general.zsh
 source ${zsh_dir}/aliases/git.zsh
 source ${zsh_dir}/aliases/node-js.zsh
 source ${zsh_dir}/aliases/flutter.zsh
-source ${zsh_dir}/aliases/alias-tips.zsh
+# source ${zsh_dir}/aliases/alias-tips.zsh
 
 # Setup Antigen, and import plugins
 source ${zsh_dir}/helpers/setup-antigen.zsh
@@ -35,6 +35,7 @@ source ${utils_dir}/hr.sh
 source ${utils_dir}/web-search.sh
 source ${utils_dir}/am-i-online.sh
 source ${utils_dir}/welcome-banner.sh
+source ${utils_dir}/color-map.sh
 
 # Left over tasks
 source ${zsh_dir}/helpers/misc-stuff.zsh
