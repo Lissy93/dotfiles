@@ -15,6 +15,8 @@
     - [Security](#security)
 - [My Dots](#my-dots)
     - [Setup](#setup)
+    - [Directory Structure](#directory-structure)
+    - [Configuring](#configuring)
     - [Aliases](#aliases)
     - [Utilities](#utilities)
     - [Packages](#packages)
@@ -188,6 +190,23 @@ You'll probably want to fork the repo, then clone your fork instead, so update t
 Once the repo is cloned, you can modify whatever files you like before running the install script. The [Directory Structure](#directory-structure) section provides an overview of where each file is located. Then see the [Configuring](#configuring) section for setting file paths and symlink locations. 
 
 </details>
+
+---
+
+
+### Directory Structure
+
+<pre>
+~
+└── <a href="https://github.com/Lissy93/dotfiles" title="Root">.</a>
+    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/bash" title="Bash Config">bash/</a>
+    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/tmux" title="Tmux Configs">tmux/</a>
+    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/vim" title="Vim Configs">vim/</a>
+    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/zsh" title="ZSH Configs">zsh/</a>
+    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/.github" title="Repo Meta">.github/</a>
+    ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh" title="Remote Setup Initiator">lets-go.sh</a>
+    └── <a href="https://github.com/Lissy93/dotfiles/blob/master/install.sh" title="Setup Script">install.sh</a>
+</pre>
 
 ---
 
