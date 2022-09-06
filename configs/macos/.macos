@@ -1,0 +1,436 @@
+#!/usr/bin/env bash
+
+# ~/.macos
+
+# This file configures Mac OS settings, overriding anything set in preferences
+# Be sure to read through and understand this file before applying any changes
+
+# Before starting, close system preferences, prompt for pass and set keep alive
+osascript -e 'tell application "System Preferences" to quit'
+sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+# Device Options
+COMPUTER_NAME="AS-MacBook"
+HIGHLIGHT_COLOR="0 0.8 0.7"
+
+# Set computer name and hostname
+sudo scutil --set ComputerName "$COMPUTER_NAME"
+sudo scutil --set HostName "$COMPUTER_NAME"
+sudo scutil --set LocalHostName "$COMPUTER_NAME"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$COMPUTER_NAME"
+
+# Set highlight color
+defaults write NSGlobalDomain AppleHighlightColor -string "${HIGHLIGHT_COLOR}"
+
+# Configure sidebars, scrollbars and window resizers
+defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
+defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
+defaults write NSGlobalDomain NSToolbarTitleViewRolloverDelay -float 0
+defaults write NSGlobalDomain NSWindowResizeTime -float 0.05
+
+# Show expanded save and print dialoges
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
+
+# Save to disk (not to iCloud) by default
+defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+
+# Automatically quit printer app once the print jobs complete
+defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
+
+# Disable the “Are you sure you want to open this application?” dialog
+defaults write com.apple.LaunchServices LSQuarantine -bool false
+
+# Remove duplicates in the “Open With” menu (also see `lscleanup` alias)
+/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
+
+# Display ASCII control characters using caret notation in standard text views
+defaults write NSGlobalDomain NSTextShowsControlCharacters -bool true
+
+# Disable Resume system-wide
+defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
+
+# Disable automatic termination of inactive apps
+defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
+
+# Disable the crash reporter
+defaults write com.apple.CrashReporter DialogType -string "none"
+
+# Fix for the ancient UTF-8 bug in QuickLook (https://mths.be/bbo)
+echo "0x08000100:0" > ~/.CFUserTextEncoding
+
+# Reveal IP address, hostname, OS version, etc. when clicking the clock in the login window
+sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
+
+# Disable automatic text capitalisation, smart dashed, period substitiotion, auto-correct
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+
+# Set a custom wallpaper image. `DefaultDesktop.jpg` is already a symlink, and
+# all wallpapers are in `/Library/Desktop Pictures/`. The default is `Wave.jpg`.
+#rm -rf ~/Library/Application Support/Dock/desktoppicture.db
+#sudo rm -rf /System/Library/CoreServices/DefaultDesktop.jpg
+#sudo ln -s /path/to/your/image /System/Library/CoreServices/DefaultDesktop.jpg
+
+###############################################################################
+# Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
+###############################################################################
+
+# Trackpad: enable tap to click for this user and for the login screen
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+# Increase sound quality for Bluetooth headphones/headsets
+defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
+
+# Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+# Use scroll gesture with the Ctrl (^) modifier key to zoom
+defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
+defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
+# Follow the keyboard focus while zoomed in
+defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
+
+# Set a blazingly fast keyboard repeat rate
+defaults write NSGlobalDomain KeyRepeat -int 8
+defaults write NSGlobalDomain InitialKeyRepeat -int 50
+
+# Set language and text formats
+defaults write NSGlobalDomain AppleLanguages -array "en"
+defaults write NSGlobalDomain AppleLocale -string "en_GB@currency=GBP"
+defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
+defaults write NSGlobalDomain AppleMetricUnits -bool true
+sudo systemsetup -settimezone "Europe/London" > /dev/null
+
+# Power and standby options
+sudo pmset -a lidwake 1
+sudo pmset -a autorestart 1
+sudo pmset -a displaysleep 15
+sudo pmset -b sleep 5
+sudo pmset -c sleep 0
+
+# Screen options
+
+# Require password immediately after sleep or screen saver begins
+defaults write com.apple.screensaver askForPassword -int 1
+defaults write com.apple.screensaver askForPasswordDelay -int 0
+
+# Save screenshots to the downloads directory, in .png
+defaults write com.apple.screencapture location -string "${HOME}/Downloads/screenshots"
+defaults write com.apple.screencapture type -string "png"
+
+# Enable subpixel font rendering on non-Apple LCDs
+defaults write NSGlobalDomain AppleFontSmoothing -int 1
+
+# Enable HiDPI display modes (requires restart)
+sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
+
+# Finder settings - Start location, hidden files
+defaults write com.apple.finder NewWindowTarget -string "PfHm"
+defaults write com.apple.finder NewWindowTargetPath -string "file:///"
+defaults write com.apple.finder AppleShowAllFiles -bool true
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+defaults write com.apple.finder WarnOnEmptyTrash -bool false
+defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
+chflags nohidden ~/Library && xattr -d com.apple.FinderInfo ~/Library
+sudo chflags nohidden /Volumes
+
+# Finder  - View pain options
+defaults write com.apple.finder QuitMenuItem -bool true
+defaults write com.apple.finder ShowStatusBar -bool true
+defaults write com.apple.finder ShowPathbar -bool true
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+defaults write com.apple.finder FXInfoPanesExpanded -dict \
+	General -bool true \
+	OpenWith -bool true \
+	Privileges -bool true
+
+# Finder - Searching options
+defaults write com.apple.finder _FXSortFoldersFirst -bool true
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+
+# Finder - Disable disk image verification
+defaults write com.apple.frameworks.diskimages skip-verify -bool true
+defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
+defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
+
+# Finder - Automatically open a new Finder window when a volume is mounted
+defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
+defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
+defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
+
+# Finder - Show info, snap-to-grid, item sizes and grid spacing
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set DesktopViewSettings:IconViewSettings:labelOnBottom false" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+
+# Dock Settings
+defaults write com.apple.dock mouse-over-hilite-stack -bool true
+defaults write com.apple.dock tilesize -int 48
+defaults write com.apple.dock mineffect -string "genie"
+defaults write com.apple.dock minimize-to-application -bool true
+defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
+defaults write com.apple.dock show-process-indicators -bool true
+defaults write com.apple.dock launchanim -bool true
+defaults write com.apple.dock expose-animation-duration -float 0.5
+defaults write com.apple.dock expose-group-by-app -bool false
+defaults write com.apple.dock mru-spaces -bool false
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock autohide-delay -float 0.05
+defaults write com.apple.dock autohide-time-modifier -float 0.05
+defaults write com.apple.dock showhidden -bool true
+defaults write com.apple.dock show-recents -bool false
+
+# If DockUtil installed, then use it to remove default dock items, and add useful ones
+if hash dockutil 2> /dev/null; then
+  apps_to_remove_from_dock=(
+    'App Store'  'Calendar' 'Contacts' 'FaceTime'
+    'Keynote' 'Mail' 'Maps' 'Messages' 'Music'
+    'News' 'Notes' 'Numbers'
+    'Pages' 'Photos' 'Podcasts'
+    'Reminders' 'TV'
+  )
+  apps_to_add_to_dock=(
+    'iTerm' 'Firefox' 'Standard Notes' 'Visual Studio Code'
+  )
+  IFS=""
+  # Removes useless apps from dock
+  for app in ${apps_to_remove_from_dock[@]}; do
+    dockutil --remove ~/Applications/${app}.app
+  done
+  # Adds useful apps to dock, if installed
+  for app in ${apps_to_add_to_dock[@]}; do
+    if [[ -d "~/Applications/${app}.app" ]]; then
+      dockutil --add ~/Applications/${app}.app
+    fi
+  done
+fi
+
+# Add iOS & Watch Simulator to Launchpad
+sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app" "/Applications/Simulator.app"
+sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator (Watch).app" "/Applications/Simulator (Watch).app"
+
+# Set hot corners
+defaults write com.apple.dock wvous-tl-corner -int 11
+defaults write com.apple.dock wvous-tl-modifier -int 0
+defaults write com.apple.dock wvous-bl-corner -int 2
+defaults write com.apple.dock wvous-bl-modifier -int 1048576
+defaults write com.apple.dock wvous-br-corner -int 5
+defaults write com.apple.dock wvous-br-modifier -int 1048576
+defaults write com.apple.dock wvous-tr-corner -int 0
+defaults write com.apple.dock wvous-tr-modifier -int 0
+
+# Safari & Webkit Privacy Enchanements
+defaults write com.apple.Safari UniversalSearchEnabled -bool false
+defaults write com.apple.Safari SuppressSearchSuggestions -bool true
+defaults write com.apple.Safari WebKitTabToLinksPreferenceKey -bool true
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks -bool true
+defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
+defaults write com.apple.Safari HomePage -string "about:blank"
+defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
+defaults write com.apple.Safari ShowFavoritesBar -bool false
+defaults write com.apple.Safari ShowSidebarInTopSites -bool false
+defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
+defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
+defaults write com.apple.Safari ProxiesInBookmarksBar "()"
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
+defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+defaults write com.apple.Safari WebContinuousSpellCheckingEnabled -bool true
+defaults write com.apple.Safari WebAutomaticSpellingCorrectionEnabled -bool false
+defaults write com.apple.Safari AutoFillFromAddressBook -bool false
+defaults write com.apple.Safari AutoFillPasswords -bool false
+defaults write com.apple.Safari AutoFillCreditCardData -bool false
+defaults write com.apple.Safari AutoFillMiscellaneousForms -bool false
+defaults write com.apple.Safari WarnAboutFraudulentWebsites -bool true
+defaults write com.apple.Safari WebKitPluginsEnabled -bool false
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2PluginsEnabled -bool false
+defaults write com.apple.Safari WebKitJavaEnabled -bool false
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled -bool false
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabledForLocalFiles -bool false
+defaults write com.apple.Safari WebKitJavaScriptCanOpenWindowsAutomatically -bool false
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically -bool false
+defaults write com.apple.Safari WebKitMediaPlaybackAllowsInline -bool false
+defaults write com.apple.SafariTechnologyPreview WebKitMediaPlaybackAllowsInline -bool false
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2AllowsInlineMediaPlayback -bool false
+defaults write com.apple.SafariTechnologyPreview com.apple.Safari.ContentPageGroupIdentifier.WebKit2AllowsInlineMediaPlayback -bool false
+defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
+defaults write com.apple.Safari InstallExtensionUpdatesAutomatically -bool true
+
+# Mail App
+defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
+defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" "@\U21a9"
+defaults write com.apple.mail DraftsViewerAttributes -dict-add "DisplayInThreadedMode" -string "yes"
+defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "yes"
+defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -string "received-date"
+defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
+
+# Spotlight - Emable / disable search locations, and indexing order
+defaults write com.apple.spotlight orderedItems -array \
+	'{"enabled" = 1;"name" = "APPLICATIONS";}' \
+	'{"enabled" = 1;"name" = "SYSTEM_PREFS";}' \
+	'{"enabled" = 1;"name" = "DIRECTORIES";}' \
+	'{"enabled" = 1;"name" = "PDF";}' \
+	'{"enabled" = 0;"name" = "FONTS";}' \
+	'{"enabled" = 0;"name" = "DOCUMENTS";}' \
+	'{"enabled" = 0;"name" = "MESSAGES";}' \
+	'{"enabled" = 0;"name" = "CONTACT";}' \
+	'{"enabled" = 0;"name" = "EVENT_TODO";}' \
+	'{"enabled" = 0;"name" = "IMAGES";}' \
+	'{"enabled" = 0;"name" = "BOOKMARKS";}' \
+	'{"enabled" = 0;"name" = "MUSIC";}' \
+	'{"enabled" = 0;"name" = "MOVIES";}' \
+	'{"enabled" = 0;"name" = "PRESENTATIONS";}' \
+	'{"enabled" = 0;"name" = "SPREADSHEETS";}' \
+	'{"enabled" = 0;"name" = "SOURCE";}' \
+	'{"enabled" = 0;"name" = "MENU_DEFINITION";}' \
+	'{"enabled" = 0;"name" = "MENU_OTHER";}' \
+	'{"enabled" = 0;"name" = "MENU_CONVERSION";}' \
+	'{"enabled" = 0;"name" = "MENU_EXPRESSION";}' \
+	'{"enabled" = 0;"name" = "MENU_WEBSEARCH";}' \
+	'{"enabled" = 0;"name" = "MENU_SPOTLIGHT_SUGGESTIONS";}'
+
+# Spotlight - load new settings, enable indexing, and rebuild index
+killall mds > /dev/null 2>&1
+sudo mdutil -i on / > /dev/null
+sudo mdutil -E / > /dev/null
+
+
+# Terminal.app - Use UTF-8 and enable secure keyboard entry
+defaults write com.apple.terminal StringEncodings -array 4
+defaults write com.apple.terminal SecureKeyboardEntry -bool true
+
+# Time Machine - don't open when disk connected
+defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+
+# Activity Monitor - launch main window, use live CPU icon, show all processes
+defaults write com.apple.ActivityMonitor OpenMainWindow -bool true
+defaults write com.apple.ActivityMonitor IconType -int 5
+defaults write com.apple.ActivityMonitor ShowCategory -int 0
+defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
+defaults write com.apple.ActivityMonitor SortDirection -int 0
+
+# Use plain text mode for new TextEdit documents, and open in UTF-8
+defaults write com.apple.TextEdit RichText -int 0
+defaults write com.apple.TextEdit PlainTextEncoding -int 4
+defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
+
+# Enable the debug menu in Disk Utility, iCal, Address Book and Dev mode for dashboard
+defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
+defaults write com.apple.DiskUtility advanced-image-options -bool true
+defaults write com.apple.iCal IncludeDebugMenu -bool true
+defaults write com.apple.addressbook ABShowDebugMenu -bool true
+defaults write com.apple.dashboard devmode -bool true
+
+
+###############################################################################
+# Mac App Store                                                               #
+###############################################################################
+
+defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
+defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
+defaults write com.apple.appstore ShowDebugMenu -bool true
+defaults write com.apple.appstore WebKitDeveloperExtras -bool true
+
+###############################################################################
+# Photos                                                                      #
+###############################################################################
+
+# Prevent Photos from opening automatically when devices are plugged in
+defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
+
+###############################################################################
+# Messages                                                                    #
+###############################################################################
+
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool false
+
+###############################################################################
+# Transmission.app                                                            #
+###############################################################################
+
+# Use `~/Downloads/Torrents` to store incomplete downloads
+defaults write org.m0k.transmission UseIncompleteDownloadFolder -bool true
+defaults write org.m0k.transmission IncompleteDownloadFolder -string "${HOME}/Documents/Torrents"
+
+# Use `~/Downloads` to store completed downloads
+defaults write org.m0k.transmission DownloadLocationConstant -bool true
+
+# Don’t prompt for confirmation before downloading
+defaults write org.m0k.transmission DownloadAsk -bool false
+defaults write org.m0k.transmission MagnetOpenAsk -bool false
+
+# Don’t prompt for confirmation before removing non-downloading active transfers
+defaults write org.m0k.transmission CheckRemoveDownloading -bool true
+
+# Trash original torrent files
+defaults write org.m0k.transmission DeleteOriginalTorrent -bool true
+
+# Hide the donate message
+defaults write org.m0k.transmission WarningDonate -bool false
+# Hide the legal disclaimer
+defaults write org.m0k.transmission WarningLegal -bool false
+
+# IP block list.
+# Source: https://giuliomac.wordpress.com/2014/02/19/best-blocklist-for-transmission/
+defaults write org.m0k.transmission BlocklistNew -bool true
+defaults write org.m0k.transmission BlocklistURL -string "http://john.bitsurge.net/public/biglist.p2p.gz"
+defaults write org.m0k.transmission BlocklistAutoUpdate -bool true
+
+# Randomize port on launch
+defaults write org.m0k.transmission RandomPort -bool true
+
+###############################################################################
+# Kill affected applications                                                  #
+###############################################################################
+
+for app in "Activity Monitor" \
+	"Address Book" \
+	"Calendar" \
+	"cfprefsd" \
+	"Contacts" \
+	"Dock" \
+	"Finder" \
+	"Google Chrome Canary" \
+	"Google Chrome" \
+	"Mail" \
+	"Messages" \
+	"Opera" \
+	"Photos" \
+	"Safari" \
+	"SizeUp" \
+	"Spectacle" \
+	"SystemUIServer" \
+	"Terminal" \
+	"Transmission" \
+	"Tweetbot" \
+	"Twitter" \
+	"iCal"; do
+	killall "${app}" &> /dev/null
+done
+echo "Done. Note that some of these changes require a logout/restart to take effect."
+

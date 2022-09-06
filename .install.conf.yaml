@@ -6,30 +6,9 @@
 - clean: ['~', '${XDG_CONFIG_HOME}']
 
 - shell:
+  # Before symlinking, source .zshenv in order to set XDG variables
   - description: Set XDG environmental variables
     command: source ./zsh/.zshenv
-  - description: Check that $XDG_CONFIG_HOME is set
-    command: >
-      if [ -z ${XDG_CONFIG_HOME+x} ]; then; \
-        echo "XDG_CONFIG_HOME is not yet set. Will use ~/.config"; \
-        XDG_CONFIG_HOME="${HOME}/.config"; \
-      fi
-    stdin: false
-    stdout: true
-    stderr: true
-    quiet: true
-  - description: Check that $XDG_DATA_HOME is set
-    command: >
-      if [ -z ${XDG_DATA_HOME+x} ]; then; \
-        echo "XDG_DATA_HOME is not yet set. Will use ~/.local/share"; \
-        XDG_DATA_HOME="${HOME}/.local/share"; \
-      fi
-    stdin: false
-    stdout: true
-    stderr: true
-    quiet: true
-
-
 - link:
     ~/.zshenv:
       path: zsh/.zshenv
@@ -44,15 +23,21 @@
     ~/.gitconfig: configs/.gitconfig
     ${XDG_CONFIG_HOME}/.gitignore_global: configs/.gitignore_global
     # ${XDG_CONFIG_HOME}/curl/.curlrc: configs/.curlrc
+    $XDG_CONFIG_HOME/yabai/yabairc:
+      if: '[ `uname` = Darwin ]'
+      path: configs/macos/yabairc
+    $XDG_CONFIG_HOME/skhd/skhdrc:
+      if: '[ `uname` = Darwin ]'
+      path: configs/macos/skhdrc
     ~/.Brewfile:
       if: '[ `uname` = Darwin ]'
       path: installs/.Brewfile
     ~/.macos:
       if: '[ `uname` = Darwin ]'
-      path: configs/.macos
+      path: configs/macos/.macos
     ~/.finicky.js:
       if: '[ `uname` = Darwin ]'
-      path: configs/.finicky.js
+      path: configs/macos/.finicky.js
 
 - create:
     - ~/Downloads
