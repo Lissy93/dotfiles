@@ -15,7 +15,7 @@ function color_map_16_bit () {
   echo -e "\n${TEXT_COL}16-Bit Pallete${RESET}\n"
   base_colors='40m 41m 42m 43m 44m 45m 46m 47m'
   for BG in $base_colors; do echo -en "$EINS \033[$BG       \033[0m"; done; echo
-  for BG in $base_colors; do echo -en "$EINS \033[1;30m\033[$BG  $(echo $BG)  \033[0m"; done; echo
+  for BG in $base_colors; do printf " \033[1;30m\033[%b  %b  \033[0m" $BG $BG; done; echo
   for BG in $base_colors; do echo -en "$EINS \033[$BG       \033[0m"; done; echo
 }
 
