@@ -48,10 +48,10 @@ if [ "$(uname -s)" = "Darwin" ] && [[ -d /opt/homebrew/bin ]]; then
 fi
 
 # And Android SDK to path, if within Library direcroty
-if [ "$(uname -s)" = "Darwin" ] && [[ -d ~/Library/Android/ ]]; then
-    export PATH="/Users/alicia/Library/Android/sdk/emulator:${PATH}"
-    export ANDROID_HOME="~/Library/Android/sdk"
-    export ANDROID_SDK_ROOT="~/Library/Android/sdk"
-    export ANDROID_AVD_HOME="~/.android/avd"
-    export NODE_BINARY=node
+if [ "$(uname -s)" = "Darwin" ] && [[ -d "${HOME}/Library/Android/" ]]; then
+    export PATH="${HOME}/Library/Android/sdk/emulator:${PATH}"
+    export ANDROID_HOME="${HOME}/Library/Android/sdk"
+    export ANDROID_SDK_ROOT="${HOME}/Library/Android/sdk"
+    export ANDROID_AVD_HOME="${ANDROID_SDK_ROOT}/tools/emulator"
+    export NODE_BINARY="/usr/local/bin/node"
 fi
