@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Dotfile setup script
 # Fetches latest changes, symlinks files, and installs dependencies
@@ -146,6 +146,46 @@ function apply_preferences () {
   /bin/zsh -i -c "antigen update && antigen-apply"
 }
 
+# Setup Brew, install / update packages and check for macOS updates
+function intall_macos_packages () {
+  # Homebrew not installed, ask user if they'd like to download it now
+  if ! command_exists brew; then
+    read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)Would you like to install Homebrew? (y/N)" -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      echo -en "🍺 ${YELLOW_B}Installing Homebrew...${RESET}\n"
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      export PATH=/opt/homebrew/bin:$PATH
+    fi
+  fi
+  # Update / Install the Homebrew packages in ~/.Brewfile
+  if command_exists brew && [ -f "$HOME/.Brewfile" ]
+  then
+    echo -e "${PURPLE}Updating homebrew and packages...${RESET}"
+    brew update
+    brew upgrade
+    brew bundle --global --file $HOME/.Brewfile
+    brew cleanup
+  fi
+  # Restore launchpad structure with lporg
+  if ! command_exists lporg && [ -f "$DOTFILES_DIR/configs/macos/launchpad.yml" ]; then
+    echo -e "${PURPLE}Restoring Launchpad Layout...${RESET}"
+  fi
+  # Check for MacOS software updates, and ask user if they'd like to install
+  echo -e "${PURPLE}Checking for software updates...${RESET}"
+  pending_updates=$(softwareupdate -l 2>&1)
+  if [[ ! $pending_updates == *"No new software available."* ]]; then
+    read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)A new macOS software update is available.\
+    Would you like to install it now?$(echo -e $RESET) (y/N)" -n 1 -r
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      softwareupdate -i -a
+    fi
+  else
+    echo -e "${GREEN}System is up-to-date."\
+    "Running $(sw_vers -productName) version $(sw_vers -productVersion)${RESET}"
+  fi
+}
+
 # Based on system type, uses appropriate package manager to install / updates apps
 function install_packages () {
 
@@ -154,42 +194,13 @@ function install_packages () {
     echo -e "\n${PURPLE}Skipping package installs${RESET}"
     return
   fi
-  echo
+  # Ask for users password
+  echo -e "\n${PURPLE}Some install steps may require elevated permissions.${CYAN_B}\n\
+  You can enter your password now, to avoid typing it for each stage, or Ctrl+C to skip.${RESET}"
+  sudo -v
   # Mac OS
   if [ "$system_type" = "Darwin" ]; then
-    # Homebrew not installed, ask user if they'd like to download it now
-    if ! command_exists brew; then
-      read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)Would you like to install Homebrew? (y/N)" -n 1 -r
-      echo
-      if [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo -en "🍺 ${YELLOW_B}Installing Homebrew...${RESET}\n"
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        export PATH=/opt/homebrew/bin:$PATH
-      fi
-    fi
-    # Update / Install the Homebrew packages in ~/.Brewfile
-    if command_exists brew && [ -f "$HOME/.Brewfile" ]
-    then
-      echo -e "${PURPLE}Updating homebrew and packages...${RESET}"
-      brew update
-      brew upgrade
-      BREW_PREFIX=$(brew --prefix)
-      brew bundle --global --file $HOME/.Brewfile
-      brew cleanup
-    fi
-    # Check for MacOS software updates, and ask user if they'd like to install
-    echo -e "${PURPLE}Checking for software updates...${RESET}"
-    pending_updates=$(softwareupdate -l 2>&1)
-    if [[ ! $pending_updates == *"No new software available."* ]]; then
-      read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)A new macOS software update is available.\
-      Would you like to install it now?$(echo -e $RESET) (y/N)" -n 1 -r
-      if [[ $REPLY =~ ^[Yy]$ ]]; then
-        softwareupdate -i -a
-      fi
-    else
-      echo -e "${GREEN}System is up-to-date."\
-      "Running $(sw_vers -productName) version $(sw_vers -productVersion)${RESET}"
-    fi
+    intall_macos_packages
   fi
 }
 
