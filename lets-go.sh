@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ######################################################################
 # Lissy93/dotfiles - Remote Runnable Dotfile Setup and Update Script #
 # Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com> #
