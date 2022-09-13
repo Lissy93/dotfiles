@@ -1,21 +1,26 @@
 #!/bin/bash
 
-# Dotfile setup script
-# Fetches latest changes, symlinks files, and installs dependencies
-# For docs and more info, see: https://github.com/lissy93/dotfiles
-# Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com>
-
-# IMPORTANT: Before running, read through everything very carefully!
+######################################################################
+# 🧰 Lissy93/Dotfiles - All-in-One Install and Setup Script for Unix #
+######################################################################
+# Fetches latest changes, symlinks files, and installs dependencies  #
+# Then sets up ZSH, TMUX, Vim as well as OS-specific tools and apps  #
+# For docs and more info, see: https://github.com/lissy93/dotfiles   #
+#                                                                    #
+# IMPORTANT: Before running, read through everything very carefully! #
+#                                                                    #
+# Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com> #
+######################################################################
 
 # Configuration Params
-REPO_NAME="Lissy93/Dotfiles"
+REPO_NAME="${REPO_NAME:-Lissy93/Dotfiles}"
 REPO_PATH="https://github.com/${REPO_NAME}.git"
-CONFIG=".install.conf.yaml"
+SYMLINK_FILE="${SYMLINK_FILE:-symlinks.yaml}"
 DOTBOT_DIR="dotbot"
 DOTBOT_BIN="bin/dotbot"
 CURRENT_DIR=$(cd "$(dirname ${BASH_SOURCE[0]})" && pwd)
 DOTFILES_DIR="${DOTFILES_DIR:-$HOME/Documents/config/dotfiles}"
-TITLE='🧰 Lissy93/Dotfiles Setup'
+TITLE="🧰 ${REPO_NAME} Setup"
 
 # Color Variables
 CYAN_B='\033[1;96m'
@@ -114,7 +119,7 @@ function setup_dot_files () {
   git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
   git submodule update --init --recursive "${DOTBOT_DIR}"
   chmod +x  dotbot/bin/dotbot
-  "${DOTFILES_DIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${DOTFILES_DIR}" -c "${CONFIG}" "${@}"
+  "${DOTFILES_DIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${DOTFILES_DIR}" -c "${SYMLINK_FILE}" "${@}"
 }
 
 # Applies application-specific preferences, and runs some setup tasks
@@ -146,14 +151,14 @@ function apply_preferences () {
   /bin/zsh -i -c "antigen update && antigen-apply"
 }
 
-# Setup Brew, install / update packages and check for macOS updates
+# Setup Brew, install / update packages, organize launchpad and checks for macOS updates
 function intall_macos_packages () {
   # Homebrew not installed, ask user if they'd like to download it now
   if ! command_exists brew; then
     read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)Would you like to install Homebrew? (y/N)" -n 1 -r
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
-      echo -en "🍺 ${YELLOW_B}Installing Homebrew...${RESET}\n"
+      echo -en "🍺 ${PURPLE}Installing Homebrew...${RESET}\n"
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       export PATH=/opt/homebrew/bin:$PATH
     fi
@@ -166,10 +171,13 @@ function intall_macos_packages () {
     brew upgrade
     brew bundle --global --file $HOME/.Brewfile
     brew cleanup
+  else
+    echo -e "${PURPLE}Skipping Homebrew as requirements not met${RESET}"
   fi
   # Restore launchpad structure with lporg
   if ! command_exists lporg && [ -f "$DOTFILES_DIR/configs/macos/launchpad.yml" ]; then
     echo -e "${PURPLE}Restoring Launchpad Layout...${RESET}"
+    lporg load "$DOTFILES_DIR/configs/macos/launchpad.yml"
   fi
   # Check for MacOS software updates, and ask user if they'd like to install
   echo -e "${PURPLE}Checking for software updates...${RESET}"
@@ -212,13 +220,15 @@ function finishing_up () {
   # Print success message, and time taken
   total_time=$((`date +%s`-start_time))
   make_banner "✨ Dotfiles configured succesfully in $total_time seconds" ${GREEN_B} 1
+  
+  # Exit script with success code
   exit 0
 }
 
-# Begin!
+# Let's Begin!
 pre_setup_tasks   # Print start message, and check requirements are met
 setup_dot_files   # Clone / updatae dotfiles, and create the symlinks
-apply_preferences # Set settings for individual applications
+apply_preferences # Apply settings for individual applications
 install_packages  # Prompt to install / update OS-specific packages
-finishing_up      # Re-source .zshenv, and print summary
-# All done!
+finishing_up      # Refresh current session, print summary and exit
+# All done :)
