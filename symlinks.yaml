@@ -25,19 +25,16 @@
     # ${XDG_CONFIG_HOME}/curl/.curlrc: configs/.curlrc
     $XDG_CONFIG_HOME/yabai/yabairc:
       if: '[ `uname` = Darwin ]'
-      path: configs/macos/yabairc
+      path: system-specific/macos/app-configs/yabairc
     $XDG_CONFIG_HOME/skhd/skhdrc:
       if: '[ `uname` = Darwin ]'
-      path: configs/macos/skhdrc
+      path: system-specific/macos/app-configs/skhdrc
     ~/.Brewfile:
       if: '[ `uname` = Darwin ]'
-      path: installs/.Brewfile
-    ~/.macos:
-      if: '[ `uname` = Darwin ]'
-      path: configs/macos/.macos
+      path: installs/Brewfile
     ~/.finicky.js:
       if: '[ `uname` = Darwin ]'
-      path: configs/macos/.finicky.js
+      path: system-specific/macos/app-configs/.finicky.js
 
 - create:
     - ~/Downloads
