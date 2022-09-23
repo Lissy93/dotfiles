@@ -44,6 +44,6 @@ source ${zsh_dir}/helpers/misc-stuff.zsh
 [[ ! -f ${zsh_dir}/.p10k.zsh ]] || source ${zsh_dir}/.p10k.zsh
 
 # If not running in nested shell, then show welcome message :)
-if [[ "${SHLVL}" -lt 2 ]]; then
+if [[ "${SHLVL}" -lt 2 ]] && [[ -z "$SKIP_WELCOME" ]]; then
   welcome
 fi

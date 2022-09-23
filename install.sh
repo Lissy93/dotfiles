@@ -264,6 +264,9 @@ function finishing_up () {
   echo -e "\033[0;92m     .--.\n    |o_o |\n    |:_/ |\n   // \
   \ \\ \n  (|     | ) \n /'\_   _/\`\\ \n \\___)=(___/\n"
   
+  # Refresh ZSH sesssion
+  SKIP_WELCOME=true || exec zsh
+
   # Exit script with success code
   echo -e "${CYAN_B}Press any key to exit.${RESET}\n"
   read -t $PROMPT_TIMEOUT -n 1 -s
