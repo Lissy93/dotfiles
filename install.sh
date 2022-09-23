@@ -221,7 +221,7 @@ function intall_macos_packages () {
   launchpad_layout="${DOTFILES_DIR}/system-specific/macos/app-configs/launchpad.yml"
   if command_exists lporg && [ -f $launchpad_layout ]; then
     echo -e "${PURPLE}Restoring Launchpad Layout...${RESET}"
-    lporg load $launchpad_layout
+    yes "" | lporg load $launchpad_layout
   fi
   # Check for MacOS software updates, and ask user if they'd like to install
   echo -e "${PURPLE}Checking for software updates...${RESET}"
