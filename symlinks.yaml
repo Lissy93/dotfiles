@@ -20,7 +20,8 @@
     ${XDG_DATA_HOME}/tmux/plugins/tpm: tpm
     ${XDG_CONFIG_HOME}/tmux/tmux.conf: tmux/tmux.conf
     ${XDG_CONFIG_HOME}/utils: utils
-    ~/.gitconfig: configs/.gitconfig
+    ${XDG_CONFIG_HOME}/git/.gitconfig: configs/.gitconfig
+    # ~/.gitconfig: configs/.gitconfig
     ${XDG_CONFIG_HOME}/.gitignore_global: configs/.gitignore_global
     # ${XDG_CONFIG_HOME}/curl/.curlrc: configs/.curlrc
     $XDG_CONFIG_HOME/yabai/yabairc:
