@@ -203,6 +203,7 @@ Once the repo is cloned, you can modify whatever files you like before running t
     ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/tmux" title="Tmux Configs">tmux/</a>
     ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/vim" title="Vim Configs">vim/</a>
     ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/zsh" title="ZSH Configs">zsh/</a>
+    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/installs" title="List of packages to install">installs/</a>
     ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/.github" title="Repo Meta">.github/</a>
     ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh" title="Remote Setup Initiator">lets-go.sh</a>
     └── <a href="https://github.com/Lissy93/dotfiles/blob/master/install.sh" title="Setup Script">install.sh</a>
@@ -621,17 +622,17 @@ bash <(curl -s https://raw.githubusercontent.com/Lissy93/dotfiles/master/utils/w
 
 ### Packages
 
+The dotfile installation script can also, detect which system and environemnt you're running, and optionally prompt to install packages and applications.
 
-The dotfiles can also optionally install any packages that you may need. This is useful for quickly setting up new systems, but it's important that you remove / comment out any packages that you don't need.
+Package lists are stored in [`installs/`](https://github.com/Lissy93/dotfiles/tree/master/installs) directory, with separate files for different OSs. The install script will [pick the appropriate file](https://github.com/Lissy93/dotfiles/blob/22c6a04fdb22c140448b7d15ef8187c3a424ab47/install.sh#L243-L260) based on your distro.
 
-The list of software is stored in the [`installs/`]() directory, and the file that's used will vary depending on the host operating system.
+You will be prompted before anything is installed. Be sure to remove / comment out anything you do not need before proceeding.
 
-- Arch (and Arch-based systems, like Manjaro) - []() uses pacman
-- Debian (and Debian-based systems, like Ubuntu) - []() uses apt
-- Alpine - []() uses [apk](https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html)
-- Mac OS - [`.Brewfile`]() uses [Homebrew](https://brew.sh/)
-- Windows - [`windows.sh`]() uses [winget](https://docs.microsoft.com/en-us/windows/package-manager/winget/) and [scoop](https://scoop.sh/)
-
+- Linux (desktop): [`flatpak.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/flatpak.sh) - Desktop apps can be installed on Linux systems via [Flatpack](https://flatpak.org/)
+- Mac OS: [`.Brewfile`](https://github.com/Lissy93/dotfiles/blob/master/installs/Brewfile) - Mac apps installed via [Homebrew](https://brew.sh/)
+- Arch (and Arch-based systems, like Manjaro): [`pacman.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/pacman.sh) - Arch CLI apps installed via [pacman](https://wiki.archlinux.org/title/Pacman)
+- Debian (and Debian-based systems, like Ubuntu): [`apt.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/apt.sh) - Debian CLI apps installed via [apt](https://wiki.debian.org/Apt)
+- Alpine: [`apk.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/apk.sh) - Alpine CLI apps installed via [apk](https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html)
 
 ---
 
