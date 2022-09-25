@@ -113,6 +113,15 @@ function install_flatpak () {
   flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 }
 
+# Ask user if they'd like to proceed, and exit if not
+echo -e "${CYAN_B}Would you like to install Flatpak desktop apps? (y/N)${RESET}\n"
+read -t $PROMPT_TIMEOUT -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+  echo -e "${YELLOW}Skipping Flatpak installations..."
+  exit 0
+fi
+
 echo -e "${CYAN_B}Starting Flatpak App Installation Script${RESET}"
 
 # Check that Flatpak is present, prompt to install or exit if not

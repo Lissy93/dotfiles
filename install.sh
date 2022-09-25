@@ -168,7 +168,7 @@ function apply_preferences () {
   fi
 
   # Install / update vim plugins with Plug
-  echo -e "${PURPLE}Installing Vim Plugins${RESET}"
+  echo -e "\n${PURPLE}Installing Vim Plugins${RESET}"
   vim +PlugInstall +qall
 
   # Install / update Tmux plugins with TPM
@@ -207,8 +207,7 @@ function intall_macos_packages () {
     fi
   fi
   # Update / Install the Homebrew packages in ~/.Brewfile
-  if command_exists brew && [ -f "$DOTFILES_DIR/installs/Brewfile" ]
-  then
+  if command_exists brew && [ -f "$DOTFILES_DIR/installs/Brewfile" ]; then
     echo -e "\n${PURPLE}Updating homebrew and packages...${RESET}"
     brew update
     brew upgrade
@@ -243,13 +242,20 @@ function intall_macos_packages () {
 # Based on system type, uses appropriate package manager to install / updates apps
 function install_packages () {
   read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)Would you like to install / update system packages? (y/N) " -n 1 -r
+  echo
   if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-    echo -e "\n${PURPLE}Skipping package installs${RESET}"
+    echo -e "${PURPLE}Skipping package installs${RESET}"
     return
   fi
   # Mac OS
   if [ "$system_type" = "Darwin" ]; then
     intall_macos_packages
+  fi
+  # If running in Linux desktop mode, prompt to install desktop apps via Flatpak
+  flatpak_script="${DOTFILES_DIR}/installs/flatpak.sh"
+  if [[ $(uname -s) == "Linux" ]] && [ ! -z $XDG_CURRENT_DESKTOP ] && [ -f $flatpak_script ]; then
+    chmod +x $flatpak_script
+    $flatpak_script
   fi
 }
 
