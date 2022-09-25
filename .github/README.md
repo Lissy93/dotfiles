@@ -20,6 +20,7 @@
     - [Aliases](#aliases)
     - [Utilities](#utilities)
     - [Packages](#packages)
+    - [System Preferences](#system-preferences)
     - [ZSH](#zsh)
     - [Vim](#vim)
     - [Tmux](#tmux)
@@ -633,6 +634,28 @@ You will be prompted before anything is installed. Be sure to remove / comment o
 - Arch (and Arch-based systems, like Manjaro): [`pacman.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/pacman.sh) - Arch CLI apps installed via [pacman](https://wiki.archlinux.org/title/Pacman)
 - Debian (and Debian-based systems, like Ubuntu): [`apt.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/apt.sh) - Debian CLI apps installed via [apt](https://wiki.debian.org/Apt)
 - Alpine: [`apk.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/apk.sh) - Alpine CLI apps installed via [apk](https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html)
+
+---
+
+### System Preferences
+
+The installation script can also prompt you to confiture system settings and user preferences. This is useful for setting up a completely fresh system in just a few seconds.
+
+#### MacOS
+
+MacOS includes a utility named [`defaults`](https://real-world-systems.com/docs/defaults.1.html), which lets you configure all system and app preferences programatically through the command line. This is very powerful, as you can write a script that configures every aspect of your system enabling you to setup a brand new machine in seconds.
+
+All settings are then updated in the `.plist` files stored in `~/Library/Preferences`. This can also be used to configure preferences for any installed app on your system, where the application is specified by its domain identifier - you can view a full list of your configurable apps by running `defaults domains`.
+
+
+In my dotfiles, the MacOS preferences will configure everything from system security to launchpad layout. The Mac settings are located in [`system-specific/macos/system-settings/`](https://github.com/Lissy93/dotfiles/tree/master/system-specific/macos/system-settings), and are split into three files:
+- [`macos-security.sh`](https://github.com/Lissy93/dotfiles/blob/master/system-specific/macos/system-settings/macos-security.sh) - Sets essential security settings, disables telementry, disconnects unused ports, enforces signing, sets logout timeouts, and much more
+- [`macos-preferences.sh`](https://github.com/Lissy93/dotfiles/blob/master/system-specific/macos/system-settings/macos-preferences.sh) - Configures all user preferences, including computer name, highlight color, finder options, spotlight settings, hardware preferences and more
+- [`macos-apps.sh`](https://github.com/Lissy93/dotfiles/blob/master/system-specific/macos/system-settings/macos-apps.sh) - Applies preferences to any installed desktop apps, such as Terminal, Time Machine, Photos, Spotify, and many others
+
+Upon running each script, a summary of what will be changed will be shown, and you'll be prompted as to weather you'd like to continue. Each script also handles permissions, compatibility checking, and graceful fallbacks. Backup of original settings will be made, and a summary of all changes made will be logged as output when the script is complete.
+
+If you choose to run any of these scripts, take care to read it through first, to ensure you understand what changes will be made, and optionally update or remove anything as you see fit.
 
 ---
 
