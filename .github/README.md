@@ -20,6 +20,7 @@
     - [Aliases](#aliases)
     - [Utilities](#utilities)
     - [Packages](#packages)
+    - [System Preferences](#system-preferences)
     - [ZSH](#zsh)
     - [Vim](#vim)
     - [Tmux](#tmux)
@@ -203,6 +204,7 @@ Once the repo is cloned, you can modify whatever files you like before running t
     ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/tmux" title="Tmux Configs">tmux/</a>
     ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/vim" title="Vim Configs">vim/</a>
     ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/zsh" title="ZSH Configs">zsh/</a>
+    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/installs" title="List of packages to install">installs/</a>
     ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/.github" title="Repo Meta">.github/</a>
     ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh" title="Remote Setup Initiator">lets-go.sh</a>
     └── <a href="https://github.com/Lissy93/dotfiles/blob/master/install.sh" title="Setup Script">install.sh</a>
@@ -621,17 +623,39 @@ bash <(curl -s https://raw.githubusercontent.com/Lissy93/dotfiles/master/utils/w
 
 ### Packages
 
+The dotfile installation script can also, detect which system and environemnt you're running, and optionally prompt to install packages and applications.
 
-The dotfiles can also optionally install any packages that you may need. This is useful for quickly setting up new systems, but it's important that you remove / comment out any packages that you don't need.
+Package lists are stored in [`installs/`](https://github.com/Lissy93/dotfiles/tree/master/installs) directory, with separate files for different OSs. The install script will [pick the appropriate file](https://github.com/Lissy93/dotfiles/blob/22c6a04fdb22c140448b7d15ef8187c3a424ab47/install.sh#L243-L260) based on your distro.
 
-The list of software is stored in the [`installs/`]() directory, and the file that's used will vary depending on the host operating system.
+You will be prompted before anything is installed. Be sure to remove / comment out anything you do not need before proceeding.
 
-- Arch (and Arch-based systems, like Manjaro) - []() uses pacman
-- Debian (and Debian-based systems, like Ubuntu) - []() uses apt
-- Alpine - []() uses [apk](https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html)
-- Mac OS - [`.Brewfile`]() uses [Homebrew](https://brew.sh/)
-- Windows - [`windows.sh`]() uses [winget](https://docs.microsoft.com/en-us/windows/package-manager/winget/) and [scoop](https://scoop.sh/)
+- Linux (desktop): [`flatpak.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/flatpak.sh) - Desktop apps can be installed on Linux systems via [Flatpack](https://flatpak.org/)
+- Mac OS: [`.Brewfile`](https://github.com/Lissy93/dotfiles/blob/master/installs/Brewfile) - Mac apps installed via [Homebrew](https://brew.sh/)
+- Arch (and Arch-based systems, like Manjaro): [`pacman.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/pacman.sh) - Arch CLI apps installed via [pacman](https://wiki.archlinux.org/title/Pacman)
+- Debian (and Debian-based systems, like Ubuntu): [`apt.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/apt.sh) - Debian CLI apps installed via [apt](https://wiki.debian.org/Apt)
+- Alpine: [`apk.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/apk.sh) - Alpine CLI apps installed via [apk](https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html)
 
+---
+
+### System Preferences
+
+The installation script can also prompt you to confiture system settings and user preferences. This is useful for setting up a completely fresh system in just a few seconds.
+
+#### MacOS
+
+MacOS includes a utility named [`defaults`](https://real-world-systems.com/docs/defaults.1.html), which lets you configure all system and app preferences programatically through the command line. This is very powerful, as you can write a script that configures every aspect of your system enabling you to setup a brand new machine in seconds.
+
+All settings are then updated in the `.plist` files stored in `~/Library/Preferences`. This can also be used to configure preferences for any installed app on your system, where the application is specified by its domain identifier - you can view a full list of your configurable apps by running `defaults domains`.
+
+
+In my dotfiles, the MacOS preferences will configure everything from system security to launchpad layout. The Mac settings are located in [`system-specific/macos/system-settings/`](https://github.com/Lissy93/dotfiles/tree/master/system-specific/macos/system-settings), and are split into three files:
+- [`macos-security.sh`](https://github.com/Lissy93/dotfiles/blob/master/system-specific/macos/system-settings/macos-security.sh) - Sets essential security settings, disables telementry, disconnects unused ports, enforces signing, sets logout timeouts, and much more
+- [`macos-preferences.sh`](https://github.com/Lissy93/dotfiles/blob/master/system-specific/macos/system-settings/macos-preferences.sh) - Configures all user preferences, including computer name, highlight color, finder options, spotlight settings, hardware preferences and more
+- [`macos-apps.sh`](https://github.com/Lissy93/dotfiles/blob/master/system-specific/macos/system-settings/macos-apps.sh) - Applies preferences to any installed desktop apps, such as Terminal, Time Machine, Photos, Spotify, and many others
+
+Upon running each script, a summary of what will be changed will be shown, and you'll be prompted as to weather you'd like to continue. Each script also handles permissions, compatibility checking, and graceful fallbacks. Backup of original settings will be made, and a summary of all changes made will be logged as output when the script is complete.
+
+If you choose to run any of these scripts, take care to read it through first, to ensure you understand what changes will be made, and optionally update or remove anything as you see fit.
 
 ---
 
