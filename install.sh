@@ -35,14 +35,19 @@ PURPLE='\033[0;35m'
 # Other params
 PROMPT_TIMEOUT=15 # When user is prompted for input, skip after x seconds
 
-# Clear the screen
-clear
-
 # Start timer
 start_time=`date +%s`
 
 # Get system type - Linux / MacOS (Darwin)
 system_type=$(uname -s)
+
+# Get any passed in parameters
+params=$*
+
+# Clear the screen
+if [[ ! $params == *"--no-clear"* ]]; then
+  clear
+fi
 
 # Function that prints important text in a banner with colored border
 # First param is the text to output, then optional color and padding
@@ -280,7 +285,7 @@ function finishing_up () {
 }
 
 # If --help flag passed in, just show the help menu
-if [[ $* == "--help" ]]; then
+if [[ $params == *"--help"* ]]; then
   make_intro
   exit 0
 fi
