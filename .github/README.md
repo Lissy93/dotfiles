@@ -635,6 +635,267 @@ You will be prompted before anything is installed. Be sure to remove / comment o
 - Debian (and Debian-based systems, like Ubuntu): [`apt.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/apt.sh) - Debian CLI apps installed via [apt](https://wiki.debian.org/Apt)
 - Alpine: [`apk.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/apk.sh) - Alpine CLI apps installed via [apk](https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html)
 
+The following section lists different apps that may be installed for each category:
+
+### Apps
+
+#### Command Line
+
+<details>
+<summary>CLI Essentials</summary>
+
+- `git` - Version controll
+- `neovim` - Text editor
+- `ranger` - Directory browser
+- `tmux` - Term multiplexer
+
+</details>
+
+<details>
+<summary>CLI Basics</summary>
+
+- `aria2` - Resuming download util _(better wget)_
+- `bat` - Output highlighting _(better cat)_
+- `ctags` - Indexing of file info + headers
+- `diff-so-fancy` -# Readable file compares _(better diff)_
+- `exa` - Listing files with info _(better ls)_
+- `fzf` - Fuzzy file finder and filtering
+- `hyperfine` - Benchmarking for arbitrary commands
+- `jq` - JSON parser
+- `lfs` - Get info on mounted disks _(better df)_
+- `procs` - Advanced process viewer _(better ps)_
+- `ripgrep` - Searching within files _(better grep)_
+- `scc` - Count lines of code _(better cloc)_
+- `sd` - RegEx find and replace _(better sed)_
+- `thefuck` - Auto-correct miss-typed commands
+- `tldr` - Community-maintained docs _(better man)_
+- `tree` - Directory listings as tree
+- `trash-cli` - Record + restore removed files
+- `xsel` - Copy paste access to X clipboard
+- `zoxide` - Easy navigation _(better cd)_
+
+</details>
+
+<details>
+<summary>CLI Monitoring and Performance Apps</summary>
+
+- `bandwhich` - Bandwidth utilization monitor 
+- `ctop` - Container metrics and monitoring
+- `bpytop` - Resource monitoring _(like htop)_
+- `glances` - Resource monitor + web and API
+- `gping` - Interactive ping tool, with graph
+- `ncdu` - Disk usage analyzer and monitor _(better du)_
+- `speedtest-cli` -# Command line speed test utility
+
+</details>
+
+<details>
+<summary>CLI Productivity Apps</summary>
+
+- `browsh` - CLI web browser
+- `buku` - Bookmark manager
+- `cmus` - Music browser / player
+- `khal` - Calendar client
+- `mutt` - Email client
+- `newsboat` - RSS / ATOM news reader
+- `rclone` - Manage cloud storage
+- `task` - Todo + task management
+
+</details>
+
+
+
+
+<details>
+<summary>CLI Dev Suits</summary>
+
+- `httpie` - HTTP / API testing testing client
+- `lazydocker` - Full Docker management app
+- `lazygit` - Full Git managemtne app
+
+</details>
+
+<details>
+<summary>CLI External Sercvices</summary>
+
+- `ngrok` - Reverse proxy for sharing localhost
+- `tmate` - Share a terminal session via internet
+- `pbgopy` - Cross-device copy and paste service
+- `asciinema` - Recording + sharing terminal sessions
+- `googler` - Fetch search results from Google
+- `gotty` - Expose terminal sessaion via browser
+- `navi` - Browse, search, read cheat sheets
+
+</details>
+
+<details>
+<summary>CLI Fun</summary>
+
+- `cowsay` - Have an ASCII cow say your message
+- `figlet` - Output text as big ASCII art text
+- `lolcat` - Make console output raibow colored
+- `neofetch` - Show system data and ditstro info
+- `pipes-sh` - Cool terminal pipe screen saver
+- `pv` - Pipe viewer, with animation options
+
+</details>
+
+#### Software Development
+
+<details>
+<summary>Development Apps</summary>
+
+- `android-studio` - IDE for Android development
+- `boop` - Test transformation tool
+- `gradle` - Build automation for Java
+- `iterm2` - Better terminal emulator
+- `postman` - HTTP API testing app
+- `sourcetree` - Git visual client
+- `utm` - VM management console
+- `visual-studio-code` - Code editor
+
+</details>
+
+<details>
+<summary>Development Langs, Compilers, Package Managers and SDKs</summary>
+
+- `docker` - Containers
+- `gcc` - GNU C++ compilers
+- `go` - Compiler for Go Lang
+- `lua` - Lua interpreter
+- `luarocks` - Package manager for Lua
+- `node` - Node.js
+- `nvm` - Switching node versions
+- `openjdk` - Java development kit
+- `python` - Python interpriter
+- `rust` - Rust language
+- `android-sdk` - Android software dev kit
+
+</details>
+
+<details>
+<summary>Development Utils</summary>
+
+- `gh` - Interact with GitHub PRs, issues, repos
+- `scrcpy` - Display and control Andrdroid devices
+- `terminal-notifier` - Trigger Mac notifications from terminal
+- `tig` - Text-mode interface for git
+- `ttygif` - Generate GIF from terminal commands + output
+
+</details>
+
+<details>
+<summary>Network and Security Testing</summary>
+
+- `bettercap` - Network, scanning and moniroting
+- `nmap` - Port scanning
+- `wrk` - HTTP benchmarking
+- `burp-suite` - Web security testing
+- `metasploit` - Pen testing framework
+- `owasp-zap` - Web app security scanner
+- `wireshark` - Network analyzer + packet capture
+
+</details>
+
+<details>
+<summary>Security Utilities</summary>
+
+- `bcrypt` - Encryption utility, using blowfish
+- `clamav` - Open source virus scanning suite
+- `gpg-suite` - PGP encryption for emails and files
+- `git-crypt` - Transparent encryption for git repos
+- `lynis` - Scan system for common security issues
+- `openssl` - Cryptography and SSL/TLS Toolkit
+- `rkhunter` - Search / detect potential root kits
+- `veracrypt` - File and volume encryption
+
+</details>
+
+#### Desktop Applications
+
+<details>
+<summary>Creativity</summary>
+
+- audacity - Audio editor / recorder
+- gimp - Photo editor
+- handbrake - Video transcoder
+- inkscape - Vector editor
+- obs - Screencasting / recording
+- shotcut - Video editor
+
+</details>
+
+<details>
+<summary>Media</summary>
+
+- calibre - E-Book reader
+- spotify - Propietary music streaming
+- transmission - Torrent client
+- vlc - Media player
+- pandoc - Universal file converter
+- youtube-dl - YouTube video downloader
+
+</details>
+
+<details>
+<summary>Personal Applications</summary>
+
+- 1password - Password manager _(proprietary)_
+- tresorit - Encrypted file backup _(proprietary)_
+- standard-notes - Encrypted synced notes
+- signal - Link to encrypted mobile messenger
+- ledger-live - Crypto hardware wallet manager
+- mountain-duck - Mount remote storage locations
+- protonmail-bridge - Decrypt ProtonMail emails
+- protonvpn - Client app for ProtonVPN
+
+</details>
+
+<details>
+<summary>Browsers</summary>
+
+- firefox
+- chromium
+- tor
+
+</details>
+
+#### MacOS Apps
+
+<details>
+<summary>MacOS Mods and Imrovments</summary>
+
+- `alt-tab` - Much better alt-tab window switcher
+- `anybar` - Custom programatic menubar icons
+- `copyq` - Clipboard manager _(cross platform)_
+- `espanso` - Live text expander _(cross-platform)_
+- `finicky` - Website-specific default browser
+- `hiddenbar` - Hide / show annoying menubar icons
+- `iproute2mac` - MacOS port of netstat and ifconfig
+- `lporg` - Backup and restore launchpad layout
+- `m-cli` - All in one MacOS management CLI app
+- `mjolnir` - Util for loading Lua automations
+- `openinterminal` - Finder button, opens directory in terminal
+- `popclip` - Popup options for text on highlight
+- `raycast` - Spotlight alternative
+- `shottr` - Better screenshot utility
+- `skhd` - Hotkey daemon for macOS
+- `stats` - System resource usage in menubar
+- `yabai` - Tiling window manager
+
+</details>
+
+<details>
+<summary>MacOS Utility Apps</summary>
+
+- coteditor - Just a simple plain-text editor
+- little-snitch - Firewall app viewing / blocking traffic
+- keka - File archiver and extractor
+- onyx - Repair util for verifying system files
+- daisydisk - Disk space analyzer and cleaner
+
+</details>
+
 ---
 
 ### System Preferences
