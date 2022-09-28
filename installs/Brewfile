@@ -42,7 +42,8 @@ brew 'diff-so-fancy'# Readable file compares (better diff)
 brew 'exa'          # Listing files with info (better ls)
 brew 'fzf'          # Fuzzy file finder and filtering
 brew 'hyperfine'    # Benchmarking for arbitrary commands
-brew 'jq'           # JSON parser
+brew 'just'         # Powerful command runner (better make)
+brew 'jq'           # JSON parser, output and query files
 brew 'duf'          # Get info on mounted disks (better df)
 brew 'procs'        # Advanced process viewer (better ps)
 brew 'ripgrep'      # Searching within files (better grep)
@@ -50,27 +51,29 @@ brew 'scc'          # Count lines of code (better cloc)
 brew 'sd'           # RegEx find and replace (better sed)
 brew 'thefuck'      # Auto-correct miss-typed commands
 brew 'tldr'         # Community-maintained docs (better man)
-brew 'tree'         # Directory listings as tree
-brew 'trash-cli'    # Record + restore removed files
-brew 'xsel'         # Copy paste access to X clipboard
-brew 'zoxide'       # Easy navigation (better cd)
+brew 'tree'         # Directory listings as tree structure
+brew 'trash-cli'    # Record and restore removed files
+brew 'xsel'         # Copy paste access to the X clipboard
+brew 'zoxide'       # Auto-learning navigation (better cd)
 
 # CLI Monitoring and Performance Apps
-brew 'bandwhich'    # Bandwidth utilization monitor 
+brew 'bmon'         # Bandwidth utilization monitor 
 brew 'ctop'         # Container metrics and monitoring
 brew 'bpytop'       # Resource monitoring (like htop)
 brew 'glances'      # Resource monitor + web and API
+brew 'goaccess'     # Web log analyzer and viewer
 brew 'gping'        # Interactive ping tool, with graph
 brew 'ncdu'         # Disk usage analyzer and monitor (better du)
 brew 'speedtest-cli'# Command line speed test utility
 
 # CLI Productivity Apps
-brew 'browsh'       # CLI web browser
+brew 'browsh'       # Web browser, in terminal
 brew 'buku'         # Bookmark manager
-brew 'cmus'         # Music browser / player
+brew 'cmus'         # Music player
 brew 'khal'         # Calendar client
 brew 'mutt'         # Email client
-brew 'newsboat'     # RSS / ATOM news reader
+brew 'newsboat'     # RSS / ATOM reader
+brew 'pass'         # Password store
 brew 'rclone'       # Manage cloud storage
 brew 'task'         # Todo + task management
 
@@ -83,7 +86,6 @@ brew 'lazygit'      # Full Git managemtne app
 cask 'ngrok'        # Reverse proxy for sharing localhost
 brew 'tmate'        # Share a terminal session via internet
 brew 'asciinema'    # Recording + sharing terminal sessions
-brew 'googler'      # Fetch search results from Google
 brew 'navi'         # Browse, search, read cheat sheets
 
 # CLI Fun
@@ -123,10 +125,12 @@ cask 'android-sdk'    # Android software dev kit
 
 # Development Utils
 brew 'gh'             # Interact with GitHub PRs, issues, repos
+brew 'git-extras'     # Extra git commands for common tasks
 brew 'scrcpy'         # Display and control Andrdroid devices
 brew 'terminal-notifier' # Trigger Mac notifications from terminal
 brew 'tig'            # Text-mode interface for git
 brew 'ttygif'         # Generate GIF from terminal commands + output
+brew 'watchman'       # Watch for changes and reload dev server
 
 # Network and Security Testing
 brew 'bettercap'  # Network, scanning and moniroting
