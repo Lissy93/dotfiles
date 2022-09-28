@@ -1,10 +1,14 @@
-# ~/.Brewfile
-#
-# List of packages to be installed / updated via Homebrew
-# Apps are sorted by category, and arranged alphabetically
-# Be sure to delete / comment out anything you do not need
-# Usage, run: $ brew bundle --global --file $HOME/.Brewfile
-# See brew docs for more info: https://docs.brew.sh/Manpage
+#############################################################
+# ~/.Brewfile - Software Installs for MacOS                 #
+#                                                           #
+# List of packages to be installed / updated via Homebrew   #
+# Apps are sorted by category, and arranged alphabetically  #
+# Be sure to delete / comment out anything you do not need  #
+# Usage, run: $ brew bundle --global --file $HOME/.Brewfile #
+# See brew docs for more info: https://docs.brew.sh/Manpage #
+#                                                           #
+# License: MIT © Alicia Sykes 2022 <https://aliciasykes.com>#
+#############################################################
 
 # Options
 cask_args appdir: '~/Applications', require_sha: true
@@ -13,53 +17,86 @@ cask_args appdir: '~/Applications', require_sha: true
 tap 'homebrew/bundle'
 tap 'homebrew/core'
 tap 'homebrew/services'
-tap 'espanso/espanso'
-tap 'koekeishiya/formulae'
 tap 'blacktop/tap'
+tap 'browsh-org/homebrew-browsh'
+tap 'espanso/espanso'
 tap 'jesseduffield/lazygit'
+tap 'koekeishiya/formulae'
+
+#############################################################
+# Command Line                                              #
+#############################################################
 
 # CLI Essentials
-brew 'git'
-brew 'neovim'
-brew 'ranger'
-brew 'tmux'
+brew 'git'        # Version controll
+brew 'neovim'     # Text editor
+brew 'ranger'     # Directory browser
+brew 'tmux'       # Term multiplexer
 
-# CLI Utils
+# CLI Basics
+brew 'aria2'        # Resuming download util (better wget)
+brew 'bat'          # Output highlighting (better cat)
+brew 'broot'        # Interactive directory navigation
 brew 'ctags'        # Indexing of file info + headers
-brew 'exa'          # Better ls
-brew 'fzf'          # Fuzzy file finder
-brew 'iproute2mac'  # MacOS port of netstat and ifconfig
+brew 'diff-so-fancy'# Readable file compares (better diff)
+brew 'exa'          # Listing files with info (better ls)
+brew 'fzf'          # Fuzzy file finder and filtering
+brew 'hyperfine'    # Benchmarking for arbitrary commands
 brew 'jq'           # JSON parser
-brew 'scc'          # Code counter, like cloc
-brew 'tldr'         # Community-maintained man pages
-brew 'tree'         # Directory listings as tree
-brew 'xsel'         # Copy paste access to X clipboard
+brew 'duf'          # Get info on mounted disks (better df)
+brew 'procs'        # Advanced process viewer (better ps)
+brew 'ripgrep'      # Searching within files (better grep)
+brew 'scc'          # Count lines of code (better cloc)
+brew 'sd'           # RegEx find and replace (better sed)
 brew 'thefuck'      # Auto-correct miss-typed commands
+brew 'tldr'         # Community-maintained docs (better man)
+brew 'tree'         # Directory listings as tree
+brew 'trash-cli'    # Record + restore removed files
+brew 'xsel'         # Copy paste access to X clipboard
+brew 'zoxide'       # Easy navigation (better cd)
 
 # CLI Monitoring and Performance Apps
 brew 'bandwhich'    # Bandwidth utilization monitor 
-brew 'bpytop'       # Resource monitoring, like htop
-brew 'glances'      # Resource monitor, web interface + API
+brew 'ctop'         # Container metrics and monitoring
+brew 'bpytop'       # Resource monitoring (like htop)
+brew 'glances'      # Resource monitor + web and API
 brew 'gping'        # Interactive ping tool, with graph
+brew 'ncdu'         # Disk usage analyzer and monitor (better du)
 brew 'speedtest-cli'# Command line speed test utility
 
 # CLI Productivity Apps
-brew 'buku'         # Bookmark manager app
-brew 'khal'         # Calendar app
-brew 'mutt'         # Email client app
-brew 'task'         # Todo and task management app
-
-# CLI Fun
-brew 'pv'           # Pipe viewer, with animation options
-brew 'neofetch'     # Show system data and ditstro info
-brew 'lolcat'       # Make console output raibow colored
-brew 'figlet'       # Output text as big ASCII art text
-brew 'cowsay'       # Have an ASCII cow say your message
+brew 'browsh'       # CLI web browser
+brew 'buku'         # Bookmark manager
+brew 'cmus'         # Music browser / player
+brew 'khal'         # Calendar client
+brew 'mutt'         # Email client
+brew 'newsboat'     # RSS / ATOM news reader
+brew 'rclone'       # Manage cloud storage
+brew 'task'         # Todo + task management
 
 # CLI Development Suits
 brew 'httpie'       # HTTP / API testing testing client
 brew 'lazydocker'   # Full Docker management app
 brew 'lazygit'      # Full Git managemtne app
+
+# CLI External Sercvices
+cask 'ngrok'        # Reverse proxy for sharing localhost
+brew 'tmate'        # Share a terminal session via internet
+brew 'asciinema'    # Recording + sharing terminal sessions
+brew 'googler'      # Fetch search results from Google
+brew 'navi'         # Browse, search, read cheat sheets
+
+# CLI Fun
+brew 'cowsay'       # Have an ASCII cow say your message
+brew 'figlet'       # Output text as big ASCII art text
+brew 'lolcat'       # Make console output raibow colored
+brew 'neofetch'     # Show system data and ditstro info
+brew 'pipes-sh'     # Cool terminal pipe screen saver
+brew 'pv'           # Pipe viewer, with animation options
+
+#############################################################
+# Software Development                                      #
+#############################################################
 
 # Development Apps
 cask 'android-studio' # IDE for Android development
@@ -71,50 +108,48 @@ cask 'sourcetree'     # Git visual client
 cask 'utm'            # VM management console
 cask 'visual-studio-code' # Code editor
 
-# Development Utils
-brew 'gh'     # Interact with GitHub PRs, issues, repos
-cask 'ngrok'  # Reverse proxy for development / testing
-brew 'scrcpy' # Display and control Andrdroid devices
-brew 'terminal-notifier' # Trigger Mac notifications from terminal
-
 # Development Langs, Compilers, Package Managers and SDKs
-cask 'android-sdk'
-brew 'docker'
-brew 'gcc'
-brew 'go'
-brew 'lua'
-brew 'luarocks'   # Package manager for Lua
-brew 'node'       # Node.js
-brew 'nvm'        # Switching node versions
-brew 'openjdk'    # Java development kit
-brew 'python'
-brew 'rust'
+brew 'docker'         # Containers
+brew 'gcc'            # GNU C++ compilers
+brew 'go'             # Compiler for Go Lang
+brew 'lua'            # Lua interpreter
+brew 'luarocks'       # Package manager for Lua
+brew 'node'           # Node.js
+brew 'nvm'            # Switching node versions
+brew 'openjdk'        # Java development kit
+brew 'python'         # Python interpriter
+brew 'rust'           # Rust language
+cask 'android-sdk'    # Android software dev kit
+
+# Development Utils
+brew 'gh'             # Interact with GitHub PRs, issues, repos
+brew 'scrcpy'         # Display and control Andrdroid devices
+brew 'terminal-notifier' # Trigger Mac notifications from terminal
+brew 'tig'            # Text-mode interface for git
+brew 'ttygif'         # Generate GIF from terminal commands + output
 
 # Network and Security Testing
+brew 'bettercap'  # Network, scanning and moniroting
 brew 'nmap'       # Port scanning
 brew 'wrk'        # HTTP benchmarking
 cask 'burp-suite' # Web security testing
 cask 'metasploit' # Pen testing framework
 cask 'owasp-zap'  # Web app security scanner
 cask 'wireshark'  # Network analyzer + packet capture
-brew 'bettercap'  # Network, scanning and moniroting
 
 # Security Utilities
 brew 'bcrypt'     # Encryption utility, using blowfish
-brew 'git-crypt'  # Transparent encryption for git repos
-cask 'gpg-suite'  # PGP encryption for emails and files
-brew 'openssl'    # Cryptography and SSL/TLS Toolkit
-cask 'veracrypt'  # File and volume encryption
-brew 'lynis'      # Scan system for common security issues
 brew 'clamav'     # Open source virus scanning suite
+cask 'gpg-suite'  # PGP encryption for emails and files
+brew 'git-crypt'  # Transparent encryption for git repos
+brew 'lynis'      # Scan system for common security issues
+brew 'openssl'    # Cryptography and SSL/TLS Toolkit
 brew 'rkhunter'   # Search / detect potential root kits
+cask 'veracrypt'  # File and volume encryption
 
-# Fonts
-tap 'homebrew/cask-fonts'
-cask 'font-fira-code'
-cask 'font-hack'
-cask 'font-inconsolata'
-cask 'font-meslo-lg-nerd-font'
+#############################################################
+# Desktop Applications                                      #
+#############################################################
 
 # Mac OS Mods and Imrovments
 cask 'alt-tab'        # Much better alt-tab window switcher
@@ -123,6 +158,7 @@ cask 'copyq'          # Clipboard manager (cross platform)
 cask 'espanso'        # Live text expander (cross-platform)
 cask 'finicky'        # Website-specific default browser
 cask 'hiddenbar'      # Hide / show annoying menubar icons
+brew 'iproute2mac'    # MacOS port of netstat and ifconfig
 brew 'lporg'          # Backup and restore launchpad layout
 brew 'm-cli'          # All in one MacOS management CLI app
 cask 'mjolnir'        # Util for loading Lua automations
@@ -142,9 +178,9 @@ cask 'onyx'           # Repair util for verifying system files
 cask 'daisydisk', args: { require_sha: false }  # Disk space analyzer and cleaner
 
 # Creativity
-brew 'handbrake'      # Video transcoder
 cask 'audacity'       # Audio editor / recorder
 cask 'gimp'           # Photo editor
+brew 'handbrake'      # Video transcoder
 cask 'inkscape'       # Vector editor
 cask 'obs'            # Screencasting / recording
 cask 'shotcut'        # Video editor
@@ -154,6 +190,8 @@ cask 'calibre'        # E-Book reader
 cask 'spotify', args: { require_sha: false } # Propietary music streaming
 cask 'transmission'   # Torrent client
 cask 'vlc'            # Media player
+brew 'pandoc'         # Universal file converter
+brew 'youtube-dl'     # YouTube video downloader
 
 # Personal Applications
 cask '1password'      # Password manager (proprietary)
@@ -169,3 +207,12 @@ cask 'protonvpn'      # Client app for ProtonVPN
 cask 'firefox'
 cask 'chromium'
 cask 'orion'
+
+# Fonts
+tap 'homebrew/cask-fonts'
+cask 'font-fira-code'
+cask 'font-hack'
+cask 'font-inconsolata'
+cask 'font-meslo-lg-nerd-font'
+
+# EOF
