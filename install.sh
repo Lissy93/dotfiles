@@ -33,20 +33,20 @@ GREEN='\033[0;32m'
 PURPLE='\033[0;35m'
 
 # Other params
+start_time=`date +%s` # Start timer
 PROMPT_TIMEOUT=15 # When user is prompted for input, skip after x seconds
-
-# Start timer
-start_time=`date +%s`
-
-# Get system type - Linux / MacOS (Darwin)
-system_type=$(uname -s)
-
-# Get any passed in parameters
-params=$*
+system_type=$(uname -s) # Get system type - Linux / MacOS (Darwin)
+params=$* # Get passed in params
 
 # Clear the screen
 if [[ ! $params == *"--no-clear"* ]]; then
   clear
+fi
+
+# If set to auto-yes - then don't wait for user reply
+if [[ $params == *"--auto-yes"* ]]; then
+  PROMPT_TIMEOUT=1
+  REPLY='Y'
 fi
 
 # Function that prints important text in a banner with colored border
