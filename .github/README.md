@@ -215,9 +215,9 @@ Once the repo is cloned, you can modify whatever files you like before running t
 
 ### Configuring
 
-The locations for all symlinks are defined in [`.install.conf.yaml`](https://github.com/Lissy93/dotfiles/blob/master/.install.conf.yaml). These are managed using [Dotbot](https://github.com/anishathalye/dotbot), and will be applied whenever you run the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. The symlinks set locations based on XDG paths, all of which are defined in [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/zsh/.zshenv).
+The locations for all symlinks are defined in [`symlinks.yaml`](https://github.com/Lissy93/dotfiles/blob/master/symlinks.yaml). These are managed using [Dotbot](https://github.com/anishathalye/dotbot), and will be applied whenever you run the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. The symlinks set locations based on XDG paths, all of which are defined in [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/zsh/.zshenv).
 
-The bootstrap configurations are idempotent (and so the installer can be run multiple times without causing any problems). To only install certain parts of the config, pass the `--only` flag to the install.sh script, similarly `--except` can be used to exclude certain directives.
+The bootstrap configurations are idempotent (and so the installer can be run multiple times without causing any problems). 
 
 ---
 
@@ -227,11 +227,16 @@ The bootstrap configurations are idempotent (and so the installer can be run mul
 
 An alias is simply a command shortcut. These are very useful for shortening long or frequently used commands.
 
+<details>
+<summary>How to use Aliases</summary>
+
 For example, if you often find yourself typing `git add .` you could add an alias like `alias gaa='git add .'`, then just type `gaa`. You can also override existing commands, for example to always show hidden files with `ls` you could set `alias ls='ls -a'`.
 
 Aliases should almost always be created at the user-level, and then sourced from your shell config file (usually `.bashrc` or `.zshrc`). System-wide aliases would be sourced from `/etc/profile`. Don't forget that for your changes to take effect, you'll need to restart your shell, or re-source the file containing your aliases, e.g. `source ~/.zshrc`.
 
 You can view a list of defined aliases by running `alias`, or search for a specific alias with `alias | grep 'search-term'`. The `unalias` command is used for removing aliases.
+
+</details>
 
 #### My Aliases
 
@@ -637,8 +642,6 @@ You will be prompted before anything is installed. Be sure to remove / comment o
 
 The following section lists different apps that may be installed for each category:
 
-### Apps
-
 #### Command Line
 
 <details>
@@ -702,9 +705,6 @@ The following section lists different apps that may be installed for each catego
 - `task` - Todo + task management
 
 </details>
-
-
-
 
 <details>
 <summary>CLI Dev Suits</summary>
