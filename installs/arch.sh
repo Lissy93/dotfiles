@@ -12,10 +12,75 @@
 
 # Apps to be installed via Pacman
 pacman_apps=(
+  # Essentials
+  'git'          # Version controll
+  'neovim'       # Text editor
+  'ranger'       # Directory browser
+  'tmux'         # Term multiplexer
 
+  # Basics
+  'aria2'        # Resuming download util (better wget)
+  'bat'          # Output highlighting (better cat)
+  'broot'        # Interactive directory navigation
+  'ctags'        # Indexing of file info + headers
+  'diff-so-fancy'# Readable file compares (better diff)
+  'exa'          # Listing files with info (better ls)
+  'fzf'          # Fuzzy file finder and filtering
+  'hyperfine'    # Benchmarking for arbitrary commands
+  'just'         # Powerful command runner (better make)
+  'jq'           # JSON parser, output and query files
+  'duf'          # Get info on mounted disks (better df)
+  'procs'        # Advanced process viewer (better ps)
+  'ripgrep'      # Searching within files (better grep)
+  'scc'          # Count lines of code (better cloc)
+  'sd'           # RegEx find and replace (better sed)
+  'thefuck'      # Auto-correct miss-typed commands
+  'tldr'         # Community-maintained docs (better man)
+  'tree'         # Directory listings as tree structure
+  'trash-cli'    # Record and restore removed files
+  'xsel'         # Copy paste access to the X clipboard
+  'zoxide'       # Auto-learning navigation (better cd)
+
+  # Monitoring
+  'bmon'         # Bandwidth utilization monitor 
+  'ctop'         # Container metrics and monitoring
+  'bpytop'       # Resource monitoring (like htop)
+  'glances'      # Resource monitor + web and API
+  'goaccess'     # Web log analyzer and viewer
+  'gping'        # Interactive ping tool, with graph
+  'ncdu'         # Disk usage analyzer and monitor (better du)
+  'speedtest-cli'# Command line speed test utility
+
+  # Productivity Apps
+  'browsh'       # Web browser, in terminal
+  'buku'         # Bookmark manager
+  'cmus'         # Music player
+  'khal'         # Calendar client
+  'mutt'         # Email client
+  'newsboat'     # RSS / ATOM reader
+  'pass'         # Password store
+  'rclone'       # Manage cloud storage
+  'task'         # Todo + task management
+
+  # Development Suits
+  'httpie'       # HTTP / API testing testing client
+  'lazydocker'   # Full Docker management app
+  'lazygit'      # Full Git managemtne app
+
+  # External Sercvices
+  'ngrok'        # Reverse proxy for sharing localhost
+  'tmate'        # Share a terminal session via internet
+  'asciinema'    # Recording + sharing terminal sessions
+  'navi'         # Browse, search, read cheat sheets
+
+  # Fun
+  'cowsay'       # Have an ASCII cow say your message
+  'figlet'       # Output text as big ASCII art text
+  'lolcat'       # Make console output raibow colored
+  'neofetch'     # Show system data and ditstro info
+  'pipes-sh'     # Cool terminal pipe screen saver
+  'pv'           # Pipe viewer, with animation options
 )
-
-
 
 # Colors
 CYAN_B='\033[1;96m'
