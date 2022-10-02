@@ -39,12 +39,13 @@ brew 'bat'          # Output highlighting (better cat)
 brew 'broot'        # Interactive directory navigation
 brew 'ctags'        # Indexing of file info + headers
 brew 'diff-so-fancy'# Readable file compares (better diff)
+brew 'duf'          # Get info on mounted disks (better df)
 brew 'exa'          # Listing files with info (better ls)
 brew 'fzf'          # Fuzzy file finder and filtering
 brew 'hyperfine'    # Benchmarking for arbitrary commands
 brew 'just'         # Powerful command runner (better make)
 brew 'jq'           # JSON parser, output and query files
-brew 'duf'          # Get info on mounted disks (better df)
+brew 'most'         # Multi-window scroll pager (better less)
 brew 'procs'        # Advanced process viewer (better ps)
 brew 'ripgrep'      # Searching within files (better grep)
 brew 'scc'          # Count lines of code (better cloc)

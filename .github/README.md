@@ -613,11 +613,12 @@ The following section lists different apps that may be installed for each catego
 - [`bat`](https://github.com/sharkdp/bat) - Output highlighting _(better cat)_
 - [`ctags`](https://github.com/universal-ctags/ctags) - Indexing of file info + headers
 - [`diff-so-fancy`](https://github.com/so-fancy/diff-so-fancy) - Readable file compares _(better diff)_
+- [`duf`](https://github.com/muesli/duf) - Get info on mounted disks _(better df)_
 - [`exa`](https://github.com/ogham/exa) - Listing files with info _(better ls)_
 - [`fzf`](https://github.com/junegunn/fzf) - Fuzzy file finder and filtering
 - [`hyperfine`](https://github.com/sharkdp/hyperfine) - Benchmarking for arbitrary commands
 - [`jq`](https://github.com/stedolan/jq) - JSON parser
-- [`lfs`](https://github.com/Canop/lfs) - Get info on mounted disks _(better df)_
+- [`most`](https://www.jedsoft.org/most/) - Multi-window scroll pager _(better less)_
 - [`procs`](https://github.com/dalance/procs) - Advanced process viewer _(better ps)_
 - [`ripgrep`](https://github.com/BurntSushi/ripgrep) - Searching within files _(better grep)_
 - [`scc`](https://github.com/boyter/scc) - Count lines of code _(better cloc)_
