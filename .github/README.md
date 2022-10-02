@@ -599,96 +599,96 @@ The following section lists different apps that may be installed for each catego
 <details>
 <summary>CLI Essentials</summary>
 
-- `git` - Version controll
-- `neovim` - Text editor
-- `ranger` - Directory browser
-- `tmux` - Term multiplexer
+- [`git`](https://git-scm.com/) - Version controll
+- [`neovim`](https://neovim.io/) - Text editor
+- [`ranger`](https://ranger.github.io/) - Directory browser
+- [`tmux`](https://github.com/tmux/tmux/wiki) - Term multiplexer
 
 </details>
 
 <details>
 <summary>CLI Basics</summary>
 
-- `aria2` - Resuming download util _(better wget)_
-- `bat` - Output highlighting _(better cat)_
-- `ctags` - Indexing of file info + headers
-- `diff-so-fancy` -# Readable file compares _(better diff)_
-- `exa` - Listing files with info _(better ls)_
-- `fzf` - Fuzzy file finder and filtering
-- `hyperfine` - Benchmarking for arbitrary commands
-- `jq` - JSON parser
-- `lfs` - Get info on mounted disks _(better df)_
-- `procs` - Advanced process viewer _(better ps)_
-- `ripgrep` - Searching within files _(better grep)_
-- `scc` - Count lines of code _(better cloc)_
-- `sd` - RegEx find and replace _(better sed)_
-- `thefuck` - Auto-correct miss-typed commands
-- `tldr` - Community-maintained docs _(better man)_
-- `tree` - Directory listings as tree
-- `trash-cli` - Record + restore removed files
-- `xsel` - Copy paste access to X clipboard
-- `zoxide` - Easy navigation _(better cd)_
+- [`aria2`](https://github.com/aria2/aria2) - Resuming download util _(better wget)_
+- [`bat`](https://github.com/sharkdp/bat) - Output highlighting _(better cat)_
+- [`ctags`](https://github.com/universal-ctags/ctags) - Indexing of file info + headers
+- [`diff-so-fancy`](https://github.com/so-fancy/diff-so-fancy) - Readable file compares _(better diff)_
+- [`exa`](https://github.com/ogham/exa) - Listing files with info _(better ls)_
+- [`fzf`](https://github.com/junegunn/fzf) - Fuzzy file finder and filtering
+- [`hyperfine`](https://github.com/sharkdp/hyperfine) - Benchmarking for arbitrary commands
+- [`jq`](https://github.com/stedolan/jq) - JSON parser
+- [`lfs`](https://github.com/Canop/lfs) - Get info on mounted disks _(better df)_
+- [`procs`](https://github.com/dalance/procs) - Advanced process viewer _(better ps)_
+- [`ripgrep`](https://github.com/BurntSushi/ripgrep) - Searching within files _(better grep)_
+- [`scc`](https://github.com/boyter/scc) - Count lines of code _(better cloc)_
+- [`sd`](https://github.com/chmln/sd) - RegEx find and replace _(better sed)_
+- [`thefuck`](https://github.com/nvbn/thefuck) - Auto-correct miss-typed commands
+- [`tldr`](https://github.com/tldr-pages/tldr) - Community-maintained docs _(better man)_
+- [`tree`](https://gitlab.com/OldManProgrammer/unix-tree) - Directory listings as tree
+- [`trash-cli`](https://github.com/andreafrancia/trash-cli) - Record + restore removed files
+- [`xsel`](https://github.com/kfish/xsel) - Copy paste access to X clipboard
+- [`zoxide`](https://github.com/ajeetdsouza/zoxide) - Easy navigation _(better cd)_
 
 </details>
 
 <details>
 <summary>CLI Monitoring and Performance Apps</summary>
 
-- `bandwhich` - Bandwidth utilization monitor 
-- `ctop` - Container metrics and monitoring
-- `bpytop` - Resource monitoring _(like htop)_
-- `glances` - Resource monitor + web and API
-- `gping` - Interactive ping tool, with graph
-- `ncdu` - Disk usage analyzer and monitor _(better du)_
-- `speedtest-cli` -# Command line speed test utility
+- [`bandwhich`](https://github.com/imsnif/bandwhich) - Bandwidth utilization monitor 
+- [`ctop`](https://github.com/bcicen/ctop) - Container metrics and monitoring
+- [`bpytop`](https://github.com/aristocratos/bpytop) - Resource monitoring _(like htop)_
+- [`glances`](https://github.com/nicolargo/glances) - Resource monitor + web and API
+- [`gping`](https://github.com/orf/gping) - Interactive ping tool, with graph
+- [`ncdu`](https://dev.yorhel.nl/ncdu) - Disk usage analyzer and monitor _(better du)_
+- [`speedtest-cli`](https://github.com/sivel/speedtest-cli) - Command line speed test utility
 
 </details>
 
 <details>
 <summary>CLI Productivity Apps</summary>
 
-- `browsh` - CLI web browser
-- `buku` - Bookmark manager
-- `cmus` - Music browser / player
-- `khal` - Calendar client
-- `mutt` - Email client
-- `newsboat` - RSS / ATOM news reader
-- `rclone` - Manage cloud storage
-- `task` - Todo + task management
+- [`browsh`](https://github.com/browsh-org/browsh) - CLI web browser
+- [`buku`](https://github.com/jarun/buku) - Bookmark manager
+- [`cmus`](https://github.com/cmus/cmus) - Music browser / player
+- [`khal`](https://github.com/pimutils/khal) - Calendar client
+- [`mutt`](https://gitlab.com/muttmua/mutt) - Email client
+- [`newsboat`](https://github.com/newsboat/newsboat) - RSS / ATOM news reader
+- [`rclone`](https://github.com/rclone/rclone) - Manage cloud storage
+- [`task`](https://github.com/GothenburgBitFactory/taskwarrior) - Todo + task management
 
 </details>
 
 <details>
 <summary>CLI Dev Suits</summary>
 
-- `httpie` - HTTP / API testing testing client
-- `lazydocker` - Full Docker management app
-- `lazygit` - Full Git managemtne app
+- [`httpie`]() - HTTP / API testing testing client
+- [`lazydocker`]() - Full Docker management app
+- [`lazygit`]() - Full Git managemtne app
 
 </details>
 
 <details>
 <summary>CLI External Sercvices</summary>
 
-- `ngrok` - Reverse proxy for sharing localhost
-- `tmate` - Share a terminal session via internet
-- `pbgopy` - Cross-device copy and paste service
-- `asciinema` - Recording + sharing terminal sessions
-- `googler` - Fetch search results from Google
-- `gotty` - Expose terminal sessaion via browser
-- `navi` - Browse, search, read cheat sheets
+- [`ngrok`]() - Reverse proxy for sharing localhost
+- [`tmate`]() - Share a terminal session via internet
+- [`pbgopy`]() - Cross-device copy and paste service
+- [`asciinema`]() - Recording + sharing terminal sessions
+- [`googler`]() - Fetch search results from Google
+- [`gotty`]() - Expose terminal sessaion via browser
+- [`navi`]() - Browse, search, read cheat sheets
 
 </details>
 
 <details>
 <summary>CLI Fun</summary>
 
-- `cowsay` - Have an ASCII cow say your message
-- `figlet` - Output text as big ASCII art text
-- `lolcat` - Make console output raibow colored
-- `neofetch` - Show system data and ditstro info
-- `pipes-sh` - Cool terminal pipe screen saver
-- `pv` - Pipe viewer, with animation options
+- [`cowsay`]() - Have an ASCII cow say your message
+- [`figlet`]() - Output text as big ASCII art text
+- [`lolcat`]() - Make console output raibow colored
+- [`neofetch`]() - Show system data and ditstro info
+- [`pipes-sh`]() - Cool terminal pipe screen saver
+- [`pv`]() - Pipe viewer, with animation options
 
 </details>
 
