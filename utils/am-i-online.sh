@@ -19,7 +19,7 @@ function aio_check-dns() {
 
 # Checks if can ping default getway
 function aio_ping-gateway() { 
-  ping -q -w 1 -c 1 `ip r | grep default | cut -d ' ' -f 3` > /dev/null && \
+  ping -q -c 1 `ip r | grep default | cut -d ' ' -f 3` > /dev/null && \
   echo -e "${pre_success} Gateway Availible${post_string}" || \
   echo -e "${pre_failure} Gateway Unavailible${post_string}"
 }
@@ -37,9 +37,11 @@ function aio_check-url() {
 
 # Checks there are network interfaces
 function aio_check-interfaces() {
-  for interface in $(ls /sys/class/net/ | grep -v lo); do
-    if [[ $(cat /sys/class/net/$interface/carrier) = 1 ]]; then OnLine=1; fi
-  done
+  if [[ -d /sys/class/net/ ]]; then
+    for interface in $(ls /sys/class/net/ | grep -v lo); do
+      if [[ $(cat /sys/class/net/$interface/carrier) = 1 ]]; then OnLine=1; fi
+    done
+  fi
   if ! [ $OnLine ]; then
     echo -e "${pre_failure} Interfaces not Configured${post_string}"
   else

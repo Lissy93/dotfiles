@@ -15,14 +15,18 @@
     - [Security](#security)
 - [My Dots](#my-dots)
     - [Setup](#setup)
+    - [Directory Structure](#directory-structure)
+    - [Configuring](#configuring)
     - [Aliases](#aliases)
     - [Utilities](#utilities)
     - [Packages](#packages)
+    - [System Preferences](#system-preferences)
     - [ZSH](#zsh)
     - [Vim](#vim)
     - [Tmux](#tmux)
     - [Git](#git)
     - [Dependencies](#dependencies)
+        
 ---
 
 ## Intro
@@ -152,12 +156,29 @@ Another solution, is to encrypt sensitive info. A great tool for this is [`pass`
 
 ## My Dotfiles
 
+> **Note**
+> This repo is still a work in progress
+
 ### Setup
 
 > **Warning**
 > Prior to running the setup script, read through everything and confirm it's what you want.
 
-To set everything up, just recursivley clone the repo, cd into it, allow execution of `install.sh` then run it to install.
+Let's Go!
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/Lissy93/dotfiles/master/lets-go.sh)
+```
+
+This will execute the quick setup script (in [`lets-go.sh`](https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh)), which just clones the repo (if not yet present), then executes the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. You can re-run this at anytime to update the dotfiles. You can also optionally pass in some variables to change the install location (`DOTFILES_DIR`) and source repo (`DOTFILES_REPO`) to use your fork.
+
+The install script is idempotent, it can be run multiple times without changing the result, beyond the initial application. It will take care of checking that all dependencies are present, and will prompt the user to install missing packages, using the appropriate package manager (currently supports brew, pacman, apt and pkg). The install script takes care of installing / updating ZSH, Tmux and Vim all plugins.
+
+_Alternatively, you can clone the repo yourself, cd into it, allow execution of [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) then run it to install or update._
+
+<details>
+<summary>Example</summary>
+
 
 ```bash
 git clone --recursive git@github.com:Lissy93/dotfiles.git ~/.dotfiles
@@ -165,13 +186,38 @@ chmod +x ~/.dotfiles/install.sh
 ~/.dotfiles/install.sh
 ```
 
+You'll probably want to fork the repo, then clone your fork instead, so update the above commands with the path to your repo, and optioanlly change the clone location on your disk.
+
+Once the repo is cloned, you can modify whatever files you like before running the install script. The [Directory Structure](#directory-structure) section provides an overview of where each file is located. Then see the [Configuring](#configuring) section for setting file paths and symlink locations. 
+
+</details>
+
+---
+
+
+### Directory Structure
+
+<pre>
+~
+└── <a href="https://github.com/Lissy93/dotfiles" title="Root">.</a>
+    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/bash" title="Bash Config">bash/</a>
+    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/tmux" title="Tmux Configs">tmux/</a>
+    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/vim" title="Vim Configs">vim/</a>
+    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/zsh" title="ZSH Configs">zsh/</a>
+    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/installs" title="List of packages to install">installs/</a>
+    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/.github" title="Repo Meta">.github/</a>
+    ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh" title="Remote Setup Initiator">lets-go.sh</a>
+    └── <a href="https://github.com/Lissy93/dotfiles/blob/master/install.sh" title="Setup Script">install.sh</a>
+    └── <a href="https://github.com/Lissy93/dotfiles/blob/master/symlinks.yml" title="Symlink location list">symlinks.yml</a>
+</pre>
+
 ---
 
 ### Configuring
 
-The locations for all symlinks are defined in [`.install.conf.yaml`](https://github.com/Lissy93/dotfiles/blob/master/.install.conf.yaml). These are managed using [Dotbot](https://github.com/anishathalye/dotbot), and will be applied whenever you run the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. 
+The locations for all symlinks are defined in [`symlinks.yaml`](https://github.com/Lissy93/dotfiles/blob/master/symlinks.yaml). These are managed using [Dotbot](https://github.com/anishathalye/dotbot), and will be applied whenever you run the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. The symlinks set locations based on XDG paths, all of which are defined in [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/zsh/.zshenv).
 
-The bootstrap configurations are idempotent (and so the installer can be run multiple times without causing any problems). To only install certain parts of the config, pass the `--only` flag to the install.sh script, similarly `--except` can be used to exclude certain directives.
+The bootstrap configurations are idempotent (and so the installer can be run multiple times without causing any problems). 
 
 ---
 
@@ -179,16 +225,24 @@ The bootstrap configurations are idempotent (and so the installer can be run mul
 
 #### Into to Aliases
 
-An alias is simply a command shortcut. These are very useful for long or frequently used commands.
+An alias is simply a command shortcut. These are very useful for shortening long or frequently used commands.
 
-For example, if you frequently find yourself typing `git add .` you could add an alias like `alias gaa='git add .'`, then just type `gaa`. You can also override existing commands, for example to always show hidden files with `ls` you could set `alias ls='ls -a'`.
+<details>
+<summary>How to use Aliases</summary>
+
+For example, if you often find yourself typing `git add .` you could add an alias like `alias gaa='git add .'`, then just type `gaa`. You can also override existing commands, for example to always show hidden files with `ls` you could set `alias ls='ls -a'`.
 
 Aliases should almost always be created at the user-level, and then sourced from your shell config file (usually `.bashrc` or `.zshrc`). System-wide aliases would be sourced from `/etc/profile`. Don't forget that for your changes to take effect, you'll need to restart your shell, or re-source the file containing your aliases, e.g. `source ~/.zshrc`.
 
 You can view a list of defined aliases by running `alias`, or search for a specific alias with `alias | grep 'search-term'`. The `unalias` command is used for removing aliases.
 
-The following section lists the aliases used in my dotfiles.
+</details>
 
+#### My Aliases
+
+All aliases in my dotfiles are categorised into files located in [`zsh/aliases/`](https://github.com/Lissy93/dotfiles/blob/master/zsh/aliases/) which are imported in [`zsh/.zshrc`](https://github.com/Lissy93/dotfiles/blob/master/zsh/.zshrc#L9-L14).
+
+The following section lists all (or most) the aliases by category:
 
 <details>
 
@@ -395,7 +449,7 @@ Alias | Description
 `mkcp` | Copies a directory, and navigates into it
 `mkmv` | Moves a directory, and navigates into it
 
-# Getting outa directories
+##### Getting outa directories
 
 Alias | Description
 ---|---
@@ -491,23 +545,378 @@ Alias | Description
 
 ### Utilities
 
-// TODO
+
+The dotfiles also contains several handy bash scripts to carry out useful tasks with slightly more ease.
+
+Each of these scripts is standalone, without any dependencies, and can be executed directly to use. 
+Alternatively, they can be sourced from within a .zshrc / .bashrc, for use anywhere via their alias.
+
+For usage instructions about any of them, just append the `--help` flag.
+
+- [Transfer]() - Quickly transfer files or folders to the internet
+- [Web Search]() - Open a specific search engine with a given query
+- [QR Code]() - Generates a QR code for a given string, to transfer data to mobile device
+- [Weather]() - Shows current and forecasted weather for your location
+- [Color Map]() - Just outputs your terminal emulators supported color pallete
+- [Welcome]() - Used for first login, prints personalised greeting, system info, and other handy info
+- [Online]() - Checks if you are connected to the internet
+
+
+
+#### Transfer
+
+Quickly transfer a file, group of files or directory via the transfer.sh service.<br>
+To get started, run `transfer <file(s) / folder>`, for more info, run `transfer --help`
+
+If multiple files are passed in, they will automatically be compressed into an archive.
+You can change the file transfer service, or use a self-hosted instance by setting the URL in `FILE_TRANSFER_SERVICE`
+The file can be either run directly, or sourced in your `.zshrc` and used via the `transfer` alias.
+
+> For info, run `transfer --help`<br>
+> Source: [`utils/transfer.sh`](https://github.com/Lissy93/dotfiles/blob/master/utils/transfer.sh)
+
+#### Web Search
+
+Quickly open web search results for a given query using a selected search engine. To get started, run `web-search`, or `web-search --help` for more info.
+
+Usage:
+
+All parameters are optional, to get started just run `web-search` or `web-search <search provider (optional)> <query (optional)>`, the `ws` alias can also be used. If a search engine isn't specified, you'll be prompted to select one from the list. Similarly, if a query hasn't been included you'll be asked for that too.
+
+- `web-search` - Opens interactive menu, you'll be prompted to select a search engine from the list then enter your query
+- `web-search <search term>` - Specify a search term, and you'll be prompted to select the search engine
+  - For example, `web-search Hello World!`
+- `web-search <search engine>` - Specify a search engine, and you'll be prompted for your search term
+  - For example, `web-search duckduckgo`
+- `web-search <search engine> <search engine>` - Specify both a search engine and query, and results will open immediately 
+  - For example, `web-search wikipedia Matrix Defense`
+
+<details>
+
+<summary><b>Supported Search Providers</b></summary>
+
+The following search engines are supported by default:
+- DuckDuckGo: `ws duckduckgo` (or `wsddg`)
+- Wikipedia: `ws wikipedia` or (`wswiki`)
+- GitHub: `ws github` (or `wsgh`)
+- StackOverflow: `ws stackoverflow` (or `wsso`)
+- Wolframalpha: `ws wolframalpha` (or `wswa`)
+- Reddit: `ws reddit` (or `wsrdt`)
+- Maps: `ws maps` (or `wsmap`)
+- Google: `ws google` (or `wsggl`)
+- Grep App: `ws grepapp` (or `wsgra`)
+
+</details>
+
+The alias `ws` will also resolve to `web-search`, if it's not already in use. You can either run the script directly, e.g.`~/.config/utils/web-search.sh` (don't forget to `chmod +x` the file first, to make it executable), or use the `web-search` / `ws` alias anywhere, once it has been source'd from your .zshrc. 
+
+> For info, run `web-search --help`<br>
+> Source: [`utils/web-search.sh`](https://github.com/Lissy93/dotfiles/blob/master/utils/web-search.sh)
+
+<details>
+
+<summary>Try now!</summary>
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/Lissy93/dotfiles/master/utils/web-search.sh)
+```
+
+</details>
+
 
 ---
 
 ### Packages
 
+The dotfile installation script can also, detect which system and environemnt you're running, and optionally prompt to install packages and applications.
 
-The dotfiles can also optionally install any packages that you may need. This is useful for quickly setting up new systems, but it's important that you remove / comment out any packages that you don't need.
+Package lists are stored in [`installs/`](https://github.com/Lissy93/dotfiles/tree/master/installs) directory, with separate files for different OSs. The install script will [pick the appropriate file](https://github.com/Lissy93/dotfiles/blob/22c6a04fdb22c140448b7d15ef8187c3a424ab47/install.sh#L243-L260) based on your distro.
 
-The list of software is stored in the [`installs/`]() directory, and the file that's used will vary depending on the host operating system.
+You will be prompted before anything is installed. Be sure to remove / comment out anything you do not need before proceeding.
 
-- Arch (and Arch-based systems, like Manjaro) - []() uses pacman
-- Debian (and Debian-based systems, like Ubuntu) - []() uses apt
-- Alpine - []() uses [apk](https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html)
-- Mac OS - [`.Brewfile`]() uses [Homebrew](https://brew.sh/)
-- Windows - [`windows.sh`]() uses [winget](https://docs.microsoft.com/en-us/windows/package-manager/winget/) and [scoop](https://scoop.sh/)
+- Linux (desktop): [`flatpak.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/flatpak.sh) - Desktop apps can be installed on Linux systems via [Flatpack](https://flatpak.org/)
+- Mac OS: [`.Brewfile`](https://github.com/Lissy93/dotfiles/blob/master/installs/Brewfile) - Mac apps installed via [Homebrew](https://brew.sh/)
+- Arch (and Arch-based systems, like Manjaro): [`pacman.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/pacman.sh) - Arch CLI apps installed via [pacman](https://wiki.archlinux.org/title/Pacman)
+- Debian (and Debian-based systems, like Ubuntu): [`apt.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/apt.sh) - Debian CLI apps installed via [apt](https://wiki.debian.org/Apt)
+- Alpine: [`apk.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/apk.sh) - Alpine CLI apps installed via [apk](https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html)
 
+The following section lists different apps that may be installed for each category:
+
+#### Command Line
+
+<details>
+<summary>CLI Essentials</summary>
+
+- `git` - Version controll
+- `neovim` - Text editor
+- `ranger` - Directory browser
+- `tmux` - Term multiplexer
+
+</details>
+
+<details>
+<summary>CLI Basics</summary>
+
+- `aria2` - Resuming download util _(better wget)_
+- `bat` - Output highlighting _(better cat)_
+- `ctags` - Indexing of file info + headers
+- `diff-so-fancy` -# Readable file compares _(better diff)_
+- `exa` - Listing files with info _(better ls)_
+- `fzf` - Fuzzy file finder and filtering
+- `hyperfine` - Benchmarking for arbitrary commands
+- `jq` - JSON parser
+- `lfs` - Get info on mounted disks _(better df)_
+- `procs` - Advanced process viewer _(better ps)_
+- `ripgrep` - Searching within files _(better grep)_
+- `scc` - Count lines of code _(better cloc)_
+- `sd` - RegEx find and replace _(better sed)_
+- `thefuck` - Auto-correct miss-typed commands
+- `tldr` - Community-maintained docs _(better man)_
+- `tree` - Directory listings as tree
+- `trash-cli` - Record + restore removed files
+- `xsel` - Copy paste access to X clipboard
+- `zoxide` - Easy navigation _(better cd)_
+
+</details>
+
+<details>
+<summary>CLI Monitoring and Performance Apps</summary>
+
+- `bandwhich` - Bandwidth utilization monitor 
+- `ctop` - Container metrics and monitoring
+- `bpytop` - Resource monitoring _(like htop)_
+- `glances` - Resource monitor + web and API
+- `gping` - Interactive ping tool, with graph
+- `ncdu` - Disk usage analyzer and monitor _(better du)_
+- `speedtest-cli` -# Command line speed test utility
+
+</details>
+
+<details>
+<summary>CLI Productivity Apps</summary>
+
+- `browsh` - CLI web browser
+- `buku` - Bookmark manager
+- `cmus` - Music browser / player
+- `khal` - Calendar client
+- `mutt` - Email client
+- `newsboat` - RSS / ATOM news reader
+- `rclone` - Manage cloud storage
+- `task` - Todo + task management
+
+</details>
+
+<details>
+<summary>CLI Dev Suits</summary>
+
+- `httpie` - HTTP / API testing testing client
+- `lazydocker` - Full Docker management app
+- `lazygit` - Full Git managemtne app
+
+</details>
+
+<details>
+<summary>CLI External Sercvices</summary>
+
+- `ngrok` - Reverse proxy for sharing localhost
+- `tmate` - Share a terminal session via internet
+- `pbgopy` - Cross-device copy and paste service
+- `asciinema` - Recording + sharing terminal sessions
+- `googler` - Fetch search results from Google
+- `gotty` - Expose terminal sessaion via browser
+- `navi` - Browse, search, read cheat sheets
+
+</details>
+
+<details>
+<summary>CLI Fun</summary>
+
+- `cowsay` - Have an ASCII cow say your message
+- `figlet` - Output text as big ASCII art text
+- `lolcat` - Make console output raibow colored
+- `neofetch` - Show system data and ditstro info
+- `pipes-sh` - Cool terminal pipe screen saver
+- `pv` - Pipe viewer, with animation options
+
+</details>
+
+#### Software Development
+
+<details>
+<summary>Development Apps</summary>
+
+- `android-studio` - IDE for Android development
+- `boop` - Test transformation tool
+- `gradle` - Build automation for Java
+- `iterm2` - Better terminal emulator
+- `postman` - HTTP API testing app
+- `sourcetree` - Git visual client
+- `utm` - VM management console
+- `visual-studio-code` - Code editor
+
+</details>
+
+<details>
+<summary>Development Langs, Compilers, Package Managers and SDKs</summary>
+
+- `docker` - Containers
+- `gcc` - GNU C++ compilers
+- `go` - Compiler for Go Lang
+- `lua` - Lua interpreter
+- `luarocks` - Package manager for Lua
+- `node` - Node.js
+- `nvm` - Switching node versions
+- `openjdk` - Java development kit
+- `python` - Python interpriter
+- `rust` - Rust language
+- `android-sdk` - Android software dev kit
+
+</details>
+
+<details>
+<summary>Development Utils</summary>
+
+- `gh` - Interact with GitHub PRs, issues, repos
+- `scrcpy` - Display and control Andrdroid devices
+- `terminal-notifier` - Trigger Mac notifications from terminal
+- `tig` - Text-mode interface for git
+- `ttygif` - Generate GIF from terminal commands + output
+
+</details>
+
+<details>
+<summary>Network and Security Testing</summary>
+
+- `bettercap` - Network, scanning and moniroting
+- `nmap` - Port scanning
+- `wrk` - HTTP benchmarking
+- `burp-suite` - Web security testing
+- `metasploit` - Pen testing framework
+- `owasp-zap` - Web app security scanner
+- `wireshark` - Network analyzer + packet capture
+
+</details>
+
+<details>
+<summary>Security Utilities</summary>
+
+- `bcrypt` - Encryption utility, using blowfish
+- `clamav` - Open source virus scanning suite
+- `gpg-suite` - PGP encryption for emails and files
+- `git-crypt` - Transparent encryption for git repos
+- `lynis` - Scan system for common security issues
+- `openssl` - Cryptography and SSL/TLS Toolkit
+- `rkhunter` - Search / detect potential root kits
+- `veracrypt` - File and volume encryption
+
+</details>
+
+#### Desktop Applications
+
+<details>
+<summary>Creativity</summary>
+
+- audacity - Audio editor / recorder
+- gimp - Photo editor
+- handbrake - Video transcoder
+- inkscape - Vector editor
+- obs - Screencasting / recording
+- shotcut - Video editor
+
+</details>
+
+<details>
+<summary>Media</summary>
+
+- calibre - E-Book reader
+- spotify - Propietary music streaming
+- transmission - Torrent client
+- vlc - Media player
+- pandoc - Universal file converter
+- youtube-dl - YouTube video downloader
+
+</details>
+
+<details>
+<summary>Personal Applications</summary>
+
+- 1password - Password manager _(proprietary)_
+- tresorit - Encrypted file backup _(proprietary)_
+- standard-notes - Encrypted synced notes
+- signal - Link to encrypted mobile messenger
+- ledger-live - Crypto hardware wallet manager
+- mountain-duck - Mount remote storage locations
+- protonmail-bridge - Decrypt ProtonMail emails
+- protonvpn - Client app for ProtonVPN
+
+</details>
+
+<details>
+<summary>Browsers</summary>
+
+- firefox
+- chromium
+- tor
+
+</details>
+
+#### MacOS Apps
+
+<details>
+<summary>MacOS Mods and Imrovments</summary>
+
+- `alt-tab` - Much better alt-tab window switcher
+- `anybar` - Custom programatic menubar icons
+- `copyq` - Clipboard manager _(cross platform)_
+- `espanso` - Live text expander _(cross-platform)_
+- `finicky` - Website-specific default browser
+- `hiddenbar` - Hide / show annoying menubar icons
+- `iproute2mac` - MacOS port of netstat and ifconfig
+- `lporg` - Backup and restore launchpad layout
+- `m-cli` - All in one MacOS management CLI app
+- `mjolnir` - Util for loading Lua automations
+- `openinterminal` - Finder button, opens directory in terminal
+- `popclip` - Popup options for text on highlight
+- `raycast` - Spotlight alternative
+- `shottr` - Better screenshot utility
+- `skhd` - Hotkey daemon for macOS
+- `stats` - System resource usage in menubar
+- `yabai` - Tiling window manager
+
+</details>
+
+<details>
+<summary>MacOS Utility Apps</summary>
+
+- coteditor - Just a simple plain-text editor
+- little-snitch - Firewall app viewing / blocking traffic
+- keka - File archiver and extractor
+- onyx - Repair util for verifying system files
+- daisydisk - Disk space analyzer and cleaner
+
+</details>
+
+---
+
+### System Preferences
+
+The installation script can also prompt you to confiture system settings and user preferences. This is useful for setting up a completely fresh system in just a few seconds.
+
+#### MacOS
+
+MacOS includes a utility named [`defaults`](https://real-world-systems.com/docs/defaults.1.html), which lets you configure all system and app preferences programatically through the command line. This is very powerful, as you can write a script that configures every aspect of your system enabling you to setup a brand new machine in seconds.
+
+All settings are then updated in the `.plist` files stored in `~/Library/Preferences`. This can also be used to configure preferences for any installed app on your system, where the application is specified by its domain identifier - you can view a full list of your configurable apps by running `defaults domains`.
+
+
+In my dotfiles, the MacOS preferences will configure everything from system security to launchpad layout. The Mac settings are located in [`system-specific/macos/system-settings/`](https://github.com/Lissy93/dotfiles/tree/master/system-specific/macos/system-settings), and are split into three files:
+- [`macos-security.sh`](https://github.com/Lissy93/dotfiles/blob/master/system-specific/macos/system-settings/macos-security.sh) - Sets essential security settings, disables telementry, disconnects unused ports, enforces signing, sets logout timeouts, and much more
+- [`macos-preferences.sh`](https://github.com/Lissy93/dotfiles/blob/master/system-specific/macos/system-settings/macos-preferences.sh) - Configures all user preferences, including computer name, highlight color, finder options, spotlight settings, hardware preferences and more
+- [`macos-apps.sh`](https://github.com/Lissy93/dotfiles/blob/master/system-specific/macos/system-settings/macos-apps.sh) - Applies preferences to any installed desktop apps, such as Terminal, Time Machine, Photos, Spotify, and many others
+
+Upon running each script, a summary of what will be changed will be shown, and you'll be prompted as to weather you'd like to continue. Each script also handles permissions, compatibility checking, and graceful fallbacks. Backup of original settings will be made, and a summary of all changes made will be logged as output when the script is complete.
+
+If you choose to run any of these scripts, take care to read it through first, to ensure you understand what changes will be made, and optionally update or remove anything as you see fit.
 
 ---
 
@@ -521,12 +930,17 @@ The list of software is stored in the [`installs/`]() directory, and the file th
 
 The entry point for the Vim config is the [`vimrc`](https://github.com/Lissy93/dotfiles/blob/master/vim/vimrc), but the main editor settings are defined in [`vim/editor.vim`](https://github.com/Lissy93/dotfiles/blob/master/vim/editor.vim)
 
-##### Plugins
+#### Vim Plugins
 
-Vim plugins are managed using [Plug](https://github.com/junegunn/vim-plug) defined in [`vim/plugins.vim`](https://github.com/Lissy93/dotfiles/blob/master/vim/plugins.vim).
-To install them from GitHub, run `:PlugInstall` (see [options](https://github.com/junegunn/vim-plug#commands)) from within Vim.
+Vim plugins are managed using [Plug](https://github.com/junegunn/vim-plug) defined in [`vim/plugins.vim`](https://github.com/Lissy93/dotfiles/blob/master/vim/setup-vim-plug.vim).
+To install them from GitHub, run `:PlugInstall` (see [options](https://github.com/junegunn/vim-plug#commands)) from within Vim. They will also be installed or updated when you run the main dotfiles setup script ([`install.sh`](https://github.com/Lissy93/dotfiles/blob/d4b8426629e7fbbd6d17d0b87f0bb863d6618bfd/install.sh#L132-L134)).
 
-Layout & Navigation:
+The following plugins are being used:
+
+<details>
+
+<summary><b>Layout & Navigation</b></summary>
+
 - **[Airline](https://github.com/vim-airline/vim-airline)**: `vim-airline/vim-airline` - A very nice status line at the bottom of each window, displaying useful info
 - **[Nerd-tree](https://github.com/preservim/nerdtree)**: `preservim/nerdtree` - Alter files in larger projects more easily, with a nice tree-view pain
 - **[Matchup](https://github.com/andymass/vim-matchup)**: `andymass/vim-matchup` - Better % naviagtion, to highlight and jump between open and closing blocks
@@ -537,7 +951,13 @@ Layout & Navigation:
 - **[Smoothie](https://github.com/psliwka/vim-smoothie)**: `psliwka/vim-smoothie` - Smooth scrolling, supporting `^D`, `^U`, `^F` and `^B`
 - **[DevIcons](https://github.com/ryanoasis/vim-devicons)**: `ryanoasis/vim-devicons` - Adds file-type icons to Nerd-tree and other plugins
 
-Operations:
+</details>
+
+
+<details>
+
+<summary><b>Operations</b></summary>
+
 - **[Nerd-Commenter](https://github.com/preservim/nerdcommenter)**: `preservim/nerdcommenter` - For auto-commenting code blocks
 - **[Ale](https://github.com/dense-analysis/ale)**: `dense-analysis/ale` - Checks syntax asynchronously, with lint support
 - **[Surround](https://github.com/tpope/vim-surround)**: `tpope/vim-surround` - Easily surround selected text with brackets, quotes, tags etc
@@ -547,13 +967,25 @@ Operations:
 - **[Vim-Test](https://github.com/janko/vim-test)**: `janko/vim-test` - A wrapper for running tests on different granularities
 - **[Syntastic](https://github.com/vim-syntastic/syntastic)**: `vim-syntastic/syntastic` - Syntax checking that warns in the gutter when there's an issue
 
-Git:
+</details>
+
+
+<details>
+
+<summary><b>Git</b></summary>
+
 - **[Git-Gutter](https://github.com/airblade/vim-gitgutter)**: `airblade/vim-gitgutter` - Shows git diff markers in the gutter column
 - **[Vim-fugitive](https://github.com/tpope/vim-fugitive)**: `tpope/vim-fugitive` - A git wrapper for git that lets you call a git command using `:Git`
 - **[Committia](https://github.com/rhysd/committia.vim)**: `rhysd/committia.vim` - Shows a diff, status and edit window for git commits
 - **[Vim-Git](https://github.com/tpope/vim-git)**: `tpope/vim-git` - Runtime files for git in vim, for  git, gitcommit, gitconfig, gitrebase, and gitsendemail
 
-File-Type Plugins:
+</details>
+
+
+<details>
+
+<summary><b>File-Type Plugins</b></summary>
+
 - **[Vim-JavaScript](https://github.com/pangloss/vim-javascript)**: `pangloss/vim-javascript` *(JavaScript)* - Syntax highlighting and improved indentation for JS files
 - **[Yats](https://github.com/HerringtonDarkholme/yats.vim)**: `HerringtonDarkholme/yats.vim` *(TypeScript)* - Syntax highlighting and snippets for TypeScript files
 - **[Vim-jsx-pretty](https://github.com/MaxMEllon/vim-jsx-pretty)**: `MaxMEllon/vim-jsx-pretty` *(React)* - Highlighting and indentation for React .tsx and .jsx files
@@ -571,8 +1003,15 @@ File-Type Plugins:
 - **[Zinit](https://github.com/zinit-zsh/zinit-vim-syntax)**: `zinit-zsh/zinit-vim-syntax` *(ZSH)* - syntax definition for Zinit commands in any file of type zsh
 - **[Nginx](https://github.com/chr4/nginx.vim)**:`chr4/nginx.vim` *(Nginx)* - Integer matching, hichlight syntax and IPv4/ IPv6, mark insecure protocols and more
 
-Themes:
+</details>
 
+
+<details>
+
+<summary><b>Themes</b></summary>
+
+
+</details>
 
 ---
 

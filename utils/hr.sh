@@ -20,9 +20,9 @@ hr_reset="\u001b[0m"
 hr_draw_char() {
     local CHAR="$1"
     local LINE=''
-    LINE=$(printf "%*s" "$hr_col_count")
+    LINE=$(printf "%*s" "$hr_col_count - 2")
     LINE="${LINE// /${CHAR}}"
-    printf "${hr_color}${LINE:0:${hr_col_count}}${hr_reset}"
+    printf "◀${hr_color}${LINE:0:${hr_col_count}}${hr_reset}▶"
 }
 
 # Passes param and calls hr()

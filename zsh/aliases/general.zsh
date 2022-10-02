@@ -179,4 +179,4 @@ alias dog='cat'
 alias gtfo='exit'
 
 # Alias for install script
-alias dotfiles="sh ${DOTFILES_DIR:-$HOME/Documents/config/dotfiles}/install.sh"
+alias dotfiles="${DOTFILES_DIR:-$HOME/Documents/config/dotfiles}/install.sh"

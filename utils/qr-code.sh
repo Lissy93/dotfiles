@@ -5,9 +5,8 @@ multiline="0" # flag that indicates multiline option
 fileoutput="0" # flag indicating the -f option
 
 
-## This function determines which http get tool the system has installed and returns an error if there isnt one
-getConfiguredClient()
-{
+# Determine which HTTP GET tool installed
+getConfiguredClient () {
   if  command -v curl &>/dev/null; then
     configuredClient="curl"
   elif command -v wget &>/dev/null; then
@@ -22,9 +21,14 @@ getConfiguredClient()
   fi
 }
 
+<<<<<<< HEAD
 ## Allows to call the users configured client without if statements everywhere
 httpGet()
 {
+=======
+# Call appropriate http get method
+httpGet() {
+>>>>>>> fe6ffbba54ca34778e1f4245466e1efc3394b896
   case "$configuredClient" in
     curl)  curl -A curl -s "$@" ;;
     wget)  wget -qO- "$@" ;;
@@ -33,8 +37,8 @@ httpGet()
   esac
 }
 
-getConfiguredPython()
-{
+# Get installed version of Python / show error if none
+getConfiguredPython() {
   if command -v python3 &>/dev/null; then
     configuredPython="python3"
   elif  command -v python2 &>/dev/null; then
@@ -48,8 +52,7 @@ getConfiguredPython()
 }
 
 if [[ $(uname) != "Darwin" ]]; then
-  python()
-  {
+  python() {
     case "$configuredPython" in
       python3) python3 "$@" ;;
       python2) python2 "$@" ;;
@@ -58,21 +61,20 @@ if [[ $(uname) != "Darwin" ]]; then
   }
 fi
 
-makeqr()
-{
+# Encode input, and call to qrenco.de to get response
+makeqr() {
   input=$(echo "$input" | sed s/" "/%20/g ) ## replace all spaces in the sentence with HTML-encoded space %20
   httpGet qrenco.de/"$input" ## get a response for the qrcode
 }
 
-# redirects the image obtained from the goqr api into a png file
+# Redirects returned QR impage into a png file
 makeQRFile() {
 	input=$(echo "$input" | sed -e s/" "/%20/g -e s/'\\n'/%0A/g ) ##same as in the makeqr function
-
   addFileExt
-
 	httpGet "api.qrserver.com/v1/create-qr-code/?size=150x150&data=$input" > "$fileName"
 }
 
+# If filename doesn't already have .png extension, append it
 addFileExt() {
   if ! echo "$fileName" | grep -E -q ".*\.png$|.*\.PNG$"
   then
@@ -80,8 +82,7 @@ addFileExt() {
   fi
 }
 
-makeMultiLineQr()
-{
+makeMultiLineQr() {
   if [[ ${configuredClient} != "curl" ]]; then ## prevent usage without curl it is unreliable
     echo "Multiline currently only supports curl!"
     return 1

@@ -1,0 +1,8 @@
+# Set all padding and gaps to 20pt (default: 0)
+yabai -m config top_padding    20
+yabai -m config bottom_padding 20
+yabai -m config left_padding   20
+yabai -m config right_padding  20
+yabai -m config window_gap     20
+
+
