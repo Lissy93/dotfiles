@@ -19,7 +19,6 @@ DOTFILES_DIR="${DOTFILES_DIR:-$HOME/Documents/config/dotfiles}"
 DOTFILES_REPO="${DOTFILES_REPO:-https://github.com/lissy93/dotfiles.git}"
 
 # Print starting message
-clear
 echo -e "\033[1;35m""Lissy93/Dotfiles Installation Script 🧰
 \033[0;35mThis script will install or update specified dotfiles:
 - From \033[4;35m${DOTFILES_REPO}\033[0;35m
