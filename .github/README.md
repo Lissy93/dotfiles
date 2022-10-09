@@ -588,7 +588,7 @@ You will be prompted before anything is installed. Be sure to remove / comment o
 
 - Linux (desktop): [`flatpak.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/flatpak.sh) - Desktop apps can be installed on Linux systems via [Flatpack](https://flatpak.org/)
 - Mac OS: [`.Brewfile`](https://github.com/Lissy93/dotfiles/blob/master/installs/Brewfile) - Mac apps installed via [Homebrew](https://brew.sh/)
-- Arch (and Arch-based systems, like Manjaro): [`pacman.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/pacman.sh) - Arch CLI apps installed via [pacman](https://wiki.archlinux.org/title/Pacman)
+- Arch (and Arch-based systems, like Manjaro): [`arch-pacman.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/arch-pacman.sh) - Arch CLI apps installed via [pacman](https://wiki.archlinux.org/title/Pacman)
 - Debian (and Debian-based systems, like Ubuntu): [`apt.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/apt.sh) - Debian CLI apps installed via [apt](https://wiki.debian.org/Apt)
 - Alpine: [`apk.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/apk.sh) - Alpine CLI apps installed via [apk](https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html)
 
