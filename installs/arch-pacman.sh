@@ -1,20 +1,21 @@
 #!/usr/bin/env bash
 
-###############################################################
-# Installs listed packages on Arch-based systems via Pacman   #
-# Also updates the cache database and existing applications   #
-# Confirms apps arn't installed via different package manager #
-# Doesn't include desktop apps, that're managed via Flatpak   #
-# Apps are sorted by category, and arranged alphabetically    #
-# Be sure to delete / comment out anything you do not need    #
-# For more info, see: https://wiki.archlinux.org/title/Pacman #
-###############################################################
-# MIT Licensed (C) Alicia Sykes 2022 <https://aliciasykes.com>#
-###############################################################
+################################################################
+# 📜 Arch Linux, Pacman Package Install / Update Script        #
+################################################################
+# Installs listed packages on Arch-based systems via Pacman    #
+# Also updates the cache database and existing applications    #
+# Confirms apps arn't installed via different package manager  #
+# Doesn't include desktop apps, that're managed via Flatpak    #
+# Apps are sorted by category, and arranged alphabetically     #
+# Be sure to delete / comment out anything you do not need     #
+# For more info, see: https://wiki.archlinux.org/title/Pacman  #
+################################################################
+# MIT Licensed (C) Alicia Sykes 2022 <https://aliciasykes.com> #
+################################################################
 
 # Apps to be installed via Pacman
 pacman_apps=(
-
   # Essentials
   'git'           # Version controll
   'neovim'        # Text editor
@@ -70,7 +71,6 @@ pacman_apps=(
   'figlet'        # Outputs text as 3D ASCII word art
   'lolcat'        # Rainbow coloured terminal output
   'neofetch'      # Show off distro and system info
-
 )
 
 # Colors
