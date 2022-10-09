@@ -22,7 +22,7 @@ pacman_apps=(
   'tmux'          # Term multiplexer
   'wget'          # Download files
 
-  # CLI Basics
+  # CLI Power Basics
   'aria2'         # Resuming download util (better wget)
   'bat'           # Output highlighting (better cat)
   'broot'         # Interactive directory navigation
@@ -47,20 +47,29 @@ pacman_apps=(
   'xsel'          # Copy paste access to the X clipboard
   'zoxide'        # Auto-learning navigation (better cd)
 
-  # CLI Fun
-  'cowsay'       # Outputs message with ASCII art cow
-  'figlet'       # Outputs text as 3D ASCII word art
-  'lolcat'       # Rainbow coloured terminal output
-  'neofetch'     # Show off distro and system info
-
   # Security Utilities
-  'clamav'      # Open source virus scanning suite
-  'cryptsetup'  # Reading / writing encrypted volumes
-  'gnupg'       # PGP encryption, signing and verifying
-  'git-crypt'   # Transparent encryption for git repos
-  'lynis'       # Scan system for common security issues
-  'openssl'     # Cryptography and SSL/TLS Toolkit
-  'rkhunter'    # Search / detect potential root kits
+  'clamav'        # Open source virus scanning suite
+  'cryptsetup'    # Reading / writing encrypted volumes
+  'gnupg'         # PGP encryption, signing and verifying
+  'git-crypt'     # Transparent encryption for git repos
+  'lynis'         # Scan system for common security issues
+  'openssl'       # Cryptography and SSL/TLS Toolkit
+  'rkhunter'      # Search / detect potential root kits
+
+  # Monitoring, management and stats
+  'btop'          # Live system resource monitoring
+  'bmon'          # Bandwidth utilization monitor
+  'ctop'          # Container metrics and monitoring
+  'gping'         # Interactive ping tool, with graph
+  'glances'       # Resource monitor + web and API
+  'goaccess'      # Web log analyzer and viewer
+  'speedtest-cli' # Command line speed test utility
+
+  # CLI Fun
+  'cowsay'        # Outputs message with ASCII art cow
+  'figlet'        # Outputs text as 3D ASCII word art
+  'lolcat'        # Rainbow coloured terminal output
+  'neofetch'      # Show off distro and system info
 
 )
 
