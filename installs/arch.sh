@@ -20,6 +20,7 @@ pacman_apps=(
   'neovim'        # Text editor
   'ranger'        # Directory browser
   'tmux'          # Term multiplexer
+  'wget'          # Download files
 
   # CLI Basics
   'aria2'         # Resuming download util (better wget)
@@ -37,30 +38,38 @@ pacman_apps=(
   'most'          # Multi-window scroll pager (better less)
   'procs'         # Advanced process viewer (better ps)
   'ripgrep'       # Searching within files (better grep)
+  'scrot'         # Screenshots programmatically via CLI
   'sd'            # RegEx find and replace (better sed)
   'thefuck'       # Auto-correct miss-typed commands
-  'tldr'          # Community-maintained docs (better man)
+  'tealdeer'      # Reader for command docs (better man)
   'tree'          # Directory listings as tree structure
   'trash-cli'     # Record and restore removed files
   'xsel'          # Copy paste access to the X clipboard
   'zoxide'        # Auto-learning navigation (better cd)
 
   # CLI Fun
-  'cowsay'       # Have an ASCII cow say your message
-  'figlet'       # Output text as big ASCII art text
-  'lolcat'       # Make console output raibow colored
-  'neofetch'     # Show system data and ditstro info
-  'pv'           # Pipe viewer, with animation options
+  'cowsay'       # Outputs message with ASCII art cow
+  'figlet'       # Outputs text as 3D ASCII word art
+  'lolcat'       # Rainbow coloured terminal output
+  'neofetch'     # Show off distro and system info
+
+  # Security Utilities
+  'clamav'      # Open source virus scanning suite
+  'cryptsetup'  # Reading / writing encrypted volumes
+  'gnupg'       # PGP encryption, signing and verifying
+  'git-crypt'   # Transparent encryption for git repos
+  'lynis'       # Scan system for common security issues
+  'openssl'     # Cryptography and SSL/TLS Toolkit
+  'rkhunter'    # Search / detect potential root kits
 
 )
 
 # Colors
-CYAN_B='\033[1;96m'
-YELLOW='\033[0;93m'
-RESET='\033[0m'
-GREEN='\033[0;32m'
 PURPLE='\033[0;35m'
+YELLOW='\033[0;93m'
+CYAN_B='\033[1;96m'
 LIGHT='\x1b[2m'
+RESET='\033[0m'
 
 PROMPT_TIMEOUT=15 # When user is prompted for input, skip after x seconds
 
@@ -137,7 +146,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
       echo -e "${YELLOW}[Skipping]${LIGHT} ${app} is already installed via Flatpak${RESET}"
     else
       echo -e "${PURPLE}[Installing]${LIGHT} Downloading ${app}...${RESET}"
-      sudo pacman -S ${app} --noconfirm
+      sudo pacman -S ${app} --needed --noconfirm
     fi
   done
 fi
