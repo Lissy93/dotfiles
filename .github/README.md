@@ -8,17 +8,16 @@
 - [Introduction to Dotfiles](#intro)
     - [What are dotfiles?](#what-are-dotfiles)
     - [Dotfile Management Systems](#dotfile-management-systems)
-    - [So copy paste, right?](#so-copy-paste-right)
     - [XDG Directories](#xdg-directories)
-    - [Applying Dotfiles](#applying-dotfiles)
     - [Containerized Userspace](#containerized-userspace)
     - [Security](#security)
+    - [So copy paste, right?](#so-copy-paste-right)
 - [My Dots](#my-dots)
     - [Setup](#setup)
     - [Directory Structure](#directory-structure)
+    - [Install Script](#install-script)
     - [Configuring](#configuring)
     - [Aliases](#aliases)
-    - [Utilities](#utilities)
     - [Packages](#packages)
     - [System Preferences](#system-preferences)
     - [ZSH](#zsh)
@@ -26,6 +25,7 @@
     - [Tmux](#tmux)
     - [Git](#git)
     - [Dependencies](#dependencies)
+    - [Utilities](#utilities)
         
 ---
 
@@ -41,51 +41,13 @@ Once everything's setup, you'll be able to SSH into a fresh system or reinstall 
 
 It's not hard to create your own dotfile repo, it's great fun and you'll learn a ton along the way!
 
-
 ---
 
 ### Dotfile Management Systems
 
-You can make things simple, or complex as you like.
+In terms of managing and applying your dotfiles, you can make things simple, or complex as you like.
 
-The two most common methods are either symlinking, or using a git bare repo, these are explained in more detail in the [Applying Dotfiles](#applying-dotfiles) section. You can either do things manually, write a simple script, or use a pre-build dotfile management system (like [dotbot](https://github.com/anishathalye/dotbot), [chezmoi](https://github.com/twpayne/chezmoi), [yadm](https://github.com/TheLocehiliosan/yadm) or [GNU Stow](https://www.gnu.org/software/stow/)).
-
-In terms of managing dependencies, using either [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) or [git subtree](https://github.com/git/git/blob/master/contrib/subtree/git-subtree.txt) will let you keep dependencies in your project, while also separate from your own code and easily updatable.
-
----
-
-### So copy paste, right?
-
-Zach Holman wrote a great article titled [Dotfiles Are Meant to Be Forked](https://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/). I personally disagree with this, since your dotfiles are ususally highly personalized, so what's right for one developer, likely won't be what someone else is looking for. They're also usually something you build up over time, and althgouh some repos may provide a great starting point, it's really important to know what everything does, and how it works.
-
-By all means feel free to take what you want from mine. I've taken care to ensure that each file is standalone, and well documented so that certain files can just be dropped into any system. But I cannot stress enough the importance of reading through files to ensure it's actually what you want. 
-
-If you're looking for some more example dotfile repos to get you started, I can highly recomend taking a look at: [holman](https://github.com/holman/dotfiles).
-
-There's even more to check out at [webpro/awesome-dotfiles](https://github.com/webpro/awesome-dotfiles), [dotfiles.github.io](https://dotfiles.github.io/) and [r/unixporn](https://www.reddit.com/r/unixporn/).
-
----
-
-### XDG Directories
-
-One of my goals was to try and keep the top-level user home directory as clean as possible by honouring the [XDG base directory specification](https://specifications.freedesktop.org/basedir-spec), which lets you specify the locations for config, cache, data, log and other files. This is done by setting environmental variables within [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/zsh/.zshenv).
-
-You can modify any of these values, but by default the following paths are used:
-
-Variable | Location
---- | ---
-`XDG_CONFIG_HOME` | `~/.config`
-`XDG_DATA_HOME`   | `~/.local/share`
-`XDG_BIN_HOME`   | `~/.local/bin`
-`XDG_LIB_HOME`    | `~/.local/lib`
-`XDG_CACHE_HOME`  | `~/.local/var/cache`
-
----
-
-
-### Applying Dotfiles
-
-There are several different approaches to managing dotfiles. The two most common would be either symlinking, or git bare repo.
+The two most common approaches are be either symlinking, or using git bare repo, but you could also do things manually by writing a simple script.
 
 #### Option 1 - Symlinking
 
@@ -130,6 +92,25 @@ Both [Chezmoi](https://github.com/twpayne/chezmoi/) and [YADM](https://github.co
 
 To learn more, DistroTube made an excellent [video about bare git repos](https://www.youtube.com/watch?v=tBoLDpTWVOM), and Marcel Krčah has written [a post](https://marcel.is/managing-dotfiles-with-git-bare-repo/) outlining the benefits.
 
+#### Dotfile Dependencies
+
+In terms of managing dependencies, using either [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) or [git subtree](https://github.com/git/git/blob/master/contrib/subtree/git-subtree.txt) will let you keep dependencies in your project, while also separate from your own code and easily updatable.
+
+---
+
+### XDG Directories
+
+One of my goals was to try and keep the top-level user home directory as clean as possible by honouring the [XDG base directory specification](https://specifications.freedesktop.org/basedir-spec), which lets you specify the locations for config, cache, data, log and other files. This is done by setting environmental variables within [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/zsh/.zshenv).
+
+You can modify any of these values, but by default the following paths are used:
+
+Variable | Location
+--- | ---
+`XDG_CONFIG_HOME` | `~/.config`
+`XDG_DATA_HOME`   | `~/.local/share`
+`XDG_BIN_HOME`   | `~/.local/bin`
+`XDG_LIB_HOME`    | `~/.local/lib`
+`XDG_CACHE_HOME`  | `~/.local/var/cache`
 
 ---
 
@@ -151,6 +132,17 @@ Something that is important to keep in mind, is security. Often you may have som
 
 Another solution, is to encrypt sensitive info. A great tool for this is [`pass`](https://www.passwordstore.org/) as it makes GPG-encrypting passwords very easy ([this article](https://www.outcoldman.com/en/archive/2015/09/17/keep-sensitive-data-encrypted-in-dotfiles/) outlines how), or you could also just use plain old GPG (as outlined in [this article](https://www.abdullah.today/encrypted-dotfiles/)).
 
+---
+
+### So copy paste, right?
+
+Zach Holman wrote a great article titled [Dotfiles Are Meant to Be Forked](https://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/). I personally disagree with this, since your dotfiles are usually highly personalized, so what's right for one developer, likely won't be what someone else is looking for. They're also typically something you build up over time, and although some repos may provide a great starting point, it's really important to know what everything does, and how it works.
+
+By all means feel free to take what you want from mine. I've taken care to ensure that each file is standalone, and well documented so that certain files can just be dropped into any system. But I cannot stress enough the importance of reading through files to ensure it's actually what you want. 
+
+If you're looking for some more example dotfile repos to get you started, I can highly recommend taking a look at: [holman](https://github.com/holman/dotfiles).
+
+There's even more to check out at [webpro/awesome-dotfiles](https://github.com/webpro/awesome-dotfiles), [dotfiles.github.io](https://dotfiles.github.io/) and [r/unixporn](https://www.reddit.com/r/unixporn/).
 
 ---
 
@@ -210,6 +202,49 @@ Once the repo is cloned, you can modify whatever files you like before running t
     └── <a href="https://github.com/Lissy93/dotfiles/blob/master/install.sh" title="Setup Script">install.sh</a>
     └── <a href="https://github.com/Lissy93/dotfiles/blob/master/symlinks.yml" title="Symlink location list">symlinks.yml</a>
 </pre>
+
+---
+
+### Install Script
+
+The install script will do the following:
+
+- **Setup**
+  - Set variables by reading any passed parameters, or fallback to sensible defaults
+  - Print welcome message, and a summary of proposed changes, and prompt user to continue
+  - Ensure that core dependencies are met (git, zsh, vim)
+- **Dotfiles**
+  - If dotfiles not yet present, will clone from git, otherwise pulls latest changes
+  - Symlinks each file to it's correct location on disk
+- **System Config**
+  - Checks default shell, if not yet set, will prompt to set to zsh
+  - Installs Vim plugins via Plug
+  - Installs Tmux plugins via TPM
+  - Installs ZSH plugins via Antigen
+  - Prompts to apply system preferences (for compatible OS / DE)
+  - On MacOS arranges apps into folders within the Launchpad view
+  - On MacOS prompts to set essential privacy + security settings
+  - On MacOS prompts to set system preferences and app settings
+- **App Installations**
+  - On MacOS if Homebrew is not yet installed, will prompt to install it
+  - On MacOS will prompt to install user apps listed in Brewfile, via Homebrew
+  - On Linux will prompt to install listed CLI apps via native package manager (pacman or apt)
+  - On Linux desktop systems, will prompt to istall desktop apps via Flatpak
+  - Checks OS is up-to-date, prompts to install updates if available
+- **Finishing up**
+  - Outputs time taken and a summary of changes applied
+  - Re-sources ZSH and refreshes current session
+  - Prints a pretty Tux ASCII picture
+  - Exits
+
+The install script can accept several flags and environmental variables to configure installation:
+- **Flags**
+  - `--help` - Prints help menu / shows info, without making any changes
+  - `--auto-yes` - Doesn't prompt for any user input, always assumes Yes (use with care!)
+  - `--no-clear` - Doesn't clear the screen before starting (useful if being run by another app)
+- **Env Vars**
+  - `REPO_NAME` - The repository name to pull, e.g. `Lissy93/Dotfiles`
+  - `DOTFILES_DIR` - The directory to clone source dotfiles into
 
 ---
 
@@ -543,89 +578,6 @@ Alias | Description
 
 ---
 
-### Utilities
-
-
-The dotfiles also contains several handy bash scripts to carry out useful tasks with slightly more ease.
-
-Each of these scripts is standalone, without any dependencies, and can be executed directly to use. 
-Alternatively, they can be sourced from within a .zshrc / .bashrc, for use anywhere via their alias.
-
-For usage instructions about any of them, just append the `--help` flag.
-
-- [Transfer]() - Quickly transfer files or folders to the internet
-- [Web Search]() - Open a specific search engine with a given query
-- [QR Code]() - Generates a QR code for a given string, to transfer data to mobile device
-- [Weather]() - Shows current and forecasted weather for your location
-- [Color Map]() - Just outputs your terminal emulators supported color pallete
-- [Welcome]() - Used for first login, prints personalised greeting, system info, and other handy info
-- [Online]() - Checks if you are connected to the internet
-
-
-
-#### Transfer
-
-Quickly transfer a file, group of files or directory via the transfer.sh service.<br>
-To get started, run `transfer <file(s) / folder>`, for more info, run `transfer --help`
-
-If multiple files are passed in, they will automatically be compressed into an archive.
-You can change the file transfer service, or use a self-hosted instance by setting the URL in `FILE_TRANSFER_SERVICE`
-The file can be either run directly, or sourced in your `.zshrc` and used via the `transfer` alias.
-
-> For info, run `transfer --help`<br>
-> Source: [`utils/transfer.sh`](https://github.com/Lissy93/dotfiles/blob/master/utils/transfer.sh)
-
-#### Web Search
-
-Quickly open web search results for a given query using a selected search engine. To get started, run `web-search`, or `web-search --help` for more info.
-
-Usage:
-
-All parameters are optional, to get started just run `web-search` or `web-search <search provider (optional)> <query (optional)>`, the `ws` alias can also be used. If a search engine isn't specified, you'll be prompted to select one from the list. Similarly, if a query hasn't been included you'll be asked for that too.
-
-- `web-search` - Opens interactive menu, you'll be prompted to select a search engine from the list then enter your query
-- `web-search <search term>` - Specify a search term, and you'll be prompted to select the search engine
-  - For example, `web-search Hello World!`
-- `web-search <search engine>` - Specify a search engine, and you'll be prompted for your search term
-  - For example, `web-search duckduckgo`
-- `web-search <search engine> <search engine>` - Specify both a search engine and query, and results will open immediately 
-  - For example, `web-search wikipedia Matrix Defense`
-
-<details>
-
-<summary><b>Supported Search Providers</b></summary>
-
-The following search engines are supported by default:
-- DuckDuckGo: `ws duckduckgo` (or `wsddg`)
-- Wikipedia: `ws wikipedia` or (`wswiki`)
-- GitHub: `ws github` (or `wsgh`)
-- StackOverflow: `ws stackoverflow` (or `wsso`)
-- Wolframalpha: `ws wolframalpha` (or `wswa`)
-- Reddit: `ws reddit` (or `wsrdt`)
-- Maps: `ws maps` (or `wsmap`)
-- Google: `ws google` (or `wsggl`)
-- Grep App: `ws grepapp` (or `wsgra`)
-
-</details>
-
-The alias `ws` will also resolve to `web-search`, if it's not already in use. You can either run the script directly, e.g.`~/.config/utils/web-search.sh` (don't forget to `chmod +x` the file first, to make it executable), or use the `web-search` / `ws` alias anywhere, once it has been source'd from your .zshrc. 
-
-> For info, run `web-search --help`<br>
-> Source: [`utils/web-search.sh`](https://github.com/Lissy93/dotfiles/blob/master/utils/web-search.sh)
-
-<details>
-
-<summary>Try now!</summary>
-
-```bash
-bash <(curl -s https://raw.githubusercontent.com/Lissy93/dotfiles/master/utils/web-search.sh)
-```
-
-</details>
-
-
----
-
 ### Packages
 
 The dotfile installation script can also, detect which system and environemnt you're running, and optionally prompt to install packages and applications.
@@ -636,7 +588,7 @@ You will be prompted before anything is installed. Be sure to remove / comment o
 
 - Linux (desktop): [`flatpak.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/flatpak.sh) - Desktop apps can be installed on Linux systems via [Flatpack](https://flatpak.org/)
 - Mac OS: [`.Brewfile`](https://github.com/Lissy93/dotfiles/blob/master/installs/Brewfile) - Mac apps installed via [Homebrew](https://brew.sh/)
-- Arch (and Arch-based systems, like Manjaro): [`pacman.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/pacman.sh) - Arch CLI apps installed via [pacman](https://wiki.archlinux.org/title/Pacman)
+- Arch (and Arch-based systems, like Manjaro): [`arch-pacman.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/arch-pacman.sh) - Arch CLI apps installed via [pacman](https://wiki.archlinux.org/title/Pacman)
 - Debian (and Debian-based systems, like Ubuntu): [`apt.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/apt.sh) - Debian CLI apps installed via [apt](https://wiki.debian.org/Apt)
 - Alpine: [`apk.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/apk.sh) - Alpine CLI apps installed via [apk](https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html)
 
@@ -647,96 +599,97 @@ The following section lists different apps that may be installed for each catego
 <details>
 <summary>CLI Essentials</summary>
 
-- `git` - Version controll
-- `neovim` - Text editor
-- `ranger` - Directory browser
-- `tmux` - Term multiplexer
+- [`git`](https://git-scm.com/) - Version controll
+- [`neovim`](https://neovim.io/) - Text editor
+- [`ranger`](https://ranger.github.io/) - Directory browser
+- [`tmux`](https://github.com/tmux/tmux/wiki) - Term multiplexer
 
 </details>
 
 <details>
 <summary>CLI Basics</summary>
 
-- `aria2` - Resuming download util _(better wget)_
-- `bat` - Output highlighting _(better cat)_
-- `ctags` - Indexing of file info + headers
-- `diff-so-fancy` -# Readable file compares _(better diff)_
-- `exa` - Listing files with info _(better ls)_
-- `fzf` - Fuzzy file finder and filtering
-- `hyperfine` - Benchmarking for arbitrary commands
-- `jq` - JSON parser
-- `lfs` - Get info on mounted disks _(better df)_
-- `procs` - Advanced process viewer _(better ps)_
-- `ripgrep` - Searching within files _(better grep)_
-- `scc` - Count lines of code _(better cloc)_
-- `sd` - RegEx find and replace _(better sed)_
-- `thefuck` - Auto-correct miss-typed commands
-- `tldr` - Community-maintained docs _(better man)_
-- `tree` - Directory listings as tree
-- `trash-cli` - Record + restore removed files
-- `xsel` - Copy paste access to X clipboard
-- `zoxide` - Easy navigation _(better cd)_
+- [`aria2`](https://github.com/aria2/aria2) - Resuming download util _(better wget)_
+- [`bat`](https://github.com/sharkdp/bat) - Output highlighting _(better cat)_
+- [`ctags`](https://github.com/universal-ctags/ctags) - Indexing of file info + headers
+- [`diff-so-fancy`](https://github.com/so-fancy/diff-so-fancy) - Readable file compares _(better diff)_
+- [`duf`](https://github.com/muesli/duf) - Get info on mounted disks _(better df)_
+- [`exa`](https://github.com/ogham/exa) - Listing files with info _(better ls)_
+- [`fzf`](https://github.com/junegunn/fzf) - Fuzzy file finder and filtering
+- [`hyperfine`](https://github.com/sharkdp/hyperfine) - Benchmarking for arbitrary commands
+- [`jq`](https://github.com/stedolan/jq) - JSON parser
+- [`most`](https://www.jedsoft.org/most/) - Multi-window scroll pager _(better less)_
+- [`procs`](https://github.com/dalance/procs) - Advanced process viewer _(better ps)_
+- [`ripgrep`](https://github.com/BurntSushi/ripgrep) - Searching within files _(better grep)_
+- [`scc`](https://github.com/boyter/scc) - Count lines of code _(better cloc)_
+- [`sd`](https://github.com/chmln/sd) - RegEx find and replace _(better sed)_
+- [`thefuck`](https://github.com/nvbn/thefuck) - Auto-correct miss-typed commands
+- [`tldr`](https://github.com/tldr-pages/tldr) - Community-maintained docs _(better man)_
+- [`tree`](https://gitlab.com/OldManProgrammer/unix-tree) - Directory listings as tree
+- [`trash-cli`](https://github.com/andreafrancia/trash-cli) - Record + restore removed files
+- [`xsel`](https://github.com/kfish/xsel) - Copy paste access to X clipboard
+- [`zoxide`](https://github.com/ajeetdsouza/zoxide) - Easy navigation _(better cd)_
 
 </details>
 
 <details>
 <summary>CLI Monitoring and Performance Apps</summary>
 
-- `bandwhich` - Bandwidth utilization monitor 
-- `ctop` - Container metrics and monitoring
-- `bpytop` - Resource monitoring _(like htop)_
-- `glances` - Resource monitor + web and API
-- `gping` - Interactive ping tool, with graph
-- `ncdu` - Disk usage analyzer and monitor _(better du)_
-- `speedtest-cli` -# Command line speed test utility
+- [`bandwhich`](https://github.com/imsnif/bandwhich) - Bandwidth utilization monitor 
+- [`ctop`](https://github.com/bcicen/ctop) - Container metrics and monitoring
+- [`bpytop`](https://github.com/aristocratos/bpytop) - Resource monitoring _(like htop)_
+- [`glances`](https://github.com/nicolargo/glances) - Resource monitor + web and API
+- [`gping`](https://github.com/orf/gping) - Interactive ping tool, with graph
+- [`ncdu`](https://dev.yorhel.nl/ncdu) - Disk usage analyzer and monitor _(better du)_
+- [`speedtest-cli`](https://github.com/sivel/speedtest-cli) - Command line speed test utility
 
 </details>
 
 <details>
 <summary>CLI Productivity Apps</summary>
 
-- `browsh` - CLI web browser
-- `buku` - Bookmark manager
-- `cmus` - Music browser / player
-- `khal` - Calendar client
-- `mutt` - Email client
-- `newsboat` - RSS / ATOM news reader
-- `rclone` - Manage cloud storage
-- `task` - Todo + task management
+- [`browsh`](https://github.com/browsh-org/browsh) - CLI web browser
+- [`buku`](https://github.com/jarun/buku) - Bookmark manager
+- [`cmus`](https://github.com/cmus/cmus) - Music browser / player
+- [`khal`](https://github.com/pimutils/khal) - Calendar client
+- [`mutt`](https://gitlab.com/muttmua/mutt) - Email client
+- [`newsboat`](https://github.com/newsboat/newsboat) - RSS / ATOM news reader
+- [`rclone`](https://github.com/rclone/rclone) - Manage cloud storage
+- [`task`](https://github.com/GothenburgBitFactory/taskwarrior) - Todo + task management
 
 </details>
 
 <details>
 <summary>CLI Dev Suits</summary>
 
-- `httpie` - HTTP / API testing testing client
-- `lazydocker` - Full Docker management app
-- `lazygit` - Full Git managemtne app
+- [`httpie`]() - HTTP / API testing testing client
+- [`lazydocker`]() - Full Docker management app
+- [`lazygit`]() - Full Git managemtne app
 
 </details>
 
 <details>
 <summary>CLI External Sercvices</summary>
 
-- `ngrok` - Reverse proxy for sharing localhost
-- `tmate` - Share a terminal session via internet
-- `pbgopy` - Cross-device copy and paste service
-- `asciinema` - Recording + sharing terminal sessions
-- `googler` - Fetch search results from Google
-- `gotty` - Expose terminal sessaion via browser
-- `navi` - Browse, search, read cheat sheets
+- [`ngrok`]() - Reverse proxy for sharing localhost
+- [`tmate`]() - Share a terminal session via internet
+- [`pbgopy`]() - Cross-device copy and paste service
+- [`asciinema`]() - Recording + sharing terminal sessions
+- [`googler`]() - Fetch search results from Google
+- [`gotty`]() - Expose terminal sessaion via browser
+- [`navi`]() - Browse, search, read cheat sheets
 
 </details>
 
 <details>
 <summary>CLI Fun</summary>
 
-- `cowsay` - Have an ASCII cow say your message
-- `figlet` - Output text as big ASCII art text
-- `lolcat` - Make console output raibow colored
-- `neofetch` - Show system data and ditstro info
-- `pipes-sh` - Cool terminal pipe screen saver
-- `pv` - Pipe viewer, with animation options
+- [`cowsay`]() - Have an ASCII cow say your message
+- [`figlet`]() - Output text as big ASCII art text
+- [`lolcat`]() - Make console output raibow colored
+- [`neofetch`]() - Show system data and ditstro info
+- [`pipes-sh`]() - Cool terminal pipe screen saver
+- [`pv`]() - Pipe viewer, with animation options
 
 </details>
 
@@ -904,12 +857,13 @@ The installation script can also prompt you to confiture system settings and use
 
 #### MacOS
 
-MacOS includes a utility named [`defaults`](https://real-world-systems.com/docs/defaults.1.html), which lets you configure all system and app preferences programatically through the command line. This is very powerful, as you can write a script that configures every aspect of your system enabling you to setup a brand new machine in seconds.
+MacOS includes a built-in utility named [`defaults`](https://real-world-systems.com/docs/defaults.1.html), which lets you configure all system and app preferences programatically through the command line. This is very powerful, as you can write a script that configures every aspect of your system enabling you to setup a brand new machine in seconds.
 
 All settings are then updated in the `.plist` files stored in `~/Library/Preferences`. This can also be used to configure preferences for any installed app on your system, where the application is specified by its domain identifier - you can view a full list of your configurable apps by running `defaults domains`.
 
 
-In my dotfiles, the MacOS preferences will configure everything from system security to launchpad layout. The Mac settings are located in [`system-specific/macos/system-settings/`](https://github.com/Lissy93/dotfiles/tree/master/system-specific/macos/system-settings), and are split into three files:
+In my dotfiles, the MacOS preferences will configure everything from system security to launchpad layout.
+The Mac settings are located in [`system-specific/macos/system-settings/`](https://github.com/Lissy93/dotfiles/tree/master/system-specific/macos/system-settings), and are split into three files:
 - [`macos-security.sh`](https://github.com/Lissy93/dotfiles/blob/master/system-specific/macos/system-settings/macos-security.sh) - Sets essential security settings, disables telementry, disconnects unused ports, enforces signing, sets logout timeouts, and much more
 - [`macos-preferences.sh`](https://github.com/Lissy93/dotfiles/blob/master/system-specific/macos/system-settings/macos-preferences.sh) - Configures all user preferences, including computer name, highlight color, finder options, spotlight settings, hardware preferences and more
 - [`macos-apps.sh`](https://github.com/Lissy93/dotfiles/blob/master/system-specific/macos/system-settings/macos-apps.sh) - Applies preferences to any installed desktop apps, such as Terminal, Time Machine, Photos, Spotify, and many others
@@ -1060,3 +1014,88 @@ They can be easily installed/ updated with your package manger, e.g:
 
 Depending on your setup, the following utils may also be required: `make`, `ctags`, `fzf` and `python3-pip`
 
+---
+
+
+### Utilities
+
+
+The dotfiles also contains several handy bash scripts to carry out useful tasks with slightly more ease.
+
+Each of these scripts is standalone, without any dependencies, and can be executed directly to use. 
+Alternatively, they can be sourced from within a .zshrc / .bashrc, for use anywhere via their alias.
+
+For usage instructions about any of them, just append the `--help` flag.
+
+- [Transfer]() - Quickly transfer files or folders to the internet
+- [Web Search]() - Open a specific search engine with a given query
+- [QR Code]() - Generates a QR code for a given string, to transfer data to mobile device
+- [Weather]() - Shows current and forecasted weather for your location
+- [Color Map]() - Just outputs your terminal emulators supported color pallete
+- [Welcome]() - Used for first login, prints personalised greeting, system info, and other handy info
+- [Online]() - Checks if you are connected to the internet
+
+
+
+#### Transfer
+
+Quickly transfer a file, group of files or directory via the transfer.sh service.<br>
+To get started, run `transfer <file(s) / folder>`, for more info, run `transfer --help`
+
+If multiple files are passed in, they will automatically be compressed into an archive.
+You can change the file transfer service, or use a self-hosted instance by setting the URL in `FILE_TRANSFER_SERVICE`
+The file can be either run directly, or sourced in your `.zshrc` and used via the `transfer` alias.
+
+> For info, run `transfer --help`<br>
+> Source: [`utils/transfer.sh`](https://github.com/Lissy93/dotfiles/blob/master/utils/transfer.sh)
+
+#### Web Search
+
+Quickly open web search results for a given query using a selected search engine. To get started, run `web-search`, or `web-search --help` for more info.
+
+Usage:
+
+All parameters are optional, to get started just run `web-search` or `web-search <search provider (optional)> <query (optional)>`, the `ws` alias can also be used. If a search engine isn't specified, you'll be prompted to select one from the list. Similarly, if a query hasn't been included you'll be asked for that too.
+
+- `web-search` - Opens interactive menu, you'll be prompted to select a search engine from the list then enter your query
+- `web-search <search term>` - Specify a search term, and you'll be prompted to select the search engine
+  - For example, `web-search Hello World!`
+- `web-search <search engine>` - Specify a search engine, and you'll be prompted for your search term
+  - For example, `web-search duckduckgo`
+- `web-search <search engine> <search engine>` - Specify both a search engine and query, and results will open immediately 
+  - For example, `web-search wikipedia Matrix Defense`
+
+<details>
+
+<summary><b>Supported Search Providers</b></summary>
+
+The following search engines are supported by default:
+- DuckDuckGo: `ws duckduckgo` (or `wsddg`)
+- Wikipedia: `ws wikipedia` or (`wswiki`)
+- GitHub: `ws github` (or `wsgh`)
+- StackOverflow: `ws stackoverflow` (or `wsso`)
+- Wolframalpha: `ws wolframalpha` (or `wswa`)
+- Reddit: `ws reddit` (or `wsrdt`)
+- Maps: `ws maps` (or `wsmap`)
+- Google: `ws google` (or `wsggl`)
+- Grep App: `ws grepapp` (or `wsgra`)
+
+</details>
+
+The alias `ws` will also resolve to `web-search`, if it's not already in use. You can either run the script directly, e.g.`~/.config/utils/web-search.sh` (don't forget to `chmod +x` the file first, to make it executable), or use the `web-search` / `ws` alias anywhere, once it has been source'd from your .zshrc. 
+
+> For info, run `web-search --help`<br>
+> Source: [`utils/web-search.sh`](https://github.com/Lissy93/dotfiles/blob/master/utils/web-search.sh)
+
+<details>
+
+<summary>Try now!</summary>
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/Lissy93/dotfiles/master/utils/web-search.sh)
+```
+
+</details>
+
+
+---

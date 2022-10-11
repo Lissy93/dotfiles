@@ -180,3 +180,4 @@ alias gtfo='exit'
 
 # Alias for install script
 alias dotfiles="${DOTFILES_DIR:-$HOME/Documents/config/dotfiles}/install.sh"
+alias dots="dotfiles"

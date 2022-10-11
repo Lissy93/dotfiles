@@ -1,6 +1,13 @@
-# A simple Bash PS1 prompt, that displays directory, git status and arrow
-# Availible on GitHub: https://github.com/Lissy93/minimal-terminal-prompt
-# Licensed under MIT - (C) Alicia Sykes, 2022 <https://aliciasykes.com>
+
+#######################################################################
+# ~/.bashrc - Custom PS1 Prompt for Bash Shell                        #
+#######################################################################
+# I don't much use Bash me, prefer ZSH of Fish...                     #
+# When that's not availible, let's at least make things look half ok  #
+#######################################################################
+# Originated from: https://github.com/Lissy93/minimal-terminal-prompt #
+# Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com>  #
+#######################################################################
 
 ## Define all the colors
 COL_USER_HOST='\e[35m' # The color of 'user@host.ext'

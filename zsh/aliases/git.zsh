@@ -26,7 +26,7 @@ alias gcl="git clone" # Downloads repo from <url>
 alias gch="git checkout" # Switch the HEAD to <branch>
 alias gb="git branch" # Create a new <branch> from HEAD
 alias gd="git diff" # Show all changes to untracked files
-alias gtree="git log --graph --oneline --decorate" # Show branch tree
+alias gtree="git log --graph --oneline --decorate --abbrev-commit" # Show branch tree
 alias gl='git log'
 
 # Tags

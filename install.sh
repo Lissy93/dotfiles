@@ -252,9 +252,14 @@ function install_packages () {
     echo -e "${PURPLE}Skipping package installs${RESET}"
     return
   fi
-  # Mac OS
   if [ "$system_type" = "Darwin" ]; then
+    # Mac OS
     intall_macos_packages
+  elif [ -f "/etc/arch-release" ]; then
+    # Arch Linux
+    arch_pkg_install_script="${DOTFILES_DIR}/installs/arch-pacman.sh"
+    chmod +x $arch_pkg_install_script
+    $arch_pkg_install_script
   fi
   # If running in Linux desktop mode, prompt to install desktop apps via Flatpak
   flatpak_script="${DOTFILES_DIR}/installs/flatpak.sh"
