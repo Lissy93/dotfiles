@@ -7,10 +7,10 @@
 ## Contents
 - [Introduction to Dotfiles](#intro)
     - [What are dotfiles?](#what-are-dotfiles)
-    - [Dotfile Management Systems](#dotfile-management-systems)
     - [XDG Directories](#xdg-directories)
     - [Containerized Userspace](#containerized-userspace)
     - [Security](#security)
+    - [Dotfile Management Systems](#dotfile-management-systems)
     - [So copy paste, right?](#so-copy-paste-right)
 - [My Dots](#my-dots)
     - [Setup](#setup)
@@ -43,11 +43,46 @@ It's not hard to create your own dotfile repo, it's great fun and you'll learn a
 
 ---
 
+### XDG Directories
+
+The location of most config files can be defined using the [XDG base directory specification](https://specifications.freedesktop.org/basedir-spec), which is honored by most apps. This lets you specify where config, log, cache and data files are stored, keeping your top-level home directory free from clutter. You can do this by setting environmental variables, usually within the [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/zsh/.zshenv) file.
+
+Variable | Location
+--- | ---
+`XDG_CONFIG_HOME` | `~/.config`
+`XDG_DATA_HOME`   | `~/.local/share`
+`XDG_BIN_HOME`   | `~/.local/bin`
+`XDG_LIB_HOME`    | `~/.local/lib`
+`XDG_CACHE_HOME`  | `~/.local/var/cache`
+
+---
+
+### Containerized Userspace
+
+You can also containerize your dotfiles, meaning with a single command, you can spin up a fresh virtual environment on any system, and immediately feel right at home with all your packages and configurations.
+
+This is awesome for a number of reasons: 1) Super minimal dependency installation on the host 2) Blazing fast, as you can pull your built image from a registry, instead of compiling everything locally 3) Cross-platform compatibility, whatever your host OS is, you can always have a familiar Linux system in the container 4) Security, you can control which host resources are accessible within each container
+
+For this, I'm using an Alpine-based Docker container defined in the [`Dockerfile`](https://github.com/Lissy93/dotfiles/blob/master/Dockerfile), to try it out, just run `docker run lissy93/dotfiles`.
+
+Other options could include spinning up VMs with a predefined config, either using something like [Vagrant](https://www.vagrantup.com/) or a [NixOS](https://nixos.org/)-based config.
+
+---
+
+### Security
+
+Something that is important to keep in mind, is security. Often you may have some personal info included in some of your dotfiles. Before storing anything on the internet, double check there's no sensitive info, SSH keys, API keys or plaintext passwords. If you're using git, then any files you wouldn't want to be commited, can just be listed in your [`.gitignore`](https://git-scm.com/docs/gitignore). If any .gitignore'd files are imported by other files, be sure to check they exist, so you don't get errors when cloning onto a fresh system.
+
+Another solution, is to encrypt sensitive info. A great tool for this is [`pass`](https://www.passwordstore.org/) as it makes GPG-encrypting passwords very easy ([this article](https://www.outcoldman.com/en/archive/2015/09/17/keep-sensitive-data-encrypted-in-dotfiles/) outlines how), or you could also just use plain old GPG (as outlined in [this article](https://www.abdullah.today/encrypted-dotfiles/)).
+
+---
+
+
 ### Dotfile Management Systems
 
 In terms of managing and applying your dotfiles, you can make things simple, or complex as you like.
 
-The two most common approaches are be either symlinking, or using git bare repo, but you could also do things manually by writing a simple script.
+The two most common approaches are be either [symlinking](#option-1---symlinking), or using [git bare repo](#option-2---git-bare-repo), but you could also do things manually by writing a simple script.
 
 #### Option 1 - Symlinking
 
@@ -96,41 +131,6 @@ To learn more, DistroTube made an excellent [video about bare git repos](https:/
 
 In terms of managing dependencies, using either [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) or [git subtree](https://github.com/git/git/blob/master/contrib/subtree/git-subtree.txt) will let you keep dependencies in your project, while also separate from your own code and easily updatable.
 
----
-
-### XDG Directories
-
-One of my goals was to try and keep the top-level user home directory as clean as possible by honouring the [XDG base directory specification](https://specifications.freedesktop.org/basedir-spec), which lets you specify the locations for config, cache, data, log and other files. This is done by setting environmental variables within [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/zsh/.zshenv).
-
-You can modify any of these values, but by default the following paths are used:
-
-Variable | Location
---- | ---
-`XDG_CONFIG_HOME` | `~/.config`
-`XDG_DATA_HOME`   | `~/.local/share`
-`XDG_BIN_HOME`   | `~/.local/bin`
-`XDG_LIB_HOME`    | `~/.local/lib`
-`XDG_CACHE_HOME`  | `~/.local/var/cache`
-
----
-
-### Containerized Userspace
-
-You can also containerize your dotfiles, meaning with a single command, you can spin up a fresh virtual environment on any system, and immediately feel right at home with all your packages and configurations.
-
-This is awesome for a number of reasons: 1) Super minimal dependency installation on the host 2) Blazing fast, as you can pull your built image from a registry, instead of compiling everything locally 3) Cross-platform compatibility, whatever your host OS is, you can always have a familiar Linux system in the container 4) Security, you can control which host resources are accessible within each container
-
-For this, I'm using an Alpine-based Docker container defined in the [`Dockerfile`](https://github.com/Lissy93/dotfiles/blob/master/Dockerfile), to try it out, just run `docker run lissy93/dotfiles`.
-
-Other options could include spinning up VMs with a predefined config, either using something like [Vagrant](https://www.vagrantup.com/) or a [NixOS](https://nixos.org/)-based config.
-
----
-
-### Security
-
-Something that is important to keep in mind, is security. Often you may have some personal info included in some of your dotfiles. Before storing anything on the internet, double check there's no sensitive info, SSH keys, API keys or plaintext passwords. If you're using git, then any files you wouldn't want to be commited, can just be listed in your [`.gitignore`](https://git-scm.com/docs/gitignore). If any .gitignore'd files are imported by other files, be sure to check they exist, so you don't get errors when cloning onto a fresh system.
-
-Another solution, is to encrypt sensitive info. A great tool for this is [`pass`](https://www.passwordstore.org/) as it makes GPG-encrypting passwords very easy ([this article](https://www.outcoldman.com/en/archive/2015/09/17/keep-sensitive-data-encrypted-in-dotfiles/) outlines how), or you could also just use plain old GPG (as outlined in [this article](https://www.abdullah.today/encrypted-dotfiles/)).
 
 ---
 
@@ -148,9 +148,6 @@ There's even more to check out at [webpro/awesome-dotfiles](https://github.com/w
 
 ## My Dotfiles
 
-> **Note**
-> This repo is still a work in progress
-
 ### Setup
 
 > **Warning**
@@ -164,7 +161,7 @@ bash <(curl -s https://raw.githubusercontent.com/Lissy93/dotfiles/master/lets-go
 
 This will execute the quick setup script (in [`lets-go.sh`](https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh)), which just clones the repo (if not yet present), then executes the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. You can re-run this at anytime to update the dotfiles. You can also optionally pass in some variables to change the install location (`DOTFILES_DIR`) and source repo (`DOTFILES_REPO`) to use your fork.
 
-The install script is idempotent, it can be run multiple times without changing the result, beyond the initial application. It will take care of checking that all dependencies are present, and will prompt the user to install missing packages, using the appropriate package manager (currently supports brew, pacman, apt and pkg). The install script takes care of installing / updating ZSH, Tmux and Vim all plugins.
+The install script [does several things](#install-script), it takes care of checking dependencies are met, updating dotfiles and symlinks, configuring CLI (Vim, Tmux, ZSH, etc), and will prompt the user to install listed packages, update the OS and apply any system preferences. The script is idempotent, so it can be run multiple times without changing the result, beyond the initial application.
 
 _Alternatively, you can clone the repo yourself, cd into it, allow execution of [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) then run it to install or update._
 
@@ -178,7 +175,7 @@ chmod +x ~/.dotfiles/install.sh
 ~/.dotfiles/install.sh
 ```
 
-You'll probably want to fork the repo, then clone your fork instead, so update the above commands with the path to your repo, and optioanlly change the clone location on your disk.
+You'll probably want to fork the repo, then clone your fork instead, so update the above commands with the path to your repo, and optionally change the clone location on your disk.
 
 Once the repo is cloned, you can modify whatever files you like before running the install script. The [Directory Structure](#directory-structure) section provides an overview of where each file is located. Then see the [Configuring](#configuring) section for setting file paths and symlink locations. 
 
