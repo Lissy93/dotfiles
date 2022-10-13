@@ -140,7 +140,7 @@ Zach Holman wrote a great article titled [Dotfiles Are Meant to Be Forked](https
 
 By all means feel free to take what you want from mine. I've taken care to ensure that each file is standalone, and well documented so that certain files can just be dropped into any system. But I cannot stress enough the importance of reading through files to ensure it's actually what you want. 
 
-If you're looking for some more example dotfile repos to get you started, I can highly recommend taking a look at: [holman](https://github.com/holman/dotfiles).
+If you're looking for some more example dotfile repos to get you started, I can highly recommend taking a look at: [@holman/dotfiles](https://github.com/holman/dotfiles), [@nickjj/dotfiles](https://github.com/nickjj/dotfiles), [@caarlos0/dotfiles](https://github.com/caarlos0/dotfiles), [@cowboy/dotfiles](https://github.com/cowboy/dotfiles).
 
 There's even more to check out at [webpro/awesome-dotfiles](https://github.com/webpro/awesome-dotfiles), [dotfiles.github.io](https://dotfiles.github.io/) and [r/unixporn](https://www.reddit.com/r/unixporn/).
 
@@ -193,10 +193,13 @@ Once the repo is cloned, you can modify whatever files you like before running t
     ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/tmux" title="Tmux Configs">tmux/</a>
     ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/vim" title="Vim Configs">vim/</a>
     ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/zsh" title="ZSH Configs">zsh/</a>
-    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/installs" title="List of packages to install">installs/</a>
+    └── <a href="https://github.com/Lissy93/dotfiles/tree/master/installs" title="List of packages to install">installs/</a>
+      ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/installs/Brewfile" title="Packages for MacOS via Homebrew">Brewfile</a>
+      ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/installs/arch-pacman.sh" title="Packages for Arch Linux via Pacman">arch-pacman.sh</a>
+      └── <a href="https://github.com/Lissy93/dotfiles/blob/master/installs/flatpak.sh" title="Packages for Linux Desktops via Flatpak">flatpak.sh</a>
     ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/.github" title="Repo Meta">.github/</a>
     ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh" title="Remote Setup Initiator">lets-go.sh</a>
-    └── <a href="https://github.com/Lissy93/dotfiles/blob/master/install.sh" title="Setup Script">install.sh</a>
+    ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/install.sh" title="Setup Script">install.sh</a>
     └── <a href="https://github.com/Lissy93/dotfiles/blob/master/symlinks.yml" title="Symlink location list">symlinks.yml</a>
 </pre>
 
@@ -204,7 +207,7 @@ Once the repo is cloned, you can modify whatever files you like before running t
 
 ### Install Script
 
-The install script will do the following:
+The setup script ([`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh)) will do the following:
 
 - **Setup**
   - Set variables by reading any passed parameters, or fallback to sensible defaults
@@ -990,12 +993,13 @@ Tmux plugins are managed using [TMP](https://github.com/tmux-plugins/tpm) and de
 
 // TODO
 
+Git aliases for ZSH are located in [`/zsh/aliases/git.zsh`](https://github.com/Lissy93/dotfiles/blob/master/zsh/aliases/git.zsh), and are documented under the [Aliases](https://github.com/lissy93/dotfiles#my-aliases) section, above.
 
 ---
 
 ## Dependencies
 
-These dot files make use of the following packages, and hence they are required
+It's strongly recomended to have the following packages installed on your system before proceeding:
 
 - [zsh](https://www.zsh.org/) - Interactive Shell
 - [nvim](http://neovim.io/) - Extensible Vim-based text editor
@@ -1009,10 +1013,7 @@ They can be easily installed/ updated with your package manger, e.g:
 - Alpine: `apk add zsh neovim tmux ranger git`
 - MacOS: `brew install zsh neovim tmux ranger git`
 
-Depending on your setup, the following utils may also be required: `make`, `ctags`, `fzf` and `python3-pip`
-
 ---
-
 
 ### Utilities
 
