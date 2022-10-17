@@ -28,10 +28,10 @@ tap 'koekeishiya/formulae'
 #############################################################
 
 # CLI Essentials
-brew 'git'        # Version controll
-brew 'neovim'     # Text editor
-brew 'ranger'     # Directory browser
-brew 'tmux'       # Term multiplexer
+brew 'git'          # Version controll
+brew 'neovim'       # Text editor
+brew 'ranger'       # Directory browser
+brew 'tmux'         # Term multiplexer
 
 # CLI Basics
 brew 'aria2'        # Resuming download util (better wget)
@@ -134,23 +134,23 @@ brew 'ttygif'         # Generate GIF from terminal commands + output
 brew 'watchman'       # Watch for changes and reload dev server
 
 # Network and Security Testing
-brew 'bettercap'  # Network, scanning and moniroting
-brew 'nmap'       # Port scanning
-brew 'wrk'        # HTTP benchmarking
-cask 'burp-suite' # Web security testing
-cask 'metasploit' # Pen testing framework
-cask 'owasp-zap'  # Web app security scanner
-cask 'wireshark'  # Network analyzer + packet capture
+brew 'bettercap'      # Network, scanning and moniroting
+brew 'nmap'           # Port scanning
+brew 'wrk'            # HTTP benchmarking
+cask 'burp-suite'     # Web security testing
+cask 'metasploit'     # Pen testing framework
+cask 'owasp-zap'      # Web app security scanner
+cask 'wireshark'      # Network analyzer + packet capture
 
 # Security Utilities
-brew 'bcrypt'     # Encryption utility, using blowfish
-brew 'clamav'     # Open source virus scanning suite
-cask 'gpg-suite'  # PGP encryption for emails and files
-brew 'git-crypt'  # Transparent encryption for git repos
-brew 'lynis'      # Scan system for common security issues
-brew 'openssl'    # Cryptography and SSL/TLS Toolkit
-brew 'rkhunter'   # Search / detect potential root kits
-cask 'veracrypt'  # File and volume encryption
+brew 'bcrypt'         # Encryption utility, using blowfish
+brew 'clamav'         # Open source virus scanning suite
+cask 'gpg-suite'      # PGP encryption for emails and files
+brew 'git-crypt'      # Transparent encryption for git repos
+brew 'lynis'          # Scan system for common security issues
+brew 'openssl'        # Cryptography and SSL/TLS Toolkit
+brew 'rkhunter'       # Search / detect potential root kits
+cask 'veracrypt'      # File and volume encryption
 
 #############################################################
 # Desktop Applications                                      #
@@ -183,20 +183,20 @@ cask 'onyx'           # Repair util for verifying system files
 cask 'daisydisk', args: { require_sha: false }  # Disk space analyzer and cleaner
 
 # Creativity
-cask 'audacity'       # Audio editor / recorder
-cask 'gimp'           # Photo editor
-brew 'handbrake'      # Video transcoder
-cask 'inkscape'       # Vector editor
-cask 'obs'            # Screencasting / recording
-cask 'shotcut'        # Video editor
+cask 'audacity'     # Audio editor / recorder
+cask 'gimp'         # Photo editor
+brew 'handbrake'    # Video transcoder
+cask 'inkscape'     # Vector editor
+cask 'obs'          # Screencasting / recording
+cask 'shotcut'      # Video editor
 
 # Media
-cask 'calibre'        # E-Book reader
+cask 'calibre'      # E-Book reader
 cask 'spotify', args: { require_sha: false } # Propietary music streaming
-cask 'transmission'   # Torrent client
-cask 'vlc'            # Media player
-brew 'pandoc'         # Universal file converter
-brew 'youtube-dl'     # YouTube video downloader
+cask 'transmission' # Torrent client
+cask 'vlc'          # Media player
+brew 'pandoc'       # Universal file converter
+brew 'youtube-dl'   # YouTube video downloader
 
 # Personal Applications
 cask '1password'      # Password manager (proprietary)
@@ -213,11 +213,26 @@ cask 'firefox'
 cask 'chromium'
 cask 'orion'
 
+#############################################################
+# Misc                                                      #
+#############################################################
+
 # Fonts
 tap 'homebrew/cask-fonts'
 cask 'font-fira-code'
 cask 'font-hack'
 cask 'font-inconsolata'
 cask 'font-meslo-lg-nerd-font'
+
+# Quick-Look Plugins
+cask 'webpquicklook'
+cask 'suspicious-package'
+cask 'quicknfo'
+cask 'quicklook-json'
+cask 'quicklook-csv'
+cask 'qlstephen'
+cask 'qlprettypatch'
+cask 'qlmarkdown'
+cask 'qlcolorcode'
 
 # EOF
