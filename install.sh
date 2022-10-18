@@ -217,10 +217,12 @@ function intall_macos_packages () {
   # Update / Install the Homebrew packages in ~/.Brewfile
   if command_exists brew && [ -f "$DOTFILES_DIR/installs/Brewfile" ]; then
     echo -e "\n${PURPLE}Updating homebrew and packages...${RESET}"
-    brew update
-    brew upgrade
-    brew bundle --global --file $HOME/.Brewfile
-    brew cleanup
+    brew doctor # Check for any app issues
+    brew update # Update Brew to latest version
+    brew upgrade # Upgrade all installed casks
+    brew bundle --global --file $HOME/.Brewfile # Install all listed Brew apps
+    brew cleanup # Remove stale lock files and outdated downloads
+    killall Finder # Restart finder (required for some apps)
   else
     echo -e "${PURPLE}Skipping Homebrew as requirements not met${RESET}"
   fi
@@ -279,7 +281,13 @@ function finishing_up () {
 
   # Print success message, and time taken
   total_time=$((`date +%s`-START_TIME))
-  make_banner "✨ Dotfiles configured succesfully in $total_time seconds" ${GREEN_B} 1
+  if [[ $total_time -gt 60 ]]; then
+    total_time="$(($total_time/60)) minutes"
+  else
+    total_time="${total_time} seconds"
+  fi
+
+  make_banner "✨ Dotfiles configured succesfully in $total_time" ${GREEN_B} 1
   echo -e "\033[0;92m     .--.\n    |o_o |\n    |:_/ |\n   // \
   \ \\ \n  (|     | ) \n /'\_   _/\`\\ \n \\___)=(___/\n"
   
