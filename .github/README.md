@@ -613,6 +613,7 @@ The following section lists different apps that may be installed for each catego
 - [`bat`](https://github.com/sharkdp/bat) - Output highlighting _(better cat)_
 - [`ctags`](https://github.com/universal-ctags/ctags) - Indexing of file info + headers
 - [`diff-so-fancy`](https://github.com/so-fancy/diff-so-fancy) - Readable file compares _(better diff)_
+- [`entr`](https://eradman.com/entrproject/) - Run command whenever file changes
 - [`duf`](https://github.com/muesli/duf) - Get info on mounted disks _(better df)_
 - [`exa`](https://github.com/ogham/exa) - Listing files with info _(better ls)_
 - [`fzf`](https://github.com/junegunn/fzf) - Fuzzy file finder and filtering
@@ -627,6 +628,7 @@ The following section lists different apps that may be installed for each catego
 - [`tldr`](https://github.com/tldr-pages/tldr) - Community-maintained docs _(better man)_
 - [`tree`](https://gitlab.com/OldManProgrammer/unix-tree) - Directory listings as tree
 - [`trash-cli`](https://github.com/andreafrancia/trash-cli) - Record + restore removed files
+- [`watch`](https://gitlab.com/procps-ng/procps) - Run commands periorically
 - [`xsel`](https://github.com/kfish/xsel) - Copy paste access to X clipboard
 - [`zoxide`](https://github.com/ajeetdsouza/zoxide) - Easy navigation _(better cd)_
 
