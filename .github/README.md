@@ -616,12 +616,15 @@ The following section lists different apps that may be installed for each catego
 - [`entr`](https://eradman.com/entrproject/) - Run command whenever file changes
 - [`duf`](https://github.com/muesli/duf) - Get info on mounted disks _(better df)_
 - [`exa`](https://github.com/ogham/exa) - Listing files with info _(better ls)_
+- [`exiftool`](https://exiftool.org/) - Reading and writing exif metadata
+- [`fdupes`](https://github.com/jbruchon/jdupes) - Duplicate file finder
 - [`fzf`](https://github.com/junegunn/fzf) - Fuzzy file finder and filtering
 - [`hyperfine`](https://github.com/sharkdp/hyperfine) - Benchmarking for arbitrary commands
 - [`jq`](https://github.com/stedolan/jq) - JSON parser
 - [`most`](https://www.jedsoft.org/most/) - Multi-window scroll pager _(better less)_
 - [`procs`](https://github.com/dalance/procs) - Advanced process viewer _(better ps)_
 - [`ripgrep`](https://github.com/BurntSushi/ripgrep) - Searching within files _(better grep)_
+- [`rsync`](https://rsync.samba.org/) - Fast, incremental file transfer
 - [`scc`](https://github.com/boyter/scc) - Count lines of code _(better cloc)_
 - [`sd`](https://github.com/chmln/sd) - RegEx find and replace _(better sed)_
 - [`thefuck`](https://github.com/nvbn/thefuck) - Auto-correct miss-typed commands
@@ -664,34 +667,29 @@ The following section lists different apps that may be installed for each catego
 <details>
 <summary>CLI Dev Suits</summary>
 
-- [`httpie`]() - HTTP / API testing testing client
-- [`lazydocker`]() - Full Docker management app
-- [`lazygit`]() - Full Git managemtne app
+- [`httpie`](https://httpie.io/) - HTTP / API testing testing client
+- [`lazydocker`](https://github.com/jesseduffield/lazydocker) - Full Docker management app
+- [`lazygit`](https://github.com/jesseduffield/lazygit) - Full Git managemtne app
 
 </details>
 
 <details>
 <summary>CLI External Sercvices</summary>
 
-- [`ngrok`]() - Reverse proxy for sharing localhost
-- [`tmate`]() - Share a terminal session via internet
-- [`pbgopy`]() - Cross-device copy and paste service
-- [`asciinema`]() - Recording + sharing terminal sessions
-- [`googler`]() - Fetch search results from Google
-- [`gotty`]() - Expose terminal sessaion via browser
-- [`navi`]() - Browse, search, read cheat sheets
+- [`ngrok`](https://ngrok.com/) - Reverse proxy for sharing localhost
+- [`tmate`](https://github.com/tmate-io/tmate) - Share a terminal session via internet
+- [`asciinema`](https://asciinema.org/) - Recording + sharing terminal sessions
+- [`navi`](https://github.com/denisidoro/navi) - Browse, search, read cheat sheets
 
 </details>
 
 <details>
 <summary>CLI Fun</summary>
 
-- [`cowsay`]() - Have an ASCII cow say your message
-- [`figlet`]() - Output text as big ASCII art text
-- [`lolcat`]() - Make console output raibow colored
-- [`neofetch`]() - Show system data and ditstro info
-- [`pipes-sh`]() - Cool terminal pipe screen saver
-- [`pv`]() - Pipe viewer, with animation options
+- [`cowsay`](https://github.com/piuccio/cowsay) - Have an ASCII cow say your message
+- [`figlet`](http://www.figlet.org/) - Output text as big ASCII art text
+- [`lolcat`](https://github.com/busyloop/lolcat) - Make console output raibow colored
+- [`neofetch`](https://github.com/dylanaraps/neofetch) - Show system data and ditstro info
 
 </details>
 
@@ -755,14 +753,13 @@ The following section lists different apps that may be installed for each catego
 <details>
 <summary>Security Utilities</summary>
 
-- `bcrypt` - Encryption utility, using blowfish
-- `clamav` - Open source virus scanning suite
-- `gpg-suite` - PGP encryption for emails and files
-- `git-crypt` - Transparent encryption for git repos
-- `lynis` - Scan system for common security issues
-- `openssl` - Cryptography and SSL/TLS Toolkit
-- `rkhunter` - Search / detect potential root kits
-- `veracrypt` - File and volume encryption
+- [`bcrypt`](https://bcrypt.sourceforge.net/) - Encryption utility, using blowfish
+- [`clamav`](https://www.clamav.net/) - Open source virus scanning suite
+- [`git-crypt`](https://www.agwa.name/projects/git-crypt/) - Transparent encryption for git repos
+- [`lynis`](https://cisofy.com/lynis/) - Scan system for common security issues
+- [`openssl`](https://www.openssl.org/) - Cryptography and SSL/TLS Toolkit
+- [`rkhunter`](https://rkhunter.sourceforge.net/) - Search / detect potential root kits
+- [`veracrypt`](https://www.veracrypt.fr/code/VeraCrypt/) - File and volume encryption
 
 </details>
 
@@ -771,38 +768,43 @@ The following section lists different apps that may be installed for each catego
 <details>
 <summary>Creativity</summary>
 
-- audacity - Audio editor / recorder
-- gimp - Photo editor
-- handbrake - Video transcoder
-- inkscape - Vector editor
-- obs - Screencasting / recording
-- shotcut - Video editor
+- **[Audacity](https://www.audacityteam.org/)** - Multi-track audio editor and recording
+- **[Blender](https://www.blender.org/)** - 3D modelling, rendering and sculpting
+- **[Cura](https://ultimaker.com/software/ultimaker-cura)** - 3D Printing software, for slicing models
+- **[DarkTable](https://www.darktable.org/)** - Organize and bulk edit photos (similar to Lightroom)
+- **[Dia](https://wiki.gnome.org/Apps/Dia)** - Versatile diagramming tool, useful for UML
+- **[Gimp](https://www.gimp.org/)** - Image and photo editing application
+- **[HandBrake](https://handbrake.fr/)** - For converting video from any format to a selection of modern codecs
+- **[InkScape](https://inkscape.org/)** - Digital drawing/ illustration
+- **[OBS Studio](https://obsproject.com/)** - Streaming and screencasting
+- **[Shotcut](https://www.shotcut.org/)** - Video editor
+- **[Synfig Studio](https://www.synfig.org/)** - 2D animation
 
 </details>
 
 <details>
 <summary>Media</summary>
 
-- calibre - E-Book reader
-- spotify - Propietary music streaming
-- transmission - Torrent client
-- vlc - Media player
-- pandoc - Universal file converter
-- youtube-dl - YouTube video downloader
+- [Calibre](https://calibre-ebook.com/) - E-Book reader
+- [Spotify](https://spotify.com) - Propietary music streaming
+- [Transmission](https://transmissionbt.com/) - Torrent client
+- [VLC](https://www.videolan.org/vlc/) - Media player
+- [Pandoc](https://pandoc.org/) - Universal file converter
+- [Youtube-dl](https://youtube-dl.org/) - YouTube video downloader
 
 </details>
 
 <details>
 <summary>Personal Applications</summary>
 
-- 1password - Password manager _(proprietary)_
-- tresorit - Encrypted file backup _(proprietary)_
-- standard-notes - Encrypted synced notes
-- signal - Link to encrypted mobile messenger
-- ledger-live - Crypto hardware wallet manager
-- mountain-duck - Mount remote storage locations
-- protonmail-bridge - Decrypt ProtonMail emails
-- protonvpn - Client app for ProtonVPN
+- 1Password - Password manager _(proprietary)_
+- Tresorit - Encrypted file backup _(proprietary)_
+- Standard Notes - Encrypted synced notes
+- Signal - Link to encrypted mobile messenger
+- Ledger Live - Crypto hardware wallet manager
+- Mountain Duck - Mount remote storage locations
+- ProtonMail-Bridge - Decrypt ProtonMail emails
+- ProtonVPN - Client app for ProtonVPN
 
 </details>
 
@@ -837,17 +839,6 @@ The following section lists different apps that may be installed for each catego
 - `skhd` - Hotkey daemon for macOS
 - `stats` - System resource usage in menubar
 - `yabai` - Tiling window manager
-
-</details>
-
-<details>
-<summary>MacOS Utility Apps</summary>
-
-- coteditor - Just a simple plain-text editor
-- little-snitch - Firewall app viewing / blocking traffic
-- keka - File archiver and extractor
-- onyx - Repair util for verifying system files
-- daisydisk - Disk space analyzer and cleaner
 
 </details>
 
