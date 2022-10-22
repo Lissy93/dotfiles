@@ -12,7 +12,7 @@
     - [Containerized Userspace](#containerized-userspace)
     - [Security](#security)
     - [So copy paste, right?](#so-copy-paste-right)
-- [My Dots](#my-dots)
+- [My Dots](#my-dotfiles)
     - [Setup](#setup)
     - [Directory Structure](#directory-structure)
     - [Install Script](#install-script)
@@ -210,12 +210,12 @@ Once the repo is cloned, you can modify whatever files you like before running t
 The install script will do the following:
 
 - **Setup**
-  - Set variables by reading any passed parameters, or fallback to sensible defaults
   - Print welcome message, and a summary of proposed changes, and prompt user to continue
   - Ensure that core dependencies are met (git, zsh, vim)
+  - Set variables by reading any passed parameters, or fallback to sensible defaults (see [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/zsh/.zshenv))  
 - **Dotfiles**
   - If dotfiles not yet present, will clone from git, otherwise pulls latest changes
-  - Symlinks each file to it's correct location on disk
+  - Setup / update symlinks each file to it's correct location on disk
 - **System Config**
   - Checks default shell, if not yet set, will prompt to set to zsh
   - Installs Vim plugins via Plug
