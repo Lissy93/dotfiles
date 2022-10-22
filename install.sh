@@ -69,14 +69,29 @@ make_intro () {
   echo -e "${CYAN_B}The seup script will do the following:${RESET}"
   echo -e "${C2}(1) Pre-Setup Tasls"
   echo -e "  ${C3}- Check that all requirements are met, and system is compatible"
+  echo -e "  ${C3}- Sets environmental variables from params, or uses sensible defaults"
+  echo -e "  ${C3}- Output welcome message"
   echo -e "${C2}(2) Setup Dotfiles"
-  echo -e "  ${C3}- Clone or update dotfiles from git, and apply symlinks"
+  echo -e "  ${C3}- Clone or update dotfiles from git"
+  echo -e "  ${C3}- Symlinks dotfiles to correct locations"
   echo -e "${C2}(3) Install packages"
-  echo -e "  ${C3}- Update packeges, and prompt to install apps"
+  echo -e "  ${C3}- On MacOS, prompt to install Homebrew if not present"
+  echo -e "  ${C3}- On MacOS, updates and installs apps liseted in Brewfile"
+  echo -e "  ${C3}- On Arch Linux, updates and installs packages via Pacman"
+  echo -e "  ${C3}- On Debian Linux, updates and installs packages via apt get"
+  echo -e "  ${C3}- On Linux desktop systems, prompt to install desktop apps via Flatpak"
+  echo -e "  ${C3}- Checks that OS is up-to-date and criticial patches are installed"
   echo -e "${C2}(4) Configure sytstem"
-  echo -e "  ${C3}- Setup Vim, Tmux and ZSH plugins"
-  echo -e "  ${C3}- Configure OS and apply app user preferences"
+  echo -e "  ${C3}- Setup Vim, and install Vim plugins via Plug"
+  echo -e "  ${C3}- Setup Tmux, and install Tmux plugins via TPM"
+  echo -e "  ${C3}- Setup ZSH, and install ZSH plugins via Antigen"
+  echo -e "  ${C3}- Prompt to configure OS user preferences"
+  echo -e "${C2}(5) Finishing Up"
+  echo -e "  ${C3}- Refresh current terminal session"
+  echo -e "  ${C3}- Print summary of applied changes and time taken"
+  echo -e "  ${C3}- Exit with appropriate status code"
   echo -e "\n${PURPLE}You will be prompted at each stage, before any changes are made.${RESET}"
+  echo -e "${PURPLE}For more info, see GitHub: \e[4mhttps://github.com/lissy93/dotfiles${RESET}"
 }
 
 # Checks if a given package is installed
@@ -259,7 +274,7 @@ function install_packages () {
     # Arch Linux
     arch_pkg_install_script="${DOTFILES_DIR}/installs/arch-pacman.sh"
     chmod +x $arch_pkg_install_script
-    $arch_pkg_install_script
+    $arch_pkg_install_script $params
   fi
   # If running in Linux desktop mode, prompt to install desktop apps via Flatpak
   flatpak_script="${DOTFILES_DIR}/installs/flatpak.sh"
