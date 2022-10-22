@@ -12,15 +12,23 @@
 # Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com> #
 ######################################################################
 
-# Configuration Params
+# Dotfiles Source Repo and Destination Directory
 REPO_NAME="${REPO_NAME:-Lissy93/Dotfiles}"
-REPO_PATH="https://github.com/${REPO_NAME}.git"
+DOTFILES_DIR="${DOTFILES_DIR:-$HOME/Documents/config/dotfiles}"
+DOTFILES_REPO="${DOTFILES_REPO:-https://github.com/${REPO_NAME}.git}"
+
+# Config Names and Locations
+TITLE="🧰 ${REPO_NAME} Setup"
 SYMLINK_FILE="${SYMLINK_FILE:-symlinks.yaml}"
 DOTBOT_DIR="dotbot"
 DOTBOT_BIN="bin/dotbot"
+
+# Set variables for reference
+PARAMS=$* # User-specified parameters
 CURRENT_DIR=$(cd "$(dirname ${BASH_SOURCE[0]})" && pwd)
-DOTFILES_DIR="${DOTFILES_DIR:-$HOME/Documents/config/dotfiles}"
-TITLE="🧰 ${REPO_NAME} Setup"
+SYSTEM_TYPE=$(uname -s) # Get system type - Linux / MacOS (Darwin)
+PROMPT_TIMEOUT=15 # When user is prompted for input, skip after x seconds
+START_TIME=`date +%s` # Start timer
 
 # Color Variables
 CYAN_B='\033[1;96m'
@@ -32,19 +40,13 @@ RESET='\033[0m'
 GREEN='\033[0;32m'
 PURPLE='\033[0;35m'
 
-# Other params
-start_time=`date +%s` # Start timer
-PROMPT_TIMEOUT=15 # When user is prompted for input, skip after x seconds
-system_type=$(uname -s) # Get system type - Linux / MacOS (Darwin)
-params=$* # Get passed in params
-
 # Clear the screen
-if [[ ! $params == *"--no-clear"* ]]; then
+if [[ ! $PARAMS == *"--no-clear"* ]]; then
   clear
 fi
 
 # If set to auto-yes - then don't wait for user reply
-if [[ $params == *"--auto-yes"* ]]; then
+if [[ $PARAMS == *"--auto-yes"* ]]; then
   PROMPT_TIMEOUT=1
   REPLY='Y'
 fi
@@ -120,17 +122,18 @@ system_verify () {
 
 # Prints welcome banner, verifies that requirements are met
 function pre_setup_tasks () {
-  # Show starting banner
+  # Show pretty starting banner
   make_banner "${TITLE}" "${CYAN_B}" 1
 
-  # Print list of what will be applied
+  # Print intro, listing what changes will be applied
   make_intro
 
-  # Confirm user would like to proceed
+  # Confirm that the user would like to proceed
   echo -e "\n${CYAN_B}Are you happy to continue? (y/N)${RESET}"
   read -t $PROMPT_TIMEOUT -n 1 -r
   if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     echo -e "\n${PURPLE}No worries, feel free to come back another time.\nTerminating...${RESET}"
+    make_banner "🚧 Installation Aborted" ${YELLOW_B} 1
     exit 0
   fi
   echo
@@ -151,7 +154,7 @@ function setup_dot_files () {
   then
     echo -e "${PURPLE}Dotfiles not yet present. Will download ${REPO_NAME} into ${DOTFILES_DIR}${RESET}"
     mkdir -p "${DOTFILES_DIR}"
-    git clone --recursive ${REPO_PATH} ${DOTFILES_DIR}
+    git clone --recursive ${DOTFILES_REPO} ${DOTFILES_DIR}
   else
     echo -e "${PURPLE}Pulling changes from ${REPO_NAME} into ${DOTFILES_DIR}${RESET}"
     cd "${DOTFILES_DIR}" && git pull origin master && git submodule update --recursive
@@ -204,7 +207,7 @@ function apply_preferences () {
   # Apply general system, app and OS security preferences (prompt user first)
   read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)Would you like to apply system preferences? (y/N)" -n 1 -r
   if [[ $REPLY =~ ^[Yy]$ ]]; then
-    if [ "$system_type" = "Darwin" ]; then
+    if [ "$SYSTEM_TYPE" = "Darwin" ]; then
       echo -e "\n${PURPLE}Applying MacOS system preferences, ensure you've understood before proceeding${RESET}\n"
       macos_settings_dir="$DOTFILES_DIR/system-specific/macos/system-settings"
       for macScript in "macos-security.sh" "macos-preferences.sh" "macos-apps.sh"; do
@@ -229,10 +232,12 @@ function intall_macos_packages () {
   # Update / Install the Homebrew packages in ~/.Brewfile
   if command_exists brew && [ -f "$DOTFILES_DIR/installs/Brewfile" ]; then
     echo -e "\n${PURPLE}Updating homebrew and packages...${RESET}"
-    brew update
-    brew upgrade
-    brew bundle --global --file $HOME/.Brewfile
-    brew cleanup
+    brew doctor # Check for any app issues
+    brew update # Update Brew to latest version
+    brew upgrade # Upgrade all installed casks
+    brew bundle --global --file $HOME/.Brewfile # Install all listed Brew apps
+    brew cleanup # Remove stale lock files and outdated downloads
+    killall Finder # Restart finder (required for some apps)
   else
     echo -e "${PURPLE}Skipping Homebrew as requirements not met${RESET}"
   fi
@@ -267,7 +272,7 @@ function install_packages () {
     echo -e "${PURPLE}Skipping package installs${RESET}"
     return
   fi
-  if [ "$system_type" = "Darwin" ]; then
+  if [ "$SYSTEM_TYPE" = "Darwin" ]; then
     # Mac OS
     intall_macos_packages
   elif [ -f "/etc/arch-release" ]; then
@@ -290,8 +295,14 @@ function finishing_up () {
   source "${HOME}/.zshenv"
 
   # Print success message, and time taken
-  total_time=$((`date +%s`-start_time))
-  make_banner "✨ Dotfiles configured succesfully in $total_time seconds" ${GREEN_B} 1
+  total_time=$((`date +%s`-START_TIME))
+  if [[ $total_time -gt 60 ]]; then
+    total_time="$(($total_time/60)) minutes"
+  else
+    total_time="${total_time} seconds"
+  fi
+
+  make_banner "✨ Dotfiles configured succesfully in $total_time" ${GREEN_B} 1
   echo -e "\033[0;92m     .--.\n    |o_o |\n    |:_/ |\n   // \
   \ \\ \n  (|     | ) \n /'\_   _/\`\\ \n \\___)=(___/\n"
   
@@ -305,7 +316,7 @@ function finishing_up () {
 }
 
 # If --help flag passed in, just show the help menu
-if [[ $params == *"--help"* ]]; then
+if [[ $PARAMS == *"--help"* ]]; then
   make_intro
   exit 0
 fi

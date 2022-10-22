@@ -28,10 +28,10 @@ tap 'koekeishiya/formulae'
 #############################################################
 
 # CLI Essentials
-brew 'git'        # Version controll
-brew 'neovim'     # Text editor
-brew 'ranger'     # Directory browser
-brew 'tmux'       # Term multiplexer
+brew 'git'          # Version controll
+brew 'neovim'       # Text editor
+brew 'ranger'       # Directory browser
+brew 'tmux'         # Term multiplexer
 
 # CLI Basics
 brew 'aria2'        # Resuming download util (better wget)
@@ -40,6 +40,7 @@ brew 'broot'        # Interactive directory navigation
 brew 'ctags'        # Indexing of file info + headers
 brew 'diff-so-fancy'# Readable file compares (better diff)
 brew 'duf'          # Get info on mounted disks (better df)
+brew 'entr'         # Run command whenever file changes
 brew 'exa'          # Listing files with info (better ls)
 brew 'fzf'          # Fuzzy file finder and filtering
 brew 'hyperfine'    # Benchmarking for arbitrary commands
@@ -54,6 +55,7 @@ brew 'thefuck'      # Auto-correct miss-typed commands
 brew 'tldr'         # Community-maintained docs (better man)
 brew 'tree'         # Directory listings as tree structure
 brew 'trash-cli'    # Record and restore removed files
+brew 'watch'        # Run commands periorically
 brew 'xsel'         # Copy paste access to the X clipboard
 brew 'zoxide'       # Auto-learning navigation (better cd)
 
@@ -68,6 +70,7 @@ brew 'ncdu'         # Disk usage analyzer and monitor (better du)
 brew 'speedtest-cli'# Command line speed test utility
 
 # CLI Productivity Apps
+brew 'aspell'       # Spell check
 brew 'browsh'       # Web browser, in terminal
 brew 'buku'         # Bookmark manager
 brew 'cmus'         # Music player
@@ -103,7 +106,7 @@ brew 'pv'           # Pipe viewer, with animation options
 
 # Development Apps
 cask 'android-studio' # IDE for Android development
-cask 'boop'           # Test transformation tool
+cask 'boop'           # Text transformation tool
 brew 'gradle'         # Build automation for Java
 cask 'iterm2'         # Better terminal emulator
 cask 'postman'        # HTTP API testing app
@@ -134,27 +137,82 @@ brew 'ttygif'         # Generate GIF from terminal commands + output
 brew 'watchman'       # Watch for changes and reload dev server
 
 # Network and Security Testing
-brew 'bettercap'  # Network, scanning and moniroting
-brew 'nmap'       # Port scanning
-brew 'wrk'        # HTTP benchmarking
-cask 'burp-suite' # Web security testing
-cask 'metasploit' # Pen testing framework
-cask 'owasp-zap'  # Web app security scanner
-cask 'wireshark'  # Network analyzer + packet capture
+brew 'bettercap'      # Network, scanning and moniroting
+brew 'nmap'           # Port scanning
+brew 'wrk'            # HTTP benchmarking
+cask 'burp-suite'     # Web security testing
+cask 'metasploit'     # Pen testing framework
+cask 'owasp-zap'      # Web app security scanner
+cask 'wireshark'      # Network analyzer + packet capture
 
 # Security Utilities
-brew 'bcrypt'     # Encryption utility, using blowfish
-brew 'clamav'     # Open source virus scanning suite
-cask 'gpg-suite'  # PGP encryption for emails and files
-brew 'git-crypt'  # Transparent encryption for git repos
-brew 'lynis'      # Scan system for common security issues
-brew 'openssl'    # Cryptography and SSL/TLS Toolkit
-brew 'rkhunter'   # Search / detect potential root kits
-cask 'veracrypt'  # File and volume encryption
+brew 'bcrypt'         # Encryption utility, using blowfish
+brew 'clamav'         # Open source virus scanning suite
+cask 'gpg-suite'      # PGP encryption for emails and files
+brew 'git-crypt'      # Transparent encryption for git repos
+brew 'lynis'          # Scan system for common security issues
+brew 'openssl'        # Cryptography and SSL/TLS Toolkit
+brew 'rkhunter'       # Search / detect potential root kits
+cask 'veracrypt'      # File and volume encryption
 
 #############################################################
 # Desktop Applications                                      #
 #############################################################
+
+# Creativity
+cask 'audacity'     # Audio editor / recorder
+cask 'gimp'         # Photo editor
+brew 'handbrake'    # Video transcoder
+cask 'inkscape'     # Vector editor
+cask 'obs'          # Screencasting / recording
+cask 'shotcut'      # Video editor
+
+# Media
+cask 'calibre'      # E-Book reader
+cask 'spotify', args: { require_sha: false } # Propietary music streaming
+cask 'transmission' # Torrent client
+cask 'vlc'          # Media player
+brew 'pandoc'       # Universal file converter
+brew 'youtube-dl'   # YouTube video downloader
+
+# Personal Applications
+cask '1password'      # Password manager (proprietary)
+cask 'tresorit'       # Encrypted file backup (proprietary)
+cask 'standard-notes' # Encrypted synced notes
+cask 'signal'         # Link to encrypted mobile messenger
+cask 'ledger-live'    # Crypto hardware wallet manager
+cask 'mountain-duck'  # Mount remote storage locations
+cask 'protonmail-bridge' # Decrypt ProtonMail emails
+cask 'protonvpn'      # Client app for ProtonVPN
+
+# Browsers
+cask 'firefox'
+cask 'chromium'
+cask 'orion'
+
+#############################################################
+# MacOS-Specific Stuff                                      #
+#############################################################
+
+# Fonts
+tap 'homebrew/cask-fonts'
+cask 'font-fira-code'
+cask 'font-hack'
+cask 'font-inconsolata'
+cask 'font-meslo-lg-nerd-font'
+
+# Mac OS Quick-Look Plugins
+cask 'qlcolorcode'        # QL for code with highlighting
+cask 'qlimagesize'        # QL for size info for images
+cask 'qlmarkdown'         # QL for markdown files
+cask 'qlprettypatch'      # QL for patch / diff files
+cask 'qlstephen'          # QL for dev text files
+cask 'qlvideo'            # QL for video formats
+cask 'quicklook-csv'      # QL for tables in CSV format
+cask 'quicklook-json', args: { require_sha: false }     # QL for JSON, with trees
+cask 'quicklookapk', args: { require_sha: false }       # QL for Android APKs
+cask 'suspicious-package', args: { require_sha: false } # QL for OSX app installers
+cask 'webpquicklook', args: { require_sha: false }      # QL for WebP image files
 
 # Mac OS Mods and Imrovments
 cask 'alt-tab'        # Much better alt-tab window switcher
@@ -175,49 +233,9 @@ brew 'skhd'           # Hotkey daemon for macOS
 cask 'stats'          # System resource usage in menubar
 brew 'yabai'          # Tiling window manager
 
-# Utility apps
+# Mac OS Utility Apps
 cask 'coteditor'      # Just a simple plain-text editor
 cask 'little-snitch'  # Firewall app viewing / blocking traffic
 cask 'keka'           # File archiver and extractor
-cask 'onyx'           # Repair util for verifying system files
-cask 'daisydisk', args: { require_sha: false }  # Disk space analyzer and cleaner
-
-# Creativity
-cask 'audacity'       # Audio editor / recorder
-cask 'gimp'           # Photo editor
-brew 'handbrake'      # Video transcoder
-cask 'inkscape'       # Vector editor
-cask 'obs'            # Screencasting / recording
-cask 'shotcut'        # Video editor
-
-# Media
-cask 'calibre'        # E-Book reader
-cask 'spotify', args: { require_sha: false } # Propietary music streaming
-cask 'transmission'   # Torrent client
-cask 'vlc'            # Media player
-brew 'pandoc'         # Universal file converter
-brew 'youtube-dl'     # YouTube video downloader
-
-# Personal Applications
-cask '1password'      # Password manager (proprietary)
-cask 'tresorit'       # Encrypted file backup (proprietary)
-cask 'standard-notes' # Encrypted synced notes
-cask 'signal'         # Link to encrypted mobile messenger
-cask 'ledger-live'    # Crypto hardware wallet manager
-cask 'mountain-duck'  # Mount remote storage locations
-cask 'protonmail-bridge' # Decrypt ProtonMail emails
-cask 'protonvpn'      # Client app for ProtonVPN
-
-# Browsers
-cask 'firefox'
-cask 'chromium'
-cask 'orion'
-
-# Fonts
-tap 'homebrew/cask-fonts'
-cask 'font-fira-code'
-cask 'font-hack'
-cask 'font-inconsolata'
-cask 'font-meslo-lg-nerd-font'
 
 # EOF
