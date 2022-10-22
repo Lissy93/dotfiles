@@ -1,5 +1,10 @@
-# ZSH aliases for common Flutter + Dart dev commands
-# Inspired by ohmyzsh/flutter and hadenlabs/zsh-flutter
+
+######################################################################
+# ZSH aliases for common Flutter + Dart dev commands                 #
+# Inspired by ohmyzsh/flutter and hadenlabs/zsh-flutter              #
+#                                                                    #
+# Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com> #
+######################################################################
 
 # Main fultter command
 alias fl="flutter"
