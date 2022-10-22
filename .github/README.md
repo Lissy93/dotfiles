@@ -189,18 +189,18 @@ Once the repo is cloned, you can modify whatever files you like before running t
 <pre>
 ~
 └── <a href="https://github.com/Lissy93/dotfiles" title="Root">.</a>
-    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/bash" title="Bash Config">bash/</a>
-    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/tmux" title="Tmux Configs">tmux/</a>
-    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/vim" title="Vim Configs">vim/</a>
-    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/zsh" title="ZSH Configs">zsh/</a>
-    └── <a href="https://github.com/Lissy93/dotfiles/tree/master/installs" title="List of packages to install">installs/</a>
-      ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/installs/Brewfile" title="Packages for MacOS via Homebrew">Brewfile</a>
-      ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/installs/arch-pacman.sh" title="Packages for Arch Linux via Pacman">arch-pacman.sh</a>
-      └── <a href="https://github.com/Lissy93/dotfiles/blob/master/installs/flatpak.sh" title="Packages for Linux Desktops via Flatpak">flatpak.sh</a>
-    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/.github" title="Repo Meta">.github/</a>
-    ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh" title="Remote Setup Initiator">lets-go.sh</a>
-    ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/install.sh" title="Setup Script">install.sh</a>
-    └── <a href="https://github.com/Lissy93/dotfiles/blob/master/symlinks.yml" title="Symlink location list">symlinks.yml</a>
+    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/bash" title="Bash Config">bash/</a>             # Bash (shell) config
+    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/tmux" title="Tmux Configs">tmux/</a>             # Tmux (multiplexer) config
+    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/vim" title="Vim Configs">vim/</a>              # Vim (text editor) config
+    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/zsh" title="ZSH Configs">zsh/</a>              # ZSH (shell) config
+    └── <a href="https://github.com/Lissy93/dotfiles/tree/master/installs" title="List of packages to install">installs/</a>         # Scripts for software installation
+      ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/installs/Brewfile" title="Packages for MacOS via Homebrew">Brewfile</a>        # Package installs for MacOS via Homebrew
+      ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/installs/arch-pacman.sh" title="Packages for Arch Linux via Pacman">arch-pacman.sh</a>  # Package installs for Arch via Pacman
+      └── <a href="https://github.com/Lissy93/dotfiles/blob/master/installs/flatpak.sh" title="Packages for Linux Desktops via Flatpak">flatpak.sh</a>      # Package installs for Linux desktops via Flatpak
+    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/.github" title="Repo Meta">.github/</a>          # Meta files for GitHub repo
+    ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh" title="Remote Setup Initiator">lets-go.sh</a>        # One-line remote installation entry point
+    ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/install.sh" title="Setup Script">install.sh</a>        # All-in-one install and setup script
+    └── <a href="https://github.com/Lissy93/dotfiles/blob/master/symlinks.yml" title="Symlink location list">symlinks.yml</a>      # List of symlink locations
 </pre>
 
 ---
