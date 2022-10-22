@@ -41,7 +41,7 @@ GREEN='\033[0;32m'
 PURPLE='\033[0;35m'
 
 # Clear the screen
-if [[ ! $PARAMS == *"--no-clear"* ]]; then
+if [[ ! $PARAMS == *"--no-clear"* ]] && [[ ! $PARAMS == *"--help"* ]] ; then
   clear
 fi
 
