@@ -698,14 +698,13 @@ The following section lists different apps that may be installed for each catego
 <details>
 <summary>Development Apps</summary>
 
-- `android-studio` - IDE for Android development
-- `boop` - Test transformation tool
-- `gradle` - Build automation for Java
-- `iterm2` - Better terminal emulator
-- `postman` - HTTP API testing app
-- `sourcetree` - Git visual client
-- `utm` - VM management console
-- `visual-studio-code` - Code editor
+- [Android Studio](https://developer.android.com/studio/) - IDE for Android development
+- [Boop](https://github.com/IvanMathy/Boop) - Test transformation tool _(MacOS Only)_
+- [iterm2](https://iterm2.com/) - Better terminal emulator _(MacOS Only)_
+- [Postman](https://www.postman.com/) - HTTP API testing app
+- [Sourcetree](https://www.sourcetreeapp.com/) - Git visual client _(MacOS Only)_
+- [Virtual Box](https://www.virtualbox.org/) - VM management console
+- [VS Code](https://code.visualstudio.com/) - Code editor
 
 </details>
 
@@ -715,6 +714,7 @@ The following section lists different apps that may be installed for each catego
 - `docker` - Containers
 - `gcc` - GNU C++ compilers
 - `go` - Compiler for Go Lang
+- `gradle` - Build tool for Java
 - `lua` - Lua interpreter
 - `luarocks` - Package manager for Lua
 - `node` - Node.js
@@ -729,24 +729,24 @@ The following section lists different apps that may be installed for each catego
 <details>
 <summary>Development Utils</summary>
 
-- `gh` - Interact with GitHub PRs, issues, repos
-- `scrcpy` - Display and control Andrdroid devices
-- `terminal-notifier` - Trigger Mac notifications from terminal
-- `tig` - Text-mode interface for git
-- `ttygif` - Generate GIF from terminal commands + output
+- [`gh`](https://cli.github.com/) - Interact with GitHub PRs, issues, repos
+- [`scrcpy`](https://github.com/Genymobile/scrcpy) - Display and control Andrdroid devices
+- [`terminal-notifier`](https://github.com/julienXX/terminal-notifier) - Trigger Mac notifications from terminal _(MacOS Only)_
+- [`tig`](https://jonas.github.io/tig/) - Text-mode interface for git
+- [`ttygif`](https://github.com/icholy/ttygif) - Generate GIF from terminal commands + output
 
 </details>
 
 <details>
 <summary>Network and Security Testing</summary>
 
-- `bettercap` - Network, scanning and moniroting
-- `nmap` - Port scanning
-- `wrk` - HTTP benchmarking
-- `burp-suite` - Web security testing
-- `metasploit` - Pen testing framework
-- `owasp-zap` - Web app security scanner
-- `wireshark` - Network analyzer + packet capture
+- [`bettercap`](https://www.bettercap.org/) - Network, scanning and moniroting
+- [`nmap`](https://nmap.org/) - Port scanning
+- [`wrk`](https://github.com/giltene/wrk2) - HTTP benchmarking
+- [`burp-suite`](https://portswigger.net/burp) - Web security testing
+- [`metasploit`](https://www.metasploit.com/) - Pen testing framework
+- [`owasp-zap`](https://owasp.org/www-project-zap/) - Web app security scanner
+- [`wireshark`](https://www.wireshark.org/) - Network analyzer + packet capture
 
 </details>
 
@@ -768,17 +768,17 @@ The following section lists different apps that may be installed for each catego
 <details>
 <summary>Creativity</summary>
 
-- **[Audacity](https://www.audacityteam.org/)** - Multi-track audio editor and recording
-- **[Blender](https://www.blender.org/)** - 3D modelling, rendering and sculpting
-- **[Cura](https://ultimaker.com/software/ultimaker-cura)** - 3D Printing software, for slicing models
-- **[DarkTable](https://www.darktable.org/)** - Organize and bulk edit photos (similar to Lightroom)
-- **[Dia](https://wiki.gnome.org/Apps/Dia)** - Versatile diagramming tool, useful for UML
-- **[Gimp](https://www.gimp.org/)** - Image and photo editing application
-- **[HandBrake](https://handbrake.fr/)** - For converting video from any format to a selection of modern codecs
-- **[InkScape](https://inkscape.org/)** - Digital drawing/ illustration
-- **[OBS Studio](https://obsproject.com/)** - Streaming and screencasting
-- **[Shotcut](https://www.shotcut.org/)** - Video editor
-- **[Synfig Studio](https://www.synfig.org/)** - 2D animation
+- [Audacity](https://www.audacityteam.org/) - Multi-track audio editor and recording
+- [Blender](https://www.blender.org/) - 3D modelling, rendering and sculpting
+- [Cura](https://ultimaker.com/software/ultimaker-cura) - 3D Printing software, for slicing models
+- [DarkTable](https://www.darktable.org/) - Organize and bulk edit photos (similar to Lightroom)
+- [Dia](https://wiki.gnome.org/Apps/Dia) - Versatile diagramming tool, useful for UML
+- [Gimp](https://www.gimp.org/) - Image and photo editing application
+- [HandBrake](https://handbrake.fr/) - For converting video from any format to a selection of modern codecs
+- [InkScape](https://inkscape.org/) - Digital drawing/ illustration
+- [OBS Studio](https://obsproject.com/) - Streaming and screencasting
+- [Shotcut](https://www.shotcut.org/) - Video editor
+- [Synfig Studio](https://www.synfig.org/) - 2D animation
 
 </details>
 
@@ -797,23 +797,22 @@ The following section lists different apps that may be installed for each catego
 <details>
 <summary>Personal Applications</summary>
 
-- 1Password - Password manager _(proprietary)_
-- Tresorit - Encrypted file backup _(proprietary)_
-- Standard Notes - Encrypted synced notes
-- Signal - Link to encrypted mobile messenger
-- Ledger Live - Crypto hardware wallet manager
-- Mountain Duck - Mount remote storage locations
-- ProtonMail-Bridge - Decrypt ProtonMail emails
-- ProtonVPN - Client app for ProtonVPN
+- [1Password](https://1password.com/) - Password manager _(proprietary)_
+- [Tresorit](https://tresorit.com/) - Encrypted file backup _(proprietary)_
+- [Standard Notes](https://standardnotes.com/) - Encrypted synced notes
+- [Signal](https://www.signal.org) - Link to encrypted mobile messenger
+- [Ledger Live](https://www.ledger.com/ledger-live) - Crypto hardware wallet manager
+- [ProtonMail-Bridge](https://proton.me/mail/bridge) - Decrypt ProtonMail emails
+- [ProtonVPN](https://protonvpn.com/) - Client app for ProtonVPN
 
 </details>
 
 <details>
 <summary>Browsers</summary>
 
-- firefox
-- chromium
-- tor
+- [Firefox](https://www.mozilla.org/en-GB/firefox/)
+- [Chromium](https://github.com/ungoogled-software/ungoogled-chromium)
+- [Tor](https://www.torproject.org/)
 
 </details>
 
