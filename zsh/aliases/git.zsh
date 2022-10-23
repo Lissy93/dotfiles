@@ -1,5 +1,9 @@
-# List of ZSH aliases for common git commands
-# Licensed under MIT - (C) Alicia Sykes, 2022 <https://aliciasykes.com>
+
+######################################################################
+# ZSH aliases and helper functions for working with Git              #
+#                                                                    #
+# Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com> #
+######################################################################
 
 # Basics
 alias g="git"
