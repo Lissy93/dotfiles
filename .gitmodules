@@ -1,6 +1,12 @@
 [submodule "dotbot"]
-	path = dotbot
+	path = lib/dotbot
 	url = https://github.com/anishathalye/dotbot
 [submodule "tpm"]
-	path = tpm
+	path = lib/tpm
+	url = https://github.com/tmux-plugins/tpm.git
+[submodule "lib/dotbot"]
+	path = lib/dotbot
+	url = https://github.com/anishathalye/dotbot
+[submodule "lib/tpm"]
+	path = lib/tpm
 	url = https://github.com/tmux-plugins/tpm.git

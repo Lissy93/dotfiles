@@ -20,7 +20,7 @@ DOTFILES_REPO="${DOTFILES_REPO:-https://github.com/${REPO_NAME}.git}"
 # Config Names and Locations
 TITLE="🧰 ${REPO_NAME} Setup"
 SYMLINK_FILE="${SYMLINK_FILE:-symlinks.yaml}"
-DOTBOT_DIR="dotbot"
+DOTBOT_DIR="lib/dotbot"
 DOTBOT_BIN="bin/dotbot"
 
 # Set variables for reference
@@ -48,7 +48,7 @@ fi
 # If set to auto-yes - then don't wait for user reply
 if [[ $PARAMS == *"--auto-yes"* ]]; then
   PROMPT_TIMEOUT=1
-  REPLY='Y'
+  AUTO_YES=true
 fi
 
 # Function that prints important text in a banner with colored border
@@ -130,8 +130,8 @@ function pre_setup_tasks () {
 
   # Confirm that the user would like to proceed
   echo -e "\n${CYAN_B}Are you happy to continue? (y/N)${RESET}"
-  read -t $PROMPT_TIMEOUT -n 1 -r
-  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+  read -t $PROMPT_TIMEOUT -n 1 -r ans_start
+  if [[ ! $ans_start =~ ^[Yy]$ ]] && [[ $AUTO_YES != true ]] ; then
     echo -e "\n${PURPLE}No worries, feel free to come back another time.\nTerminating...${RESET}"
     make_banner "🚧 Installation Aborted" ${YELLOW_B} 1
     exit 0
@@ -182,9 +182,9 @@ function apply_preferences () {
 
   # If ZSH not the default shell, ask user if they'd like to set it
   if [[ $SHELL != *"zsh"* ]] && command_exists zsh; then
-    read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)Would you like to set ZSH as your default shell? (y/N)" -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
+    echo "\n${CYAN_B}Would you like to set ZSH as your default shell? (y/N)${RESET}"
+    read -t $PROMPT_TIMEOUT -n 1 -r ans_zsh
+    if [[ $ans_zsh =~ ^[Yy]$ ]] || [ $AUTO_YES = "true" ] ; then
       echo -e "${PURPLE}Setting ZSH as default shell${RESET}"
       chsh -s $(which zsh) $USER
     fi
@@ -205,11 +205,12 @@ function apply_preferences () {
   /bin/zsh -i -c "antigen update && antigen-apply"
 
   # Apply general system, app and OS security preferences (prompt user first)
-  read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)Would you like to apply system preferences? (y/N)" -n 1 -r
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
+  echo -e "${CYAN_B}Would you like to apply system preferences? (y/N)${RESET}"
+  read -t $PROMPT_TIMEOUT -n 1 -r ans_syspref
+  if [[ $ans_syspref =~ ^[Yy]$ ]] || [ $AUTO_YES = "true" ]; then
     if [ "$SYSTEM_TYPE" = "Darwin" ]; then
       echo -e "\n${PURPLE}Applying MacOS system preferences, ensure you've understood before proceeding${RESET}\n"
-      macos_settings_dir="$DOTFILES_DIR/system-specific/macos/system-settings"
+      macos_settings_dir="$DOTFILES_DIR/scripts/macos-setup"
       for macScript in "macos-security.sh" "macos-preferences.sh" "macos-apps.sh"; do
         chmod +x $macos_settings_dir/$macScript && $macos_settings_dir/$macScript --quick-exit
       done
@@ -221,16 +222,16 @@ function apply_preferences () {
 function intall_macos_packages () {
   # Homebrew not installed, ask user if they'd like to download it now
   if ! command_exists brew; then
-    read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)Would you like to install Homebrew? (y/N)" -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
+    echo -e "\n${CYAN_B}Would you like to install Homebrew? (y/N)${RESET}"
+    read -t $PROMPT_TIMEOUT -n 1 -r ans_homebrewins
+    if [[ $ans_homebrewins =~ ^[Yy]$ ]] || [ $AUTO_YES = "true" ] ; then
       echo -en "🍺 ${PURPLE}Installing Homebrew...${RESET}\n"
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       export PATH=/opt/homebrew/bin:$PATH
     fi
   fi
   # Update / Install the Homebrew packages in ~/.Brewfile
-  if command_exists brew && [ -f "$DOTFILES_DIR/installs/Brewfile" ]; then
+  if command_exists brew && [ -f "$DOTFILES_DIR/scripts/installs/Brewfile" ]; then
     echo -e "\n${PURPLE}Updating homebrew and packages...${RESET}"
     brew doctor # Check for any app issues
     brew update # Update Brew to latest version
@@ -242,7 +243,7 @@ function intall_macos_packages () {
     echo -e "${PURPLE}Skipping Homebrew as requirements not met${RESET}"
   fi
   # Restore launchpad structure with lporg
-  launchpad_layout="${DOTFILES_DIR}/system-specific/macos/app-configs/launchpad.yml"
+  launchpad_layout="${DOTFILES_DIR}/config/macos/launchpad.yml"
   if command_exists lporg && [ -f $launchpad_layout ]; then
     echo -e "${PURPLE}Restoring Launchpad Layout...${RESET}"
     yes "" | lporg load $launchpad_layout
@@ -252,10 +253,10 @@ function intall_macos_packages () {
   pending_updates=$(softwareupdate -l 2>&1)
   if [[ ! $pending_updates == *"No new software available."* ]]; then
     echo -e "${PURPLE}A new version of Mac OS is availbile${RESET}"
-    read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)Would you like to update to the latest version of MacOS? (y/N)" -n 1 -r
-    echo -e "${RESET}"
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-      echo "${PURPLE}Updating MacOS${RESET}"
+    echo -e "${CYAN_B}Would you like to update to the latest version of MacOS? (y/N)${RESET}"
+    read -t $PROMPT_TIMEOUT -n 1 -r ans_macosupdate
+    if [[ $ans_macosupdate =~ ^[Yy]$ ]] || [ $AUTO_YES = "true" ]; then
+      echo -e "${PURPLE}Updating MacOS${RESET}"
       softwareupdate -i -a
     fi
   else
@@ -266,9 +267,9 @@ function intall_macos_packages () {
 
 # Based on system type, uses appropriate package manager to install / updates apps
 function install_packages () {
-  read -t $PROMPT_TIMEOUT -p "$(echo -e $CYAN_B)Would you like to install / update system packages? (y/N) " -n 1 -r
-  echo
-  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+  echo -e "\n${CYAN_B}Would you like to install / update system packages? (y/N)${RESET}"
+  read -t $PROMPT_TIMEOUT -n 1 -r ans_syspackages
+  if [[ ! $ans_syspackages =~ ^[Yy]$ ]] && [[ $AUTO_YES != true ]] ; then
     echo -e "${PURPLE}Skipping package installs${RESET}"
     return
   fi
@@ -277,12 +278,12 @@ function install_packages () {
     intall_macos_packages
   elif [ -f "/etc/arch-release" ]; then
     # Arch Linux
-    arch_pkg_install_script="${DOTFILES_DIR}/installs/arch-pacman.sh"
+    arch_pkg_install_script="${DOTFILES_DIR}/scripts/installs/arch-pacman.sh"
     chmod +x $arch_pkg_install_script
     $arch_pkg_install_script $params
   fi
   # If running in Linux desktop mode, prompt to install desktop apps via Flatpak
-  flatpak_script="${DOTFILES_DIR}/installs/flatpak.sh"
+  flatpak_script="${DOTFILES_DIR}/scripts/installs/flatpak.sh"
   if [[ $(uname -s) == "Linux" ]] && [ ! -z $XDG_CURRENT_DESKTOP ] && [ -f $flatpak_script ]; then
     chmod +x $flatpak_script
     $flatpak_script
@@ -294,7 +295,7 @@ function finishing_up () {
   # Update source to ZSH entry point
   source "${HOME}/.zshenv"
 
-  # Print success message, and time taken
+  # Calculate time taken
   total_time=$((`date +%s`-START_TIME))
   if [[ $total_time -gt 60 ]]; then
     total_time="$(($total_time/60)) minutes"
@@ -302,16 +303,23 @@ function finishing_up () {
     total_time="${total_time} seconds"
   fi
 
+  # Print success msg and pretty picture
   make_banner "✨ Dotfiles configured succesfully in $total_time" ${GREEN_B} 1
   echo -e "\033[0;92m     .--.\n    |o_o |\n    |:_/ |\n   // \
   \ \\ \n  (|     | ) \n /'\_   _/\`\\ \n \\___)=(___/\n"
-  
+
   # Refresh ZSH sesssion
   SKIP_WELCOME=true || exec zsh
 
-  # Exit script with success code
+  # Show press any key to exit
   echo -e "${CYAN_B}Press any key to exit.${RESET}\n"
   read -t $PROMPT_TIMEOUT -n 1 -s
+
+  # Unset re-used variables
+  unset PROMPT_TIMEOUT
+  unset AUTO_YES
+
+  # Bye
   exit 0
 }
 
