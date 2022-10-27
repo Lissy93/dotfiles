@@ -140,7 +140,7 @@ Zach Holman wrote a great article titled [Dotfiles Are Meant to Be Forked](https
 
 By all means feel free to take what you want from mine. I've taken care to ensure that each file is standalone, and well documented so that certain files can just be dropped into any system. But I cannot stress enough the importance of reading through files to ensure it's actually what you want. 
 
-If you're looking for some more example dotfile repos to get you started, I can highly recommend taking a look at: [@holman/dotfiles](https://github.com/holman/dotfiles), [@nickjj/dotfiles](https://github.com/nickjj/dotfiles), [@caarlos0/dotfiles](https://github.com/caarlos0/dotfiles), [@cowboy/dotfiles](https://github.com/cowboy/dotfiles).
+If you're looking for some more example dotfile repos to get you started, I can highly recommend taking a look at: [@holman/dotfiles](https://github.com/holman/dotfiles), [@nickjj/dotfiles](https://github.com/nickjj/dotfiles), [@caarlos0/dotfiles](https://github.com/caarlos0/dotfiles), [@cowboy/dotfiles](https://github.com/cowboy/dotfiles), [@drduh/config](https://github.com/drduh/config).
 
 There's even more to check out at [webpro/awesome-dotfiles](https://github.com/webpro/awesome-dotfiles), [dotfiles.github.io](https://dotfiles.github.io/) and [r/unixporn](https://www.reddit.com/r/unixporn/).
 
@@ -193,10 +193,10 @@ Once the repo is cloned, you can modify whatever files you like before running t
     ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/tmux" title="Tmux Configs">tmux/</a>             # Tmux (multiplexer) config
     ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/vim" title="Vim Configs">vim/</a>              # Vim (text editor) config
     ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/zsh" title="ZSH Configs">zsh/</a>              # ZSH (shell) config
-    └── <a href="https://github.com/Lissy93/dotfiles/tree/master/installs" title="List of packages to install">installs/</a>         # Scripts for software installation
-      ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/installs/Brewfile" title="Packages for MacOS via Homebrew">Brewfile</a>        # Package installs for MacOS via Homebrew
-      ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/installs/arch-pacman.sh" title="Packages for Arch Linux via Pacman">arch-pacman.sh</a>  # Package installs for Arch via Pacman
-      └── <a href="https://github.com/Lissy93/dotfiles/blob/master/installs/flatpak.sh" title="Packages for Linux Desktops via Flatpak">flatpak.sh</a>      # Package installs for Linux desktops via Flatpak
+    └── <a href="https://github.com/Lissy93/dotfiles/tree/master/installs" title="List of packages to install">scripts/installs/</a>         # Scripts for software installation
+      ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/Brewfile" title="Packages for MacOS via Homebrew">Brewfile</a>        # Package installs for MacOS via Homebrew
+      ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/arch-pacman.sh" title="Packages for Arch Linux via Pacman">arch-pacman.sh</a>  # Package installs for Arch via Pacman
+      └── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/flatpak.sh" title="Packages for Linux Desktops via Flatpak">flatpak.sh</a>      # Package installs for Linux desktops via Flatpak
     ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/.github" title="Repo Meta">.github/</a>          # Meta files for GitHub repo
     ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh" title="Remote Setup Initiator">lets-go.sh</a>        # One-line remote installation entry point
     ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/install.sh" title="Setup Script">install.sh</a>        # All-in-one install and setup script
@@ -582,15 +582,15 @@ Alias | Description
 
 The dotfile installation script can also, detect which system and environemnt you're running, and optionally prompt to install packages and applications.
 
-Package lists are stored in [`installs/`](https://github.com/Lissy93/dotfiles/tree/master/installs) directory, with separate files for different OSs. The install script will [pick the appropriate file](https://github.com/Lissy93/dotfiles/blob/22c6a04fdb22c140448b7d15ef8187c3a424ab47/install.sh#L243-L260) based on your distro.
+Package lists are stored in [`scripts/installs/`](https://github.com/Lissy93/dotfiles/tree/master/installs) directory, with separate files for different OSs. The install script will [pick the appropriate file](https://github.com/Lissy93/dotfiles/blob/22c6a04fdb22c140448b7d15ef8187c3a424ab47/install.sh#L243-L260) based on your distro.
 
 You will be prompted before anything is installed. Be sure to remove / comment out anything you do not need before proceeding.
 
-- Linux (desktop): [`flatpak.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/flatpak.sh) - Desktop apps can be installed on Linux systems via [Flatpack](https://flatpak.org/)
-- Mac OS: [`.Brewfile`](https://github.com/Lissy93/dotfiles/blob/master/installs/Brewfile) - Mac apps installed via [Homebrew](https://brew.sh/)
-- Arch (and Arch-based systems, like Manjaro): [`arch-pacman.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/arch-pacman.sh) - Arch CLI apps installed via [pacman](https://wiki.archlinux.org/title/Pacman)
-- Debian (and Debian-based systems, like Ubuntu): [`apt.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/apt.sh) - Debian CLI apps installed via [apt](https://wiki.debian.org/Apt)
-- Alpine: [`apk.sh`](https://github.com/Lissy93/dotfiles/blob/master/installs/apk.sh) - Alpine CLI apps installed via [apk](https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html)
+- Linux (desktop): [`flatpak.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/flatpak.sh) - Desktop apps can be installed on Linux systems via [Flatpack](https://flatpak.org/)
+- Mac OS: [`.Brewfile`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/Brewfile) - Mac apps installed via [Homebrew](https://brew.sh/)
+- Arch (and Arch-based systems, like Manjaro): [`arch-pacman.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/arch-pacman.sh) - Arch CLI apps installed via [pacman](https://wiki.archlinux.org/title/Pacman)
+- Debian (and Debian-based systems, like Ubuntu): [`apt.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/apt.sh) - Debian CLI apps installed via [apt](https://wiki.debian.org/Apt)
+- Alpine: [`apk.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/apk.sh) - Alpine CLI apps installed via [apk](https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html)
 
 The following section lists different apps that may be installed for each category:
 
@@ -855,10 +855,10 @@ All settings are then updated in the `.plist` files stored in `~/Library/Prefere
 
 
 In my dotfiles, the MacOS preferences will configure everything from system security to launchpad layout.
-The Mac settings are located in [`system-specific/macos/system-settings/`](https://github.com/Lissy93/dotfiles/tree/master/system-specific/macos/system-settings), and are split into three files:
-- [`macos-security.sh`](https://github.com/Lissy93/dotfiles/blob/master/system-specific/macos/system-settings/macos-security.sh) - Sets essential security settings, disables telementry, disconnects unused ports, enforces signing, sets logout timeouts, and much more
-- [`macos-preferences.sh`](https://github.com/Lissy93/dotfiles/blob/master/system-specific/macos/system-settings/macos-preferences.sh) - Configures all user preferences, including computer name, highlight color, finder options, spotlight settings, hardware preferences and more
-- [`macos-apps.sh`](https://github.com/Lissy93/dotfiles/blob/master/system-specific/macos/system-settings/macos-apps.sh) - Applies preferences to any installed desktop apps, such as Terminal, Time Machine, Photos, Spotify, and many others
+The Mac settings are located in [`scripts/macos-setup/`](https://github.com/Lissy93/dotfiles/tree/master/scripts/macos-setup), and are split into three files:
+- [`macos-security.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/macos-setup/macos-security.sh) - Sets essential security settings, disables telementry, disconnects unused ports, enforces signing, sets logout timeouts, and much more
+- [`macos-preferences.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/macos-setup/macos-preferences.sh) - Configures all user preferences, including computer name, highlight color, finder options, spotlight settings, hardware preferences and more
+- [`macos-apps.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/macos-setup/macos-apps.sh) - Applies preferences to any installed desktop apps, such as Terminal, Time Machine, Photos, Spotify, and many others
 
 Upon running each script, a summary of what will be changed will be shown, and you'll be prompted as to weather you'd like to continue. Each script also handles permissions, compatibility checking, and graceful fallbacks. Backup of original settings will be made, and a summary of all changes made will be logged as output when the script is complete.
 

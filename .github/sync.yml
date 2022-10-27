@@ -1,4 +1,4 @@
 lissy93/Brewfile:
-  - source: installs/Brewfile
+  - source: scripts/installs/Brewfile
     dest: Brewfile
   

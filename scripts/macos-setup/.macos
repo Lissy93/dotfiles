@@ -21,7 +21,7 @@ if [ ! -z $0 ]; then # Use local files
   done
 else # Run from remote origin
   REMOTE_DIR="https://raw.githubusercontent.com/Lissy93/dotfiles"
-  REMOTE_DIR+="/master/system-specific/macos/system-settings"
+  REMOTE_DIR+="/master/scripts/macos-setup"
   for mac_script in ${macos_scripts[@]}; do
     bash <(curl -s "${REMOTE_DIR}/${mac_script}")
   done

@@ -42,13 +42,16 @@ brew 'diff-so-fancy'# Readable file compares (better diff)
 brew 'duf'          # Get info on mounted disks (better df)
 brew 'entr'         # Run command whenever file changes
 brew 'exa'          # Listing files with info (better ls)
+brew 'exiftool'     # Read, write and modify exif data
 brew 'fzf'          # Fuzzy file finder and filtering
 brew 'hyperfine'    # Benchmarking for arbitrary commands
+brew 'jdupes'       # Duplicate file finder
 brew 'just'         # Powerful command runner (better make)
 brew 'jq'           # JSON parser, output and query files
 brew 'most'         # Multi-window scroll pager (better less)
 brew 'procs'        # Advanced process viewer (better ps)
 brew 'ripgrep'      # Searching within files (better grep)
+brew 'rsync'        # Fast incremental file transfer
 brew 'scc'          # Count lines of code (better cloc)
 brew 'sd'           # RegEx find and replace (better sed)
 brew 'thefuck'      # Auto-correct miss-typed commands
@@ -111,11 +114,9 @@ brew 'gradle'         # Build automation for Java
 cask 'iterm2'         # Better terminal emulator
 cask 'postman'        # HTTP API testing app
 cask 'sourcetree'     # Git visual client
-cask 'utm'            # VM management console
 cask 'visual-studio-code' # Code editor
 
 # Development Langs, Compilers, Package Managers and SDKs
-brew 'docker'         # Containers
 brew 'gcc'            # GNU C++ compilers
 brew 'go'             # Compiler for Go Lang
 brew 'lua'            # Lua interpreter
@@ -126,6 +127,10 @@ brew 'openjdk'        # Java development kit
 brew 'python'         # Python interpriter
 brew 'rust'           # Rust language
 cask 'android-sdk'    # Android software dev kit
+
+# DevOps
+brew 'ansible'        # Automation
+brew 'docker'         # Containers
 
 # Development Utils
 brew 'gh'             # Interact with GitHub PRs, issues, repos
@@ -148,6 +153,7 @@ cask 'wireshark'      # Network analyzer + packet capture
 # Security Utilities
 brew 'bcrypt'         # Encryption utility, using blowfish
 brew 'clamav'         # Open source virus scanning suite
+brew 'dnscrypt-proxy' # Proxy for using encrypted DNS
 cask 'gpg-suite'      # PGP encryption for emails and files
 brew 'git-crypt'      # Transparent encryption for git repos
 brew 'lynis'          # Scan system for common security issues
@@ -202,17 +208,16 @@ cask 'font-inconsolata'
 cask 'font-meslo-lg-nerd-font'
 
 # Mac OS Quick-Look Plugins
-cask 'qlcolorcode'        # QL for code with highlighting
-cask 'qlimagesize'        # QL for size info for images
-cask 'qlmarkdown'         # QL for markdown files
-cask 'qlprettypatch'      # QL for patch / diff files
-cask 'qlstephen'          # QL for dev text files
-cask 'qlvideo'            # QL for video formats
-cask 'quicklook-csv'      # QL for tables in CSV format
-cask 'quicklook-json', args: { require_sha: false }     # QL for JSON, with trees
-cask 'quicklookapk', args: { require_sha: false }       # QL for Android APKs
-cask 'suspicious-package', args: { require_sha: false } # QL for OSX app installers
-cask 'webpquicklook', args: { require_sha: false }      # QL for WebP image files
+cask 'qlcolorcode'    # QL for code with highlighting
+cask 'qlimagesize'    # QL for size info for images
+cask 'qlmarkdown'     # QL for markdown files
+cask 'qlprettypatch'  # QL for patch / diff files
+cask 'qlstephen'      # QL for dev text files
+cask 'qlvideo'        # QL for video formats
+cask 'quicklook-csv'  # QL for tables in CSV format
+cask 'quicklook-json', args: { require_sha: false } # QL for JSON, with trees
+cask 'quicklookapk',   args: { require_sha: false } # QL for Android APKs
+cask 'webpquicklook',  args: { require_sha: false } # QL for WebP image files
 
 # Mac OS Mods and Imrovments
 cask 'alt-tab'        # Much better alt-tab window switcher
@@ -228,6 +233,7 @@ cask 'mjolnir'        # Util for loading Lua automations
 cask 'openinterminal' # Finder button, opens directory in terminal
 cask 'popclip'        # Popup options for text on highlight
 cask 'raycast', args: { require_sha: false }  # Spotlight alternative
+cask 'santa'          # Binary authorization for security
 cask 'shottr'         # Better screenshot utility
 brew 'skhd'           # Hotkey daemon for macOS
 cask 'stats'          # System resource usage in menubar

@@ -1,14 +1,3 @@
-######################################################################
-# MacOS App Launchpad Layout                                         #
-######################################################################
-# Specifies the folder layout and app order within OSX Launchpad     #
-# Useful for setting up fresh systems quickly after installing apps  #
-# Intended for use with lporg, run: brew install blacktop/tap/lporg  #
-# To restore launchpad layout with lporg, run: lporg load [file]     #
-#                                                                    #
-# Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com> #
-######################################################################
-
 apps:
   pages:
   - number: 1
@@ -93,41 +82,42 @@ apps:
         - LinearMouse
         - Übersicht
         - MacForge
+        - QLMarkdown
     - folder: Other
       pages:
       - number: 1
         items:
+        - Shortcuts
+        - QuickTime Player
+        - TextEdit
+        - Grapher
+        - Time Machine
+        - Font Book
+        - Chess
+        - Stickies
+        - Image Capture
+        - VoiceOver Utility
+        - AirPort Utility
+        - Migration Assistant
         - Terminal
         - Activity Monitor
-        - Automator
-        - TextEdit
-        - System Information
+        - Console
         - Keychain Access
+        - System Information
+        - Automator
         - Script Editor
         - Disk Utility
-        - Console
+        - Digital Color Meter
+        - ColorSync Utility
         - Screenshot
+        - Bluetooth File Exchange
+        - Audio MIDI Setup
         - Calculator
         - System Preferences
         - Simulator
         - TestFlight
         - Developer
-        - Time Machine
         - Dictionary
-        - Stickies
-        - Shortcuts
-        - Grapher
-        - Digital Color Meter
-        - ColorSync Utility
-        - Font Book
-        - Chess
-        - Audio MIDI Setup
-        - Image Capture
-        - VoiceOver Utility
-        - Bluetooth File Exchange
-        - AirPort Utility
-        - Migration Assistant
-        - QuickTime Player
         - VMware Fusion Tech Preview
         - Jabra Direct
         - CotEditor

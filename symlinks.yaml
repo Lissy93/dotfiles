@@ -9,32 +9,41 @@
   # Before symlinking, source .zshenv in order to set XDG variables
   - description: Set XDG environmental variables
     command: source ./zsh/.zshenv
+
+# Symlink locations for files / directories
 - link:
-    ~/.zshenv:
-      path: zsh/.zshenv
-      force: true
+    # Essential configs (ZSH, Vim, Tmux)
+    ~/.zshenv: { path: zsh/.zshenv, force: true }
     ${XDG_CONFIG_HOME}/zsh: zsh
     ${XDG_CONFIG_HOME}/vim: vim
     ${XDG_CONFIG_HOME}/nvim: vim
-    ${XDG_CONFIG_HOME}/bash: bash
-    ${XDG_DATA_HOME}/tmux/plugins/tpm: tpm
-    ${XDG_CONFIG_HOME}/tmux/tmux.conf: tmux/tmux.conf
+    ${XDG_CONFIG_HOME}/tmux: tmux
+    ${XDG_DATA_HOME}/tmux/plugins/tpm: lib/tpm
+    
+    # Utility config files
+    ${XDG_CONFIG_HOME}/bash/.bashrc: config/.bashrc
+    ${XDG_CONFIG_HOME}/git/.gitconfig: config/.gitconfig
+    ${XDG_CONFIG_HOME}/.gitignore_global: config/.gitignore_global
+    ${XDG_CONFIG_HOME}/.wgetrc: config/.wgetrc
+
+    # Bash utils
     ${XDG_CONFIG_HOME}/utils: utils
-    ${XDG_CONFIG_HOME}/git/.gitconfig: configs/.gitconfig
-    ${XDG_CONFIG_HOME}/.gitignore_global: configs/.gitignore_global
-    $XDG_CONFIG_HOME/yabai/yabairc:
+
+    # MacOS-Only
+    ${XDG_CONFIG_HOME}/yabai/yabairc:
       if: '[ `uname` = Darwin ]'
-      path: system-specific/macos/app-configs/yabairc
-    $XDG_CONFIG_HOME/skhd/skhdrc:
+      path: config/macos/yabairc
+    ${XDG_CONFIG_HOME}/skhd/skhdrc:
       if: '[ `uname` = Darwin ]'
-      path: system-specific/macos/app-configs/skhdrc
+      path: config/macos/skhdrc
     ~/.Brewfile:
       if: '[ `uname` = Darwin ]'
-      path: installs/Brewfile
+      path: scripts/installs/Brewfile
     ~/.finicky.js:
       if: '[ `uname` = Darwin ]'
-      path: system-specific/macos/app-configs/.finicky.js
+      path: config/macos/.finicky.js
 
+# If not already present, create home directories
 - create:
     - ~/Downloads
     - ~/Documents
