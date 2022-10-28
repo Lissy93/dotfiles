@@ -93,7 +93,7 @@ make_intro () {
   echo -e "  ${C3}- Print summary of applied changes and time taken"
   echo -e "  ${C3}- Exit with appropriate status code"
   echo -e "\n${PURPLE}You will be prompted at each stage, before any changes are made.${RESET}"
-  echo -e "${PURPLE}For more info, see GitHub: \e[4mhttps://github.com/lissy93/dotfiles${RESET}"
+  echo -e "${PURPLE}For more info, see GitHub: \033[4;35mhttps://github.com/lissy93/dotfiles${RESET}"
 }
 
 # Checks if a given package is installed
@@ -184,7 +184,7 @@ function apply_preferences () {
   if [[ $SHELL != *"zsh"* ]] && command_exists zsh; then
     echo "\n${CYAN_B}Would you like to set ZSH as your default shell? (y/N)${RESET}"
     read -t $PROMPT_TIMEOUT -n 1 -r ans_zsh
-    if [[ $ans_zsh =~ ^[Yy]$ ]] || [ $AUTO_YES = "true" ] ; then
+    if [[ $ans_zsh =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
       echo -e "${PURPLE}Setting ZSH as default shell${RESET}"
       chsh -s $(which zsh) $USER
     fi
@@ -207,7 +207,7 @@ function apply_preferences () {
   # Apply general system, app and OS security preferences (prompt user first)
   echo -e "${CYAN_B}Would you like to apply system preferences? (y/N)${RESET}"
   read -t $PROMPT_TIMEOUT -n 1 -r ans_syspref
-  if [[ $ans_syspref =~ ^[Yy]$ ]] || [ $AUTO_YES = "true" ]; then
+  if [[ $ans_syspref =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]]; then
     if [ "$SYSTEM_TYPE" = "Darwin" ]; then
       echo -e "\n${PURPLE}Applying MacOS system preferences, ensure you've understood before proceeding${RESET}\n"
       macos_settings_dir="$DOTFILES_DIR/scripts/macos-setup"
@@ -224,7 +224,7 @@ function intall_macos_packages () {
   if ! command_exists brew; then
     echo -e "\n${CYAN_B}Would you like to install Homebrew? (y/N)${RESET}"
     read -t $PROMPT_TIMEOUT -n 1 -r ans_homebrewins
-    if [[ $ans_homebrewins =~ ^[Yy]$ ]] || [ $AUTO_YES = "true" ] ; then
+    if [[ $ans_homebrewins =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
       echo -en "🍺 ${PURPLE}Installing Homebrew...${RESET}\n"
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       export PATH=/opt/homebrew/bin:$PATH
@@ -233,7 +233,6 @@ function intall_macos_packages () {
   # Update / Install the Homebrew packages in ~/.Brewfile
   if command_exists brew && [ -f "$DOTFILES_DIR/scripts/installs/Brewfile" ]; then
     echo -e "\n${PURPLE}Updating homebrew and packages...${RESET}"
-    brew doctor # Check for any app issues
     brew update # Update Brew to latest version
     brew upgrade # Upgrade all installed casks
     brew bundle --global --file $HOME/.Brewfile # Install all listed Brew apps
@@ -245,23 +244,31 @@ function intall_macos_packages () {
   # Restore launchpad structure with lporg
   launchpad_layout="${DOTFILES_DIR}/config/macos/launchpad.yml"
   if command_exists lporg && [ -f $launchpad_layout ]; then
-    echo -e "${PURPLE}Restoring Launchpad Layout...${RESET}"
-    yes "" | lporg load $launchpad_layout
+    echo -e "\n${CYAN_B}Would you like to restore launchpad layout? (y/N)${RESET}"
+    read -t $PROMPT_TIMEOUT -n 1 -r ans_restorelayout
+    if [[ $ans_restorelayout =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
+      echo -e "${PURPLE}Restoring Launchpad Layout...${RESET}"
+      yes "" | lporg load $launchpad_layout
+    fi
   fi
   # Check for MacOS software updates, and ask user if they'd like to install
-  echo -e "${PURPLE}Checking for software updates...${RESET}"
-  pending_updates=$(softwareupdate -l 2>&1)
-  if [[ ! $pending_updates == *"No new software available."* ]]; then
-    echo -e "${PURPLE}A new version of Mac OS is availbile${RESET}"
-    echo -e "${CYAN_B}Would you like to update to the latest version of MacOS? (y/N)${RESET}"
-    read -t $PROMPT_TIMEOUT -n 1 -r ans_macosupdate
-    if [[ $ans_macosupdate =~ ^[Yy]$ ]] || [ $AUTO_YES = "true" ]; then
-      echo -e "${PURPLE}Updating MacOS${RESET}"
-      softwareupdate -i -a
+  echo -e "\n${CYAN_B}Would you like to check for OX X system updates? (y/N)${RESET}"
+  read -t $PROMPT_TIMEOUT -n 1 -r ans_macoscheck
+  if [[ $ans_macoscheck =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
+    echo -e "${PURPLE}Checking for software updates...${RESET}"
+    pending_updates=$(softwareupdate -l 2>&1)
+    if [[ ! $pending_updates == *"No new software available."* ]]; then
+      echo -e "${PURPLE}A new version of Mac OS is availbile${RESET}"
+      echo -e "${CYAN_B}Would you like to update to the latest version of MacOS? (y/N)${RESET}"
+      read -t $PROMPT_TIMEOUT -n 1 -r ans_macosupdate
+      if [[ $ans_macosupdate =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]]; then
+        echo -e "${PURPLE}Updating MacOS${RESET}"
+        softwareupdate -i -a
+      fi
+    else
+      echo -e "${GREEN}System is up-to-date."\
+      "Running $(sw_vers -productName) version $(sw_vers -productVersion)${RESET}"
     fi
-  else
-    echo -e "${GREEN}System is up-to-date."\
-    "Running $(sw_vers -productName) version $(sw_vers -productVersion)${RESET}"
   fi
 }
 
