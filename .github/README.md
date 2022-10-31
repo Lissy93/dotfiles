@@ -193,6 +193,7 @@ Once the repo is cloned, you can modify whatever files you like before running t
    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/tmux">tmux/</a>                 # Tmux (multiplexer) config
    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/vim">vim/</a>                  # Vim (text editor) config
    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/zsh">zsh/</a>                  # ZSH (shell) config
+   ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/config">config/</a>               # All other config files
    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/scripts">scripts/</a>              # Bash scripts for automating tasks
    │ ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/scripts/installs">installs/</a>           # Scripts for software installation
    │ │ ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/Brewfile">Brewfile</a>          # Package installs for MacOS via Homebrew
@@ -202,7 +203,9 @@ Once the repo is cloned, you can modify whatever files you like before running t
    │   ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/macos-setup/macos-apps.sh">macos-apps.sh</a>     # Sets app preferences
    │   ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/macos-setup/macos-preferences.sh">macos-prefs.sh</a>    # Sets MacOS system preferences
    │   └── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/macos-setup/macos-security.sh">macos-security.sh</a> # Applies MacOS security and privacy settings
+   ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/utils">utils/</a>                # Handy Shell utilitis for various day-to-day tasks
    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/.github">.github/</a>              # Meta files for GitHub repo
+   ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/lib">lib/</a>                  # External dependencies, as git sub-modules
    ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh">lets-go.sh</a>            # One-line remote installation entry point
    ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/install.sh">install.sh</a>            # All-in-one install and setup script
    └── <a href="https://github.com/Lissy93/dotfiles/blob/master/symlinks.yaml">symlinks.yml</a>          # List of symlink locations
