@@ -11,7 +11,7 @@ source ${zsh_dir}/aliases/general.zsh
 source ${zsh_dir}/aliases/git.zsh
 source ${zsh_dir}/aliases/node-js.zsh
 source ${zsh_dir}/aliases/flutter.zsh
-# source ${zsh_dir}/aliases/alias-tips.zsh
+source ${zsh_dir}/aliases/alias-tips.zsh
 
 # Setup Antigen, and import plugins
 source ${zsh_dir}/helpers/setup-antigen.zsh
