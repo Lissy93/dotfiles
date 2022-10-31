@@ -6,9 +6,28 @@
 - clean: ['~', '${XDG_CONFIG_HOME}']
 
 - shell:
-  # Before symlinking, source .zshenv in order to set XDG variables
   - description: Set XDG environmental variables
     command: source ./zsh/.zshenv
+  - description: Check that $XDG_CONFIG_HOME is set
+    command: >
+      if [ -z ${XDG_CONFIG_HOME+x} ]; then; \
+        echo "XDG_CONFIG_HOME is not yet set. Will use ~/.config"; \
+        XDG_CONFIG_HOME="${HOME}/.config"; \
+      fi
+    stdin: false
+    stdout: true
+    stderr: true
+    quiet: true
+  - description: Check that $XDG_DATA_HOME is set
+    command: >
+      if [ -z ${XDG_DATA_HOME+x} ]; then; \
+        echo "XDG_DATA_HOME is not yet set. Will use ~/.local/share"; \
+        XDG_DATA_HOME="${HOME}/.local/share"; \
+      fi
+    stdin: false
+    stdout: true
+    stderr: true
+    quiet: true
 
 # Symlink locations for files / directories
 - link:
