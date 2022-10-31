@@ -12,9 +12,17 @@
 # Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com> #
 ######################################################################
 
+# Set variables for reference
+PARAMS=$* # User-specified parameters
+CURRENT_DIR=$(cd "$(dirname ${BASH_SOURCE[0]})" && pwd)
+SYSTEM_TYPE=$(uname -s) # Get system type - Linux / MacOS (Darwin)
+PROMPT_TIMEOUT=15 # When user is prompted for input, skip after x seconds
+START_TIME=`date +%s` # Start timer
+SRC_DIR=$(dirname ${0})
+
 # Dotfiles Source Repo and Destination Directory
 REPO_NAME="${REPO_NAME:-Lissy93/Dotfiles}"
-DOTFILES_DIR="${DOTFILES_DIR:-$HOME/Documents/config/dotfiles}"
+DOTFILES_DIR="${DOTFILES_DIR:-${SRC_DIR:-$HOME/.dotfiles}}"
 DOTFILES_REPO="${DOTFILES_REPO:-https://github.com/${REPO_NAME}.git}"
 
 # Config Names and Locations
@@ -22,13 +30,6 @@ TITLE="🧰 ${REPO_NAME} Setup"
 SYMLINK_FILE="${SYMLINK_FILE:-symlinks.yaml}"
 DOTBOT_DIR="lib/dotbot"
 DOTBOT_BIN="bin/dotbot"
-
-# Set variables for reference
-PARAMS=$* # User-specified parameters
-CURRENT_DIR=$(cd "$(dirname ${BASH_SOURCE[0]})" && pwd)
-SYSTEM_TYPE=$(uname -s) # Get system type - Linux / MacOS (Darwin)
-PROMPT_TIMEOUT=15 # When user is prompted for input, skip after x seconds
-START_TIME=`date +%s` # Start timer
 
 # Color Variables
 CYAN_B='\033[1;96m'
