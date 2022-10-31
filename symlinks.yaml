@@ -18,6 +18,7 @@
     ${XDG_CONFIG_HOME}/vim: vim
     ${XDG_CONFIG_HOME}/nvim: vim
     ${XDG_CONFIG_HOME}/tmux: tmux
+    ${XDG_DATA_HOME}/tmux/tpm: lib/tpm
     ${XDG_DATA_HOME}/tmux/plugins/tpm: lib/tpm
     
     # Utility config files

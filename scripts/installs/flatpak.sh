@@ -42,6 +42,7 @@ flatpak_apps=(
   'com.obsproject.Studio'     # Video streaming
   'fr.handbrake.ghb'          # Video transcoder
   'io.github.seadve.Kooha'    # Screen recorder
+  'nl.hjdskes.gcolor3'        # Color picker
   'org.audacityteam.Audacity' # Sound editor
   'org.blender.Blender'       # 3D modeling
   'org.darktable.Darktable'   # Video editor
