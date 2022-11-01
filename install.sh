@@ -145,6 +145,16 @@ function pre_setup_tasks () {
   system_verify "vim" false
   system_verify "nvim" false
   system_verify "tmux" false
+
+  # If XDG variables arn't yet set, then configure defaults
+  if [ -z ${XDG_CONFIG_HOME+x} ]; then
+    echo -e "${YELLOW_B}XDG_CONFIG_HOME is not yet set. Will use ~/.config${RESET}"
+    XDG_CONFIG_HOME="${HOME}/.config"
+  fi
+  if [ -z ${XDG_DATA_HOME+x} ]; then
+    echo -e "${YELLOW_B}XDG_DATA_HOME is not yet set. Will use ~/.local/share${RESET}"
+    XDG_DATA_HOME="${HOME}/.local/share"
+  fi
 }
 
 # Downloads / updates dotfiles and symlinks them
@@ -158,7 +168,9 @@ function setup_dot_files () {
     git clone --recursive ${DOTFILES_REPO} ${DOTFILES_DIR}
   else
     echo -e "${PURPLE}Pulling changes from ${REPO_NAME} into ${DOTFILES_DIR}${RESET}"
-    cd "${DOTFILES_DIR}" && git pull origin master && git submodule update --recursive
+    cd "${DOTFILES_DIR}" && \
+    git pull origin master && \
+    git submodule update --recursive --remote --init
   fi
 
   # If git clone / pull failed, then exit with error
