@@ -1,7 +1,3 @@
-# This file specifies folders for the MacOS launchpad, and which apps should be nested where.
-# It's useful for setting up fresh systems quickly, after installing all required dependencies.
-# Requires lporg (brew install blacktop/tap/lporg), run `lporg load [file]` to restore layout.
-
 apps:
   pages:
   - number: 1
@@ -18,6 +14,7 @@ apps:
         - Sourcetree
         - UTM
         - Visual Studio
+        - MacDown
     - folder: Work Coms
       pages:
       - number: 1
@@ -67,23 +64,25 @@ apps:
       - number: 1
         items:
         - Raycast
-        - Scroll Reverser
+        - Stats
         - Hidden Bar
         - AltTab
-        - Finicky
-        - Stats
-        - Little Snitch
-        - Espanso
-        - CopyQ
-        - PopClip
         - OpenInTerminal
+        - Scroll Reverser
         - AnyBar
-        - Marta
+        - Shottr
+        - Little Snitch
+        - Finicky
+        - Espanso
+        - OnyX
+        - CopyQ
+        - amm
+        - PopClip
         - Mjolnir
         - LinearMouse
         - Übersicht
-        - Shottr
-        - OnyX
+        - MacForge
+        - QLMarkdown
     - folder: Other
       pages:
       - number: 1
@@ -113,16 +112,15 @@ apps:
         - Screenshot
         - Bluetooth File Exchange
         - Audio MIDI Setup
-        - Developer
-        - Jabra Firmware Update
-        - Jabra Direct
-        - System Preferences
         - Calculator
-        - Dictionary
-        - CotEditor
-        - VMware Fusion Tech Preview
-        - TestFlight
+        - System Preferences
         - Simulator
+        - TestFlight
+        - Developer
+        - Dictionary
+        - VMware Fusion Tech Preview
+        - Jabra Direct
+        - CotEditor
       - number: 2
         items:
         - Orion
@@ -135,29 +133,29 @@ apps:
         items:
         - Contacts
         - Reminders
+        - Photos
+        - Numbers
+        - Pages
+        - Keynote
+        - Photo Booth
         - Notes
         - FaceTime
         - Messages
         - Maps
         - Find My
-        - Photo Booth
-        - Photos
-        - Preview
         - Music
         - Podcasts
+        - Books
+        - Preview
         - TV
         - Voice Memos
-        - Numbers
-        - Keynote
-        - Pages
         - News
         - Stocks
-        - Books
         - Siri
-        - App Store
         - Mission Control
         - Safari
         - Home
+        - App Store
     - folder: Corporate Spyware
       pages:
       - number: 1
@@ -165,12 +163,13 @@ apps:
         - Netskope Client
         - Self Service
         - Solarwinds Discovery Agent
+        - Kandji Extension Manager
         - Sophos Endpoint
-        - Sophos Endpoint Self Help
         - Sophos Network Extension
         - Sophos Scan
         - Remove Sophos Endpoint
         - Remove Netskope Client
+        - Sophos Endpoint Self Help
     - folder: Voldermort
       pages:
       - number: 1
@@ -183,8 +182,3 @@ apps:
     - Chromium
     - Visual Studio Code
     - iTerm
-# widgets:
-#   pages: []
-# dock_items:
-# - ============
-# desktop: {}

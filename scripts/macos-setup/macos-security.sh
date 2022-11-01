@@ -37,7 +37,7 @@ RESET_COLOR='\033[0m'
 
 # Current and total taslks, used for progress updates
 current_event=0
-total_events=25
+total_events=34
 
 if [ ! "$(uname -s)" = "Darwin" ]; then
   echo -e "${PRIMARY_COLOR}Incompatible System${RESET_COLOR}"
@@ -114,7 +114,7 @@ osascript -e 'tell application "System Preferences" to quit'
 # ######################################
 # Disabling Siri and related features #
 # ######################################
-log_section "Disable Assistant Features"
+log_section "Disable Telemetry and Assistant Features"
 
 # Disable Ask Siri
 log_msg "Disable 'Ask Siri'"
@@ -154,6 +154,9 @@ defaults write com.apple.Siri 'UserHasDeclinedEnable' -bool true
 log_msg "Opt-out from Siri data collection"
 defaults write com.apple.assistant.support 'Siri Data Sharing Opt-In Status' -int 2
 
+# Don't prompt user to report crashes, may leak sensitive info
+log_msg "Disable crash reporter"
+defaults write com.apple.CrashReporter DialogType none
 
 ############################
 # MacOS Firefwall Security #
@@ -185,11 +188,41 @@ log_msg "Turn on stealth mode"
 sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -bool true
 defaults write com.apple.security.firewall EnableStealthMode -bool true
 
+# Will prompt user to allow network access even for signed apps
+log_msg "Prevent signed apps from being automatically whitelisted"
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsigned off
+
+# Will prompt user to allow network access for downloaded apps
+log_msg "Prevent downloaded apps from being automatically whitelisted"
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsignedapp off
+
+# Sending hangup command to socketfilterfw is required for changes to take effect
+log_msg "Restarting socket filter firewall"
+sudo pkill -HUP socketfilterfw
+
+# Prevents quarantine from storing info about downloaded files as privacy risk
+log_msg "Disabling GateKeeper"
+sudo spctl --master-disable
 
 ####################################
 # Log In and User Account Security #
 ####################################
 log_section "Account Security"
+
+# Enforce system hibernation
+log_msg "Enforce hibernation instead of sleep"
+sudo pmset -a destroyfvkeyonstandby 1
+
+# Evict FileVault keys from memory
+log_msg "Evict FileVault keys from memory on hibernate"
+sudo pmset -a hibernatemode 25
+
+# Set power settings (required when evicting FV keys)
+log_msg "Disable power nap and other auto-power settings"
+sudo pmset -a powernap 0
+sudo pmset -a standby 0
+sudo pmset -a standbydelay 0
+sudo pmset -a autopoweroff 0
 
 # Require a password to wake the computer from sleep or screen saver
 log_msg "Require a password to wake the computer from sleep or screen saver"
@@ -200,7 +233,6 @@ log_msg "Initiate session lock five seconds after screen saver is started"
 sudo defaults write /Library/Preferences/com.apple.screensaver 'askForPasswordDelay' -int 5
 
 # Disables signing in as Guest from the login screen
-
 log_msg "Disables signing in as Guest from the login screen"
 sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -bool NO
 
@@ -234,6 +266,8 @@ sudo defaults write /Library/Preferences/com.apple.mDNSResponder.plist NoMultica
 log_msg "Disable insecure telnet protocol"
 sudo launchctl disable system/com.apple.telnetd
 
+log_msg "Prevent auto-launching captive portal webpages"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control.plist Active -bool false
 
 #########################################
 # Disable Printers and Sharing Protocols #

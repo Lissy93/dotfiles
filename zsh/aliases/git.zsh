@@ -1,5 +1,9 @@
-# List of ZSH aliases for common git commands
-# Licensed under MIT - (C) Alicia Sykes, 2022 <https://aliciasykes.com>
+
+######################################################################
+# ZSH aliases and helper functions for working with Git              #
+#                                                                    #
+# Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com> #
+######################################################################
 
 # Basics
 alias g="git"
@@ -26,7 +30,7 @@ alias gcl="git clone" # Downloads repo from <url>
 alias gch="git checkout" # Switch the HEAD to <branch>
 alias gb="git branch" # Create a new <branch> from HEAD
 alias gd="git diff" # Show all changes to untracked files
-alias gtree="git log --graph --oneline --decorate" # Show branch tree
+alias gtree="git log --graph --oneline --decorate --abbrev-commit" # Show branch tree
 alias gl='git log'
 
 # Tags

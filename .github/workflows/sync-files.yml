@@ -1,0 +1,26 @@
+name: 🔄 Sync to other Repos
+on:
+  workflow_dispatch: # Manual dispatch
+  schedule:
+    - cron: '0 1 * * 0' # At 01:00 on Sunday.
+  push:
+    branches:
+      - master
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@master
+      - name: Run GitHub File Sync
+        uses: BetaHuhn/repo-file-sync-action@v1
+        with:
+          GH_PAT: ${{ secrets.BOT_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+          GH_INSTALLATION_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+          CONFIG_PATH: .github/sync.yml
+          GIT_USERNAME: liss-bot
+          GIT_EMAIL: alicia-gh-bot@mail.as93.net
+          ASSIGNEES: Lissy93
+          REVIEWERS: Lissy93
+          PR_BODY: |
+            This PR pulls the latest changes to the `Brewfile` from [Lissy93/Dotfiles](https://github.com/lissy93/dotfiles).

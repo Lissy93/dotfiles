@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+########################################################################
+# Initiates the applying of MacOS-specific settings and preferences    #
+# Will use local files if available, otherwise run directly from git   #
+# IMPORTANT: Be sure to read files through thoughouly before executing #
+########################################################################
+# Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com>   #
+########################################################################
+
+macos_scripts=(
+  "macos-security.sh"     # Applies security settings
+  "macos-preferences.sh"  # Sets user preferences
+  "macos-apps.sh"         # Configures app options
+)
+
+if [ ! -z $0 ]; then # Use local files
+  DIR="$(cd "$(dirname "$0")" && pwd)/system-settings"
+  for mac_script in ${macos_scripts[@]}; do
+    $DIR/$mac_script
+  done
+else # Run from remote origin
+  REMOTE_DIR="https://raw.githubusercontent.com/Lissy93/dotfiles"
+  REMOTE_DIR+="/master/scripts/macos-setup"
+  for mac_script in ${macos_scripts[@]}; do
+    bash <(curl -s "${REMOTE_DIR}/${mac_script}")
+  done
+fi
