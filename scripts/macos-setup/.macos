@@ -15,7 +15,7 @@ macos_scripts=(
 )
 
 if [ ! -z $0 ]; then # Use local files
-  DIR="$(cd "$(dirname "$0")" && pwd)/system-settings"
+  DIR="$(cd "$(dirname "$0")" && pwd)"
   for mac_script in ${macos_scripts[@]}; do
     $DIR/$mac_script
   done
