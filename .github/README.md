@@ -59,7 +59,7 @@ Variable | Location
 
 ### Containerized Userspace
 
-You can also containerize your dotfiles, meaning with a single command, you can spin up a fresh virtual environment on any system, and immediately feel right at home with all your packages and configurations.
+You can also containerize your dotfiles, meaning with a single command, you can spin up a fresh virtual environment on any system, and immediately feel right at home with all your configurations, packages, aliases and utils.
 
 This is awesome for a number of reasons: 1) Super minimal dependency installation on the host 2) Blazing fast, as you can pull your built image from a registry, instead of compiling everything locally 3) Cross-platform compatibility, whatever your host OS is, you can always have a familiar Linux system in the container 4) Security, you can control which host resources are accessible within each container
 
@@ -260,8 +260,6 @@ The install script can accept several flags and environmental variables to confi
 ### Configuring
 
 The locations for all symlinks are defined in [`symlinks.yaml`](https://github.com/Lissy93/dotfiles/blob/master/symlinks.yaml). These are managed using [Dotbot](https://github.com/anishathalye/dotbot), and will be applied whenever you run the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. The symlinks set locations based on XDG paths, all of which are defined in [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/zsh/.zshenv).
-
-The bootstrap configurations are idempotent (and so the installer can be run multiple times without causing any problems). 
 
 ---
 
