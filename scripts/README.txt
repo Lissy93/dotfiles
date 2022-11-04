@@ -14,5 +14,8 @@ A set of Bash scripts for automating the setup and management of various systems
   * macos-security.sh     Apply essential MacOS security settings
   * macos-preferences.sh  Apply user MacOS preferences (spotlight, colors, behaviour, etc)
   * macos-apps.sh         Apply preferences to user applications (Finder, Mail, Terminal, etc)
+* scripts/linux           Scripts to configure standard Linux systems
+  * dconf-prefs.sh        Apply preferences to (mostly GNOME apps) via dconf utility
 
 Source: https://github.com/Lissy93/dotfiles/tree/master/scripts
+Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com>
