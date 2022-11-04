@@ -186,7 +186,7 @@ function setup_dot_files () {
   cd "${DOTFILES_DIR}"
   git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
   git submodule update --init --recursive "${DOTBOT_DIR}"
-  chmod +x  dotbot/bin/dotbot
+  chmod +x  lib/dotbot/bin/dotbot
   "${DOTFILES_DIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${DOTFILES_DIR}" -c "${SYMLINK_FILE}" "${@}"
 }
 
@@ -195,7 +195,7 @@ function apply_preferences () {
 
   # If ZSH not the default shell, ask user if they'd like to set it
   if [[ $SHELL != *"zsh"* ]] && command_exists zsh; then
-    echo "\n${CYAN_B}Would you like to set ZSH as your default shell? (y/N)${RESET}"
+    echo -e "\n${CYAN_B}Would you like to set ZSH as your default shell? (y/N)${RESET}"
     read -t $PROMPT_TIMEOUT -n 1 -r ans_zsh
     if [[ $ans_zsh =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
       echo -e "${PURPLE}Setting ZSH as default shell${RESET}"
@@ -203,19 +203,24 @@ function apply_preferences () {
     fi
   fi
 
-  # Install / update vim plugins with Plug
-  echo -e "\n${PURPLE}Installing Vim Plugins${RESET}"
-  vim +PlugInstall +qall
+  # Prompt user to update ZSH, Tmux and Vim plugins, then reload each
+  echo -e "\n${CYAN_B}Would you like to install / update ZSH, Tmux and Vim plugins? (y/N)${RESET}"
+  read -t $PROMPT_TIMEOUT -n 1 -r ans_cliplugins
+  if [[ $ans_cliplugins =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
+    # Install / update vim plugins with Plug
+    echo -e "\n${PURPLE}Installing Vim Plugins${RESET}"
+    vim +PlugInstall +qall
 
-  # Install / update Tmux plugins with TPM
-  echo -e "${PURPLE}Installing TMUX Plugins${RESET}"
-  chmod ug+x "${XDG_DATA_HOME}/tmux/tpm"
-  sh "${TMUX_PLUGIN_MANAGER_PATH}/tpm/bin/install_plugins"
-  sh "${XDG_DATA_HOME}/tmux/plugins/tpm/bin/install_plugins"
-  
-  # Install / update ZSH plugins with Antigen
-  echo -e "${PURPLE}Installing ZSH Plugins${RESET}"
-  /bin/zsh -i -c "antigen update && antigen-apply"
+    # Install / update Tmux plugins with TPM
+    echo -e "${PURPLE}Installing TMUX Plugins${RESET}"
+    chmod ug+x "${XDG_DATA_HOME}/tmux/tpm"
+    sh "${TMUX_PLUGIN_MANAGER_PATH}/tpm/bin/install_plugins"
+    sh "${XDG_DATA_HOME}/tmux/plugins/tpm/bin/install_plugins"
+
+    # Install / update ZSH plugins with Antigen
+    echo -e "${PURPLE}Installing ZSH Plugins${RESET}"
+    /bin/zsh -i -c "antigen update && antigen-apply"
+  fi
 
   # Apply general system, app and OS security preferences (prompt user first)
   echo -e "${CYAN_B}Would you like to apply system preferences? (y/N)${RESET}"
