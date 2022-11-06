@@ -4,9 +4,9 @@ tmp/*
 dotbot/*
 
 # Auto-generated files
-zsh/.zcompcache/*
-zsh/*/*.zwc
-zsh/.zsh_sessions/*
+config/zsh/.zcompcache/*
+config/zsh/*/*.zwc
+config/zsh/.zsh_sessions/*
 installs/.Brewfile.lock.json
 
 # Linux

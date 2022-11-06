@@ -117,6 +117,7 @@ alias ff='find . -type f -name' # Find a file by name within current directory
 alias h='history' # Shows full history
 alias h-search='fc -El 0 | grep' # Searchses for a word in terminal history
 alias top-history='history 0 | awk '{print $2}' | sort | uniq -c | sort -n -r | head' 
+alias histrg='history -500 | rg' # Rip grep search recent history
 
 # Clearing terminal
 if command_exists hr ; then
@@ -168,6 +169,11 @@ alias tinyurl='curl -s "http://tinyurl.com/api-create.php?url='
 alias ports='netstat -tulanp'
 if command_exists cointop ; then; alias crypto='cointop'; fi
 if command_exists gotop ; then; alias gto='gotop'; fi
+
+# Copy / pasting
+alias cpwd='pwd | pbcopy' # Copy current path
+alias pa='pbpaste' # Paste clipboard contents
+
 
 # Random lolz
 alias cls='clear;ls' # Clear and ls

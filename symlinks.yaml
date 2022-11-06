@@ -7,36 +7,18 @@
 
 - shell:
   - description: Set XDG environmental variables
-    command: source ./zsh/.zshenv
-  - description: Check that $XDG_CONFIG_HOME is set
-    command: >
-      if [ -z ${XDG_CONFIG_HOME+x} ]; then; \
-        echo "XDG_CONFIG_HOME is not yet set. Will use ~/.config"; \
-        XDG_CONFIG_HOME="${HOME}/.config"; \
-      fi
-    stdin: false
-    stdout: true
-    stderr: true
-    quiet: true
-  - description: Check that $XDG_DATA_HOME is set
-    command: >
-      if [ -z ${XDG_DATA_HOME+x} ]; then; \
-        echo "XDG_DATA_HOME is not yet set. Will use ~/.local/share"; \
-        XDG_DATA_HOME="${HOME}/.local/share"; \
-      fi
-    stdin: false
-    stdout: true
-    stderr: true
-    quiet: true
+    command: source ./config/zsh/.zshenv
 
 # Symlink locations for files / directories
 - link:
     # Essential configs (ZSH, Vim, Tmux)
-    ~/.zshenv: { path: zsh/.zshenv, force: true }
-    ${XDG_CONFIG_HOME}/zsh: zsh
-    ${XDG_CONFIG_HOME}/vim: vim
-    ${XDG_CONFIG_HOME}/nvim: vim
-    ${XDG_CONFIG_HOME}/tmux: tmux
+    ~/.zshenv: { path: config/zsh/.zshenv, force: true }
+    ${XDG_CONFIG_HOME}/zsh: config/zsh
+    ${XDG_CONFIG_HOME}/vim: config/vim
+    ${XDG_CONFIG_HOME}/nvim: config/vim
+    ${XDG_CONFIG_HOME}/tmux: config/tmux
+
+    ${XDG_CONFIG_HOME}/fish/config.fish: config/config.fish
     ${XDG_DATA_HOME}/tmux/tpm: lib/tpm
     ${XDG_DATA_HOME}/tmux/plugins/tpm: lib/tpm
     
