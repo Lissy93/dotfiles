@@ -199,6 +199,8 @@ Once the repo is cloned, you can modify whatever files you like before running t
    │ │ ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/Brewfile">Brewfile</a>          # Package installs for MacOS via Homebrew
    │ │ ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/arch-pacman.sh">arch-pacman.sh</a>    # Package installs for Arch via Pacman
    │ │ └── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/flatpak.sh">flatpak.sh</a>        # Package installs for Linux desktops via Flatpak
+   │ ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/scripts/linux">linux/</a>              # Automated configuration for Linux
+   │ │ └── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/linux/dconf-prefs.sh">dconf-prefs.sh</a>    # Setting GNOME settings via dconf util
    │ └── <a href="https://github.com/Lissy93/dotfiles/tree/master/scripts/macos-setup">macos-setup/</a>        # Scripts for setting up Mac OS machines
    │   ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/macos-setup/macos-apps.sh">macos-apps.sh</a>     # Sets app preferences
    │   ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/macos-setup/macos-preferences.sh">macos-prefs.sh</a>    # Sets MacOS system preferences
