@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ######################################################################
 # 🧰 Lissy93/Dotfiles - All-in-One Install and Setup Script for Unix #
@@ -149,11 +149,11 @@ function pre_setup_tasks () {
   # If XDG variables arn't yet set, then configure defaults
   if [ -z ${XDG_CONFIG_HOME+x} ]; then
     echo -e "${YELLOW_B}XDG_CONFIG_HOME is not yet set. Will use ~/.config${RESET}"
-    XDG_CONFIG_HOME="${HOME}/.config"
+    export XDG_CONFIG_HOME="${HOME}/.config"
   fi
   if [ -z ${XDG_DATA_HOME+x} ]; then
     echo -e "${YELLOW_B}XDG_DATA_HOME is not yet set. Will use ~/.local/share${RESET}"
-    XDG_DATA_HOME="${HOME}/.local/share"
+    export XDG_DATA_HOME="${HOME}/.local/share"
   fi
 }
 
@@ -295,7 +295,7 @@ function install_packages () {
   echo -e "\n${CYAN_B}Would you like to install / update system packages? (y/N)${RESET}"
   read -t $PROMPT_TIMEOUT -n 1 -r ans_syspackages
   if [[ ! $ans_syspackages =~ ^[Yy]$ ]] && [[ $AUTO_YES != true ]] ; then
-    echo -e "${PURPLE}Skipping package installs${RESET}"
+    echo -e "\n${PURPLE}Skipping package installs${RESET}"
     return
   fi
   if [ "$SYSTEM_TYPE" = "Darwin" ]; then
