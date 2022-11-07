@@ -75,7 +75,7 @@ alias lz='ls-archive'
 # Make directory, and cd into it
 mkcd() {
   local dir="$*";
-  local mkdir -p "$dir" && cd "$dir";
+  mkdir -p "$dir" && cd "$dir";
 }
 
 # Make dir and copy
@@ -154,26 +154,26 @@ alias memhog='ps -eo pid,ppid,cmd,%mem --sort=-%mem | head' # Processes consumin
 alias cpuhog='ps -eo pid,ppid,cmd,%cpu --sort=-%cpu | head' # Processes consuming most cpu
 alias cpuinfo='lscpu' # Show CPU Info
 alias distro='cat /etc/*-release' # Show OS info
-
-# App Specific
-if command_exists code ; then
-  alias vsc='code .' # Open VS Code in current dir
-fi
-
-# Utilities
-alias myip='curl icanhazip.com'
-alias weather='curl wttr.in'
-alias weather-short='curl "wttr.in?format=3"'
-alias cheat='curl cheat.sh/'
-alias tinyurl='curl -s "http://tinyurl.com/api-create.php?url='
-alias ports='netstat -tulanp'
-if command_exists cointop ; then; alias crypto='cointop'; fi
-if command_exists gotop ; then; alias gto='gotop'; fi
+alias ports='netstat -tulanp' # Show open ports
 
 # Copy / pasting
 alias cpwd='pwd | pbcopy' # Copy current path
 alias pa='pbpaste' # Paste clipboard contents
 
+# App Specific
+if command_exists code ; then; alias vsc='code .'; fi # Launch VS Code in current dir
+if command_exists cointop ; then; alias crypto='cointop'; fi
+if command_exists gotop ; then; alias gto='gotop'; fi
+
+# External Services
+alias myip='curl icanhazip.com'
+alias weather='curl wttr.in'
+alias weather-short='curl "wttr.in?format=3"'
+alias cheat='curl cheat.sh/'
+alias tinyurl='curl -s "http://tinyurl.com/api-create.php?url='
+alias joke='curl https://icanhazdadjoke.com'
+alias hackernews='curl hkkr.in'
+alias worldinternet='curl https://status.plaintext.sh/t'
 
 # Random lolz
 alias cls='clear;ls' # Clear and ls
