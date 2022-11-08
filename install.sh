@@ -97,6 +97,19 @@ make_intro () {
   echo -e "${PURPLE}For more info, see GitHub: \033[4;35mhttps://github.com/lissy93/dotfiles${RESET}"
 }
 
+# Cleanup tasks, run when the script exits
+cleanup () {
+  # Reset tab color and title (iTerm2 only)
+  echo -e "\033];\007\033]6;1;bg;*;default\a"
+
+  # Unset re-used variables
+  unset PROMPT_TIMEOUT
+  unset AUTO_YES
+
+  # dino
+  echo "🦖"
+}
+
 # Checks if a given package is installed
 command_exists () {
   hash "$1" 2> /dev/null
@@ -125,6 +138,10 @@ system_verify () {
 function pre_setup_tasks () {
   # Show pretty starting banner
   make_banner "${TITLE}" "${CYAN_B}" 1
+
+  # Set term title
+  echo -e "\033];${TITLE}\007\033]6;1;bg;red;brightness;30\a" \
+  "\033]6;1;bg;green;brightness;235\a\033]6;1;bg;blue;brightness;215\a"
 
   # Print intro, listing what changes will be applied
   make_intro
@@ -340,13 +357,12 @@ function finishing_up () {
   echo -e "${CYAN_B}Press any key to exit.${RESET}\n"
   read -t $PROMPT_TIMEOUT -n 1 -s
 
-  # Unset re-used variables
-  unset PROMPT_TIMEOUT
-  unset AUTO_YES
-
   # Bye
   exit 0
 }
+
+# Trigger cleanup on exit
+trap cleanup EXIT
 
 # If --help flag passed in, just show the help menu
 if [[ $PARAMS == *"--help"* ]]; then
