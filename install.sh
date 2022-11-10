@@ -69,32 +69,32 @@ make_banner () {
 make_intro () {
   C2="\033[0;35m"
   C3="\x1b[2m"
-  echo -e "${CYAN_B}The seup script will do the following:${RESET}"
-  echo -e "${C2}(1) Pre-Setup Tasls"
-  echo -e "  ${C3}- Check that all requirements are met, and system is compatible"
-  echo -e "  ${C3}- Sets environmental variables from params, or uses sensible defaults"
-  echo -e "  ${C3}- Output welcome message"
-  echo -e "${C2}(2) Setup Dotfiles"
-  echo -e "  ${C3}- Clone or update dotfiles from git"
-  echo -e "  ${C3}- Symlinks dotfiles to correct locations"
-  echo -e "${C2}(3) Install packages"
-  echo -e "  ${C3}- On MacOS, prompt to install Homebrew if not present"
-  echo -e "  ${C3}- On MacOS, updates and installs apps liseted in Brewfile"
-  echo -e "  ${C3}- On Arch Linux, updates and installs packages via Pacman"
-  echo -e "  ${C3}- On Debian Linux, updates and installs packages via apt get"
-  echo -e "  ${C3}- On Linux desktop systems, prompt to install desktop apps via Flatpak"
-  echo -e "  ${C3}- Checks that OS is up-to-date and criticial patches are installed"
-  echo -e "${C2}(4) Configure sytstem"
-  echo -e "  ${C3}- Setup Vim, and install Vim plugins via Plug"
-  echo -e "  ${C3}- Setup Tmux, and install Tmux plugins via TPM"
-  echo -e "  ${C3}- Setup ZSH, and install ZSH plugins via Antigen"
-  echo -e "  ${C3}- Prompt to configure OS user preferences"
-  echo -e "${C2}(5) Finishing Up"
-  echo -e "  ${C3}- Refresh current terminal session"
-  echo -e "  ${C3}- Print summary of applied changes and time taken"
-  echo -e "  ${C3}- Exit with appropriate status code"
-  echo -e "\n${PURPLE}You will be prompted at each stage, before any changes are made.${RESET}"
-  echo -e "${PURPLE}For more info, see GitHub: \033[4;35mhttps://github.com/lissy93/dotfiles${RESET}"
+  echo -e "${CYAN_B}The seup script will do the following:${RESET}\n"\
+  "${C2}(1) Pre-Setup Tasls\n"\
+  "  ${C3}- Check that all requirements are met, and system is compatible\n"\
+  "  ${C3}- Sets environmental variables from params, or uses sensible defaults\n"\
+  "  ${C3}- Output welcome message\n"\
+  "${C2}(2) Setup Dotfiles\n"\
+  "  ${C3}- Clone or update dotfiles from git\n"\
+  "  ${C3}- Symlinks dotfiles to correct locations\n"\
+  "${C2}(3) Install packages\n"\
+  "  ${C3}- On MacOS, prompt to install Homebrew if not present\n"\
+  "  ${C3}- On MacOS, updates and installs apps liseted in Brewfile\n"\
+  "  ${C3}- On Arch Linux, updates and installs packages via Pacman\n"\
+  "  ${C3}- On Debian Linux, updates and installs packages via apt get\n"\
+  "  ${C3}- On Linux desktop systems, prompt to install desktop apps via Flatpak\n"\
+  "  ${C3}- Checks that OS is up-to-date and criticial patches are installed\n"\
+  "${C2}(4) Configure sytstem\n"\
+  "  ${C3}- Setup Vim, and install Vim plugins via Plug\n"\
+  "  ${C3}- Setup Tmux, and install Tmux plugins via TPM\n"\
+  "  ${C3}- Setup ZSH, and install ZSH plugins via Antigen\n"\
+  "  ${C3}- Prompt to configure OS user preferences\n"\
+  "${C2}(5) Finishing Up\n"\
+  "  ${C3}- Refresh current terminal session\n"\
+  "  ${C3}- Print summary of applied changes and time taken\n"\
+  "  ${C3}- Exit with appropriate status code\n\n"\
+  "${PURPLE}You will be prompted at each stage, before any changes are made.${RESET}\n"\
+  "${PURPLE}For more info, see GitHub: \033[4;35mhttps://github.com/${REPO_NAME}${RESET}"
 }
 
 # Cleanup tasks, run when the script exits
@@ -180,7 +180,8 @@ function setup_dot_files () {
   # Download / update dotfiles repo with git
   if [[ ! -d "$DOTFILES_DIR" ]]
   then
-    echo -e "${PURPLE}Dotfiles not yet present. Will download ${REPO_NAME} into ${DOTFILES_DIR}${RESET}"
+    echo -e "${PURPLE}Dotfiles not yet present. \
+    Will download ${REPO_NAME} into ${DOTFILES_DIR}${RESET}"
     mkdir -p "${DOTFILES_DIR}"
     git clone --recursive ${DOTFILES_REPO} ${DOTFILES_DIR}
   else
@@ -194,7 +195,7 @@ function setup_dot_files () {
   ret=$?
   if ! test "$ret" -eq 0
   then
-    echo >&2 "${RED_B}Failed to fetch dotfiels $ret${RESET}"
+    echo -e >&2 "${RED_B}Failed to fetch dotfiels $ret${RESET}"
     terminate
   fi
 
@@ -240,14 +241,16 @@ function apply_preferences () {
   fi
 
   # Apply general system, app and OS security preferences (prompt user first)
-  echo -e "${CYAN_B}Would you like to apply system preferences? (y/N)${RESET}"
+  echo -e "\n${CYAN_B}Would you like to apply system preferences? (y/N)${RESET}"
   read -t $PROMPT_TIMEOUT -n 1 -r ans_syspref
   if [[ $ans_syspref =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]]; then
     if [ "$SYSTEM_TYPE" = "Darwin" ]; then
-      echo -e "\n${PURPLE}Applying MacOS system preferences, ensure you've understood before proceeding${RESET}\n"
+      echo -e "\n${PURPLE}Applying MacOS system preferences,\
+      ensure you've understood before proceeding${RESET}\n"
       macos_settings_dir="$DOTFILES_DIR/scripts/macos-setup"
       for macScript in "macos-security.sh" "macos-preferences.sh" "macos-apps.sh"; do
-        chmod +x $macos_settings_dir/$macScript && $macos_settings_dir/$macScript --quick-exit
+        chmod +x $macos_settings_dir/$macScript && \
+        $macos_settings_dir/$macScript --quick-exit --yes-to-all
       done
     fi
   fi
@@ -261,7 +264,8 @@ function intall_macos_packages () {
     read -t $PROMPT_TIMEOUT -n 1 -r ans_homebrewins
     if [[ $ans_homebrewins =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
       echo -en "🍺 ${PURPLE}Installing Homebrew...${RESET}\n"
-      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      brew_url='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
+      /bin/bash -c "$(curl -fsSL $brew_url)"
       export PATH=/opt/homebrew/bin:$PATH
     fi
   fi
@@ -352,6 +356,14 @@ function finishing_up () {
 
   # Refresh ZSH sesssion
   SKIP_WELCOME=true || exec zsh
+
+  # Show popup
+  if command_exists terminal-notifier; then
+    terminal-notifier -group 'dotfiles' -title $TITLE  -subtitle 'All Tasks Complete' \
+    -message "Your dotfiles are now configured and ready to use 🥳" \
+    -appIcon ./.github/logo.png -contentImage ./.github/logo.png \
+    -remove 'ALL' -sound 'Sosumi' &> /dev/null
+  fi
 
   # Show press any key to exit
   echo -e "${CYAN_B}Press any key to exit.${RESET}\n"
