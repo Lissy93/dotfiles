@@ -46,6 +46,11 @@ if [ "$(uname -s)" = "Darwin" ] && [[ -d /opt/homebrew/bin ]]; then
     export PATH=/opt/homebrew/bin:$PATH
 fi
 
+# If using iTerm on MacOS, import the shell integration
+if [ "$(uname -s)" = "Darwin" ] && [[ -f "${XDG_CONFIG_HOME}/zsh/.iterm2_shell_integration.zsh" ]]; then
+    source ${XDG_CONFIG_HOME}/iterm/shell-integration.zsh
+fi
+
 # And Android SDK to path, if within Library direcroty
 if [ "$(uname -s)" = "Darwin" ] && [[ -d "${HOME}/Library/Android/" ]]; then
     export PATH="${HOME}/Library/Android/sdk/emulator:${PATH}"
