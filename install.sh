@@ -5,6 +5,7 @@
 ######################################################################
 # Fetches latest changes, symlinks files, and installs dependencies  #
 # Then sets up ZSH, TMUX, Vim as well as OS-specific tools and apps  #
+# Checks all dependencies are met, and prompts to install if missing #
 # For docs and more info, see: https://github.com/lissy93/dotfiles   #
 #                                                                    #
 # IMPORTANT: Before running, read through everything very carefully! #
@@ -101,12 +102,12 @@ make_intro () {
 cleanup () {
   # Reset tab color and title (iTerm2 only)
   echo -e "\033];\007\033]6;1;bg;*;default\a"
-
+Arch
   # Unset re-used variables
   unset PROMPT_TIMEOUT
   unset AUTO_YES
 
-  # dino
+  # dinosaurs are awesome
   echo "🦖"
 }
 
@@ -134,6 +135,20 @@ system_verify () {
   fi
 }
 
+# Shows a desktop notification, on compatible systems ($1 = message)
+show_notification () {
+  if [[ $PARAMS == *"--no-notifications"* ]]; then return; fi
+  notif_title=$TITLE
+  notif_logo="${DOTFILES_DIR}/.github/logo.png"
+  if command_exists terminal-notifier; then
+    terminal-notifier -group 'dotfiles' -title $notif_title  -subtitle $1 \
+    -message $2 -appIcon $notif_logo -contentImage $notif_logo \
+    -remove 'ALL' -sound 'Sosumi' &> /dev/null
+  elif command_exists notify-send; then
+    notify-send -u normal -t 15000 -i "${notif_logo}" "${notif_title}" "${1}"
+  fi
+}
+
 # Prints welcome banner, verifies that requirements are met
 function pre_setup_tasks () {
   # Show pretty starting banner
@@ -150,7 +165,8 @@ function pre_setup_tasks () {
   echo -e "\n${CYAN_B}Are you happy to continue? (y/N)${RESET}"
   read -t $PROMPT_TIMEOUT -n 1 -r ans_start
   if [[ ! $ans_start =~ ^[Yy]$ ]] && [[ $AUTO_YES != true ]] ; then
-    echo -e "\n${PURPLE}No worries, feel free to come back another time.\nTerminating...${RESET}"
+    echo -e "\n${PURPLE}No worries, feel free to come back another time."\
+    "\nTerminating...${RESET}"
     make_banner "🚧 Installation Aborted" ${YELLOW_B} 1
     exit 0
   fi
@@ -326,13 +342,13 @@ function install_packages () {
     # Arch Linux
     arch_pkg_install_script="${DOTFILES_DIR}/scripts/installs/arch-pacman.sh"
     chmod +x $arch_pkg_install_script
-    $arch_pkg_install_script $params
+    $arch_pkg_install_script $PARAMS
   fi
   # If running in Linux desktop mode, prompt to install desktop apps via Flatpak
   flatpak_script="${DOTFILES_DIR}/scripts/installs/flatpak.sh"
-  if [[ $(uname -s) == "Linux" ]] && [ ! -z $XDG_CURRENT_DESKTOP ] && [ -f $flatpak_script ]; then
+  if [[ $SYSTEM_TYPE == "Linux" ]] && [ ! -z $XDG_CURRENT_DESKTOP ] && [ -f $flatpak_script ]; then
     chmod +x $flatpak_script
-    $flatpak_script
+    $flatpak_script $PARAMS
   fi
 }
 
@@ -358,12 +374,7 @@ function finishing_up () {
   SKIP_WELCOME=true || exec zsh
 
   # Show popup
-  if command_exists terminal-notifier; then
-    terminal-notifier -group 'dotfiles' -title $TITLE  -subtitle 'All Tasks Complete' \
-    -message "Your dotfiles are now configured and ready to use 🥳" \
-    -appIcon ./.github/logo.png -contentImage ./.github/logo.png \
-    -remove 'ALL' -sound 'Sosumi' &> /dev/null
-  fi
+  show_notification "All Tasks Complete" "Your dotfiles are now configured and ready to use 🥳"
 
   # Show press any key to exit
   echo -e "${CYAN_B}Press any key to exit.${RESET}\n"
