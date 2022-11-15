@@ -1,6 +1,6 @@
 <h1 align="center"><code>~/.Dotfiles</code></h1>
 <h2 align="center"><code>$HOME, sweet $HOME</code></h2>
-<p align="center"><i>My dotfiles for configuring Vim, ZSH, Tmux, Git, etc</i></p>
+<p align="center"><i>My dotfiles for configuring literally everything (automatically!)</i></p>
 <p align="center"><img width="400" src="https://i.ibb.co/rH30RbM/Dotfiles.png" /></p>
 
 
