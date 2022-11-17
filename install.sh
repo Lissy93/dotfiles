@@ -103,7 +103,7 @@ make_intro () {
 cleanup () {
   # Reset tab color and title (iTerm2 only)
   echo -e "\033];\007\033]6;1;bg;*;default\a"
-Arch
+
   # Unset re-used variables
   unset PROMPT_TIMEOUT
   unset AUTO_YES
