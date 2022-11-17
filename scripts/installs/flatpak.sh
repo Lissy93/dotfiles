@@ -40,6 +40,7 @@ flatpak_apps=(
   # Media
   'com.spotify.Client'        # Music streaming
   'com.valvesoftware.Steam'   # Gaming
+  'com.gitlab.newsflash'      # RSS reader
   'org.gnome.Cheese'          # Webcam client
   'org.libretro.RetroArch'    # Retro game emulation
   'org.videolan.VLC'          # Media player
@@ -47,8 +48,9 @@ flatpak_apps=(
   # Creativity
   'com.ultimaker.cura'        # 3D slicing
   'com.obsproject.Studio'     # Video streaming
+  'com.transmissionbt.Transmission' # Torrent downloader
+  'com.uploadedlobster.peek'  # Screen recorder
   'fr.handbrake.ghb'          # Video transcoder
-  'io.github.seadve.Kooha'    # Screen recorder
   'nl.hjdskes.gcolor3'        # Color picker
   'org.audacityteam.Audacity' # Sound editor
   'org.blender.Blender'       # 3D modeling
@@ -71,13 +73,17 @@ flatpak_apps=(
   'org.zaproxy.ZAP'           # Auto vulnerability scanning
   'org.nmap.Zenmap'           # GUI for Nmap security scans
 
+  # Settings and system utils
+  'com.borgbase.Vorta'        # Borg backup client
+
   # Browsers
   'org.mozilla.firefox'
   'com.github.Eloston.UngoogledChromium'
   'com.github.micahflee.torbrowser-launcher'
 
   # Office
-  'org.libreoffice.LibreOffice'
+  'org.libreoffice.LibreOffice' # Office suite
+  'org.cvfosammmm.Setzer'       # LaTeX editor
 
   # Personal
   'ch.protonmail.protonmail-bridge' # ProtonMail bridge
