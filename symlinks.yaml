@@ -44,6 +44,12 @@
     ~/.finicky.js:
       if: '[ `uname` = Darwin ]'
       path: config/macos/.finicky.js
+    ~/Library/Application\ Support/iTerm2/DynamicProfiles:
+      if: '[ `uname` = Darwin ]'
+      path: config/macos/iterm.json
+    ${XDG_CONFIG_HOME}/zsh/.iterm2_shell_integration.zsh:
+      if: '[ `uname` = Darwin ]'
+      path: config/macos/iterm-shell-integration.zsh
 
 # If not already present, create home directories
 - create:

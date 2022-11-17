@@ -74,7 +74,7 @@ make_intro () {
   "${C2}(1) Pre-Setup Tasls\n"\
   "  ${C3}- Check that all requirements are met, and system is compatible\n"\
   "  ${C3}- Sets environmental variables from params, or uses sensible defaults\n"\
-  "  ${C3}- Output welcome message\n"\
+  "  ${C3}- Output welcome message and summary of changes\n"\
   "${C2}(2) Setup Dotfiles\n"\
   "  ${C3}- Clone or update dotfiles from git\n"\
   "  ${C3}- Symlinks dotfiles to correct locations\n"\
@@ -86,10 +86,11 @@ make_intro () {
   "  ${C3}- On Linux desktop systems, prompt to install desktop apps via Flatpak\n"\
   "  ${C3}- Checks that OS is up-to-date and criticial patches are installed\n"\
   "${C2}(4) Configure sytstem\n"\
-  "  ${C3}- Setup Vim, and install Vim plugins via Plug\n"\
-  "  ${C3}- Setup Tmux, and install Tmux plugins via TPM\n"\
-  "  ${C3}- Setup ZSH, and install ZSH plugins via Antigen\n"\
-  "  ${C3}- Prompt to configure OS user preferences\n"\
+  "  ${C3}- Setup Vim, and install / update Vim plugins via Plug\n"\
+  "  ${C3}- Setup Tmux, and install / update Tmux plugins via TPM\n"\
+  "  ${C3}- Setup ZSH, and install / update ZSH plugins via Antigen\n"\
+  "  ${C3}- Apply system settings (via NSDefaults on Mac, dconf on Linux)\n"\
+  "  ${C3}- Apply assets, wallpaper, fonts, screensaver, etc\n"\
   "${C2}(5) Finishing Up\n"\
   "  ${C3}- Refresh current terminal session\n"\
   "  ${C3}- Print summary of applied changes and time taken\n"\
@@ -171,6 +172,11 @@ function pre_setup_tasks () {
     exit 0
   fi
   echo
+
+  # If pre-requsite packages not found, prompt to install
+  if ! command_exists git; then
+    bash <(curl -s  -L 'https://alicia.url.lol/prerequisite-installs') $PARAMS
+  fi
 
   # Verify required packages are installed
   system_verify "git" true
@@ -374,7 +380,12 @@ function finishing_up () {
   SKIP_WELCOME=true || exec zsh
 
   # Show popup
-  show_notification "All Tasks Complete" "Your dotfiles are now configured and ready to use 🥳"
+  if command_exists terminal-notifier; then
+    terminal-notifier -group 'dotfiles' -title $TITLE  -subtitle 'All Tasks Complete' \
+    -message "Your dotfiles are now configured and ready to use 🥳" \
+    -appIcon ./.github/logo.png -contentImage ./.github/logo.png \
+    -remove 'ALL' -sound 'Sosumi' &> /dev/null
+  fi
 
   # Show press any key to exit
   echo -e "${CYAN_B}Press any key to exit.${RESET}\n"

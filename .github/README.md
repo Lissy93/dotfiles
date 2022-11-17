@@ -17,6 +17,7 @@
     - [Directory Structure](#directory-structure)
     - [Install Script](#install-script)
     - [Configuring](#configuring)
+    - [Colors](#color-theme)
     - [Aliases](#aliases)
     - [Packages](#packages)
     - [System Preferences](#system-preferences)
@@ -264,6 +265,10 @@ The install script can accept several flags and environmental variables to confi
 ### Configuring
 
 The locations for all symlinks are defined in [`symlinks.yaml`](https://github.com/Lissy93/dotfiles/blob/master/symlinks.yaml). These are managed using [Dotbot](https://github.com/anishathalye/dotbot), and will be applied whenever you run the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. The symlinks set locations based on XDG paths, all of which are defined in [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/.zshenv).
+
+---
+
+## Color Theme
 
 ---
 
