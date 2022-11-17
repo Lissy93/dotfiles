@@ -1,8 +1,11 @@
 <h1 align="center"><code>~/.Dotfiles</code></h1>
-<h2 align="center"><code>$HOME, sweet $HOME</code></h2>
 <p align="center"><i>My dotfiles for configuring literally everything (automatically!)</i></p>
-<p align="center"><img width="400" src="https://i.ibb.co/rH30RbM/Dotfiles.png" /></p>
-
+<p align="center">
+  <a href="https://github.com/lissy93/dotfiles" title="Automate all the things!">
+    <img width="140" src="https://github.com/Lissy93/dotfiles/raw/master/.github/logo.png" />
+  </a>
+</p>
+<h3 align="center"><code>$HOME, sweet $HOME</code></h3>
 
 ## Contents
 - [Introduction to Dotfiles](#intro)
@@ -148,6 +151,8 @@ There's even more to check out at [webpro/awesome-dotfiles](https://github.com/w
 ---
 
 ## My Dotfiles
+
+<p align="center"><img width="380" src="https://i.ibb.co/rH30RbM/Dotfiles.png" /></p>
 
 ### Setup
 
