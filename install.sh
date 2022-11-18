@@ -1,10 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ######################################################################
 # 🧰 Lissy93/Dotfiles - All-in-One Install and Setup Script for Unix #
 ######################################################################
 # Fetches latest changes, symlinks files, and installs dependencies  #
 # Then sets up ZSH, TMUX, Vim as well as OS-specific tools and apps  #
+# Checks all dependencies are met, and prompts to install if missing #
 # For docs and more info, see: https://github.com/lissy93/dotfiles   #
 #                                                                    #
 # IMPORTANT: Before running, read through everything very carefully! #
@@ -69,32 +70,46 @@ make_banner () {
 make_intro () {
   C2="\033[0;35m"
   C3="\x1b[2m"
-  echo -e "${CYAN_B}The seup script will do the following:${RESET}"
-  echo -e "${C2}(1) Pre-Setup Tasls"
-  echo -e "  ${C3}- Check that all requirements are met, and system is compatible"
-  echo -e "  ${C3}- Sets environmental variables from params, or uses sensible defaults"
-  echo -e "  ${C3}- Output welcome message"
-  echo -e "${C2}(2) Setup Dotfiles"
-  echo -e "  ${C3}- Clone or update dotfiles from git"
-  echo -e "  ${C3}- Symlinks dotfiles to correct locations"
-  echo -e "${C2}(3) Install packages"
-  echo -e "  ${C3}- On MacOS, prompt to install Homebrew if not present"
-  echo -e "  ${C3}- On MacOS, updates and installs apps liseted in Brewfile"
-  echo -e "  ${C3}- On Arch Linux, updates and installs packages via Pacman"
-  echo -e "  ${C3}- On Debian Linux, updates and installs packages via apt get"
-  echo -e "  ${C3}- On Linux desktop systems, prompt to install desktop apps via Flatpak"
-  echo -e "  ${C3}- Checks that OS is up-to-date and criticial patches are installed"
-  echo -e "${C2}(4) Configure sytstem"
-  echo -e "  ${C3}- Setup Vim, and install Vim plugins via Plug"
-  echo -e "  ${C3}- Setup Tmux, and install Tmux plugins via TPM"
-  echo -e "  ${C3}- Setup ZSH, and install ZSH plugins via Antigen"
-  echo -e "  ${C3}- Prompt to configure OS user preferences"
-  echo -e "${C2}(5) Finishing Up"
-  echo -e "  ${C3}- Refresh current terminal session"
-  echo -e "  ${C3}- Print summary of applied changes and time taken"
-  echo -e "  ${C3}- Exit with appropriate status code"
-  echo -e "\n${PURPLE}You will be prompted at each stage, before any changes are made.${RESET}"
-  echo -e "${PURPLE}For more info, see GitHub: \033[4;35mhttps://github.com/lissy93/dotfiles${RESET}"
+  echo -e "${CYAN_B}The seup script will do the following:${RESET}\n"\
+  "${C2}(1) Pre-Setup Tasls\n"\
+  "  ${C3}- Check that all requirements are met, and system is compatible\n"\
+  "  ${C3}- Sets environmental variables from params, or uses sensible defaults\n"\
+  "  ${C3}- Output welcome message and summary of changes\n"\
+  "${C2}(2) Setup Dotfiles\n"\
+  "  ${C3}- Clone or update dotfiles from git\n"\
+  "  ${C3}- Symlinks dotfiles to correct locations\n"\
+  "${C2}(3) Install packages\n"\
+  "  ${C3}- On MacOS, prompt to install Homebrew if not present\n"\
+  "  ${C3}- On MacOS, updates and installs apps liseted in Brewfile\n"\
+  "  ${C3}- On Arch Linux, updates and installs packages via Pacman\n"\
+  "  ${C3}- On Debian Linux, updates and installs packages via apt get\n"\
+  "  ${C3}- On Linux desktop systems, prompt to install desktop apps via Flatpak\n"\
+  "  ${C3}- Checks that OS is up-to-date and criticial patches are installed\n"\
+  "${C2}(4) Configure sytstem\n"\
+  "  ${C3}- Setup Vim, and install / update Vim plugins via Plug\n"\
+  "  ${C3}- Setup Tmux, and install / update Tmux plugins via TPM\n"\
+  "  ${C3}- Setup ZSH, and install / update ZSH plugins via Antigen\n"\
+  "  ${C3}- Apply system settings (via NSDefaults on Mac, dconf on Linux)\n"\
+  "  ${C3}- Apply assets, wallpaper, fonts, screensaver, etc\n"\
+  "${C2}(5) Finishing Up\n"\
+  "  ${C3}- Refresh current terminal session\n"\
+  "  ${C3}- Print summary of applied changes and time taken\n"\
+  "  ${C3}- Exit with appropriate status code\n\n"\
+  "${PURPLE}You will be prompted at each stage, before any changes are made.${RESET}\n"\
+  "${PURPLE}For more info, see GitHub: \033[4;35mhttps://github.com/${REPO_NAME}${RESET}"
+}
+
+# Cleanup tasks, run when the script exits
+cleanup () {
+  # Reset tab color and title (iTerm2 only)
+  echo -e "\033];\007\033]6;1;bg;*;default\a"
+
+  # Unset re-used variables
+  unset PROMPT_TIMEOUT
+  unset AUTO_YES
+
+  # dinosaurs are awesome
+  echo "🦖"
 }
 
 # Checks if a given package is installed
@@ -121,10 +136,28 @@ system_verify () {
   fi
 }
 
+# Shows a desktop notification, on compatible systems ($1 = message)
+show_notification () {
+  if [[ $PARAMS == *"--no-notifications"* ]]; then return; fi
+  notif_title=$TITLE
+  notif_logo="${DOTFILES_DIR}/.github/logo.png"
+  if command_exists terminal-notifier; then
+    terminal-notifier -group 'dotfiles' -title $notif_title  -subtitle $1 \
+    -message $2 -appIcon $notif_logo -contentImage $notif_logo \
+    -remove 'ALL' -sound 'Sosumi' &> /dev/null
+  elif command_exists notify-send; then
+    notify-send -u normal -t 15000 -i "${notif_logo}" "${notif_title}" "${1}"
+  fi
+}
+
 # Prints welcome banner, verifies that requirements are met
 function pre_setup_tasks () {
   # Show pretty starting banner
   make_banner "${TITLE}" "${CYAN_B}" 1
+
+  # Set term title
+  echo -e "\033];${TITLE}\007\033]6;1;bg;red;brightness;30\a" \
+  "\033]6;1;bg;green;brightness;235\a\033]6;1;bg;blue;brightness;215\a"
 
   # Print intro, listing what changes will be applied
   make_intro
@@ -133,11 +166,17 @@ function pre_setup_tasks () {
   echo -e "\n${CYAN_B}Are you happy to continue? (y/N)${RESET}"
   read -t $PROMPT_TIMEOUT -n 1 -r ans_start
   if [[ ! $ans_start =~ ^[Yy]$ ]] && [[ $AUTO_YES != true ]] ; then
-    echo -e "\n${PURPLE}No worries, feel free to come back another time.\nTerminating...${RESET}"
+    echo -e "\n${PURPLE}No worries, feel free to come back another time."\
+    "\nTerminating...${RESET}"
     make_banner "🚧 Installation Aborted" ${YELLOW_B} 1
     exit 0
   fi
   echo
+
+  # If pre-requsite packages not found, prompt to install
+  if ! command_exists git; then
+    bash <(curl -s  -L 'https://alicia.url.lol/prerequisite-installs') $PARAMS
+  fi
 
   # Verify required packages are installed
   system_verify "git" true
@@ -149,35 +188,46 @@ function pre_setup_tasks () {
   # If XDG variables arn't yet set, then configure defaults
   if [ -z ${XDG_CONFIG_HOME+x} ]; then
     echo -e "${YELLOW_B}XDG_CONFIG_HOME is not yet set. Will use ~/.config${RESET}"
-    XDG_CONFIG_HOME="${HOME}/.config"
+    export XDG_CONFIG_HOME="${HOME}/.config"
   fi
   if [ -z ${XDG_DATA_HOME+x} ]; then
     echo -e "${YELLOW_B}XDG_DATA_HOME is not yet set. Will use ~/.local/share${RESET}"
-    XDG_DATA_HOME="${HOME}/.local/share"
+    export XDG_DATA_HOME="${HOME}/.local/share"
+  fi
+
+  # Ensure dotfiles source directory is set and valid
+  if [[ ! -d "$SRC_DIR" ]] && [[ ! -d "$DOTFILES_DIR" ]]; then
+    echo -e "${YELLOW_B}Destination direcory not set,"\
+    "defaulting to $HOME/.dotfiles\n"\
+    "${CYAN_B}To specify where you'd like dotfiles to be downloaded to,"\
+    "set the DOTFILES_DIR environmental variable, and re-run.${RESET}"
+    DOTFILES_DIR="${HOME}/.dotfiles"
   fi
 }
 
 # Downloads / updates dotfiles and symlinks them
 function setup_dot_files () {
 
-  # Download / update dotfiles repo with git
-  if [[ ! -d "$DOTFILES_DIR" ]]
-  then
-    echo -e "${PURPLE}Dotfiles not yet present. Will download ${REPO_NAME} into ${DOTFILES_DIR}${RESET}"
-    mkdir -p "${DOTFILES_DIR}"
-    git clone --recursive ${DOTFILES_REPO} ${DOTFILES_DIR}
-  else
+  # If dotfiles not yet present, clone the repo
+  if [[ ! -d "$DOTFILES_DIR" ]]; then
+    echo -e "${PURPLE}Dotfiles not yet present."\
+    "Downloading ${REPO_NAME} into ${DOTFILES_DIR}${RESET}"
+    echo -e "${YELLOW_B}You can change where dotfiles will be saved to,"\
+    "by setting the DOTFILES_DIR env var${RESET}"
+    mkdir -p "${DOTFILES_DIR}" && \
+    git clone --recursive ${DOTFILES_REPO} ${DOTFILES_DIR} && \
+    cd "${DOTFILES_DIR}"
+  else # Dotfiles already downloaded, just fetch latest changes
     echo -e "${PURPLE}Pulling changes from ${REPO_NAME} into ${DOTFILES_DIR}${RESET}"
     cd "${DOTFILES_DIR}" && \
     git pull origin master && \
+    echo -e "${PURPLE}Updating submodules${RESET}" && \
     git submodule update --recursive --remote --init
   fi
 
   # If git clone / pull failed, then exit with error
-  ret=$?
-  if ! test "$ret" -eq 0
-  then
-    echo >&2 "${RED_B}Failed to fetch dotfiels $ret${RESET}"
+  if ! test "$?" -eq 0; then
+    echo -e >&2 "${RED_B}Failed to fetch dotfiels from git${RESET}"
     terminate
   fi
 
@@ -186,7 +236,7 @@ function setup_dot_files () {
   cd "${DOTFILES_DIR}"
   git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
   git submodule update --init --recursive "${DOTBOT_DIR}"
-  chmod +x  dotbot/bin/dotbot
+  chmod +x  lib/dotbot/bin/dotbot
   "${DOTFILES_DIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${DOTFILES_DIR}" -c "${SYMLINK_FILE}" "${@}"
 }
 
@@ -195,7 +245,7 @@ function apply_preferences () {
 
   # If ZSH not the default shell, ask user if they'd like to set it
   if [[ $SHELL != *"zsh"* ]] && command_exists zsh; then
-    echo "\n${CYAN_B}Would you like to set ZSH as your default shell? (y/N)${RESET}"
+    echo -e "\n${CYAN_B}Would you like to set ZSH as your default shell? (y/N)${RESET}"
     read -t $PROMPT_TIMEOUT -n 1 -r ans_zsh
     if [[ $ans_zsh =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
       echo -e "${PURPLE}Setting ZSH as default shell${RESET}"
@@ -203,29 +253,36 @@ function apply_preferences () {
     fi
   fi
 
-  # Install / update vim plugins with Plug
-  echo -e "\n${PURPLE}Installing Vim Plugins${RESET}"
-  vim +PlugInstall +qall
+  # Prompt user to update ZSH, Tmux and Vim plugins, then reload each
+  echo -e "\n${CYAN_B}Would you like to install / update ZSH, Tmux and Vim plugins? (y/N)${RESET}"
+  read -t $PROMPT_TIMEOUT -n 1 -r ans_cliplugins
+  if [[ $ans_cliplugins =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
+    # Install / update vim plugins with Plug
+    echo -e "\n${PURPLE}Installing Vim Plugins${RESET}"
+    vim +PlugInstall +qall
 
-  # Install / update Tmux plugins with TPM
-  echo -e "${PURPLE}Installing TMUX Plugins${RESET}"
-  chmod ug+x "${XDG_DATA_HOME}/tmux/tpm"
-  sh "${TMUX_PLUGIN_MANAGER_PATH}/tpm/bin/install_plugins"
-  sh "${XDG_DATA_HOME}/tmux/plugins/tpm/bin/install_plugins"
-  
-  # Install / update ZSH plugins with Antigen
-  echo -e "${PURPLE}Installing ZSH Plugins${RESET}"
-  /bin/zsh -i -c "antigen update && antigen-apply"
+    # Install / update Tmux plugins with TPM
+    echo -e "${PURPLE}Installing TMUX Plugins${RESET}"
+    chmod ug+x "${XDG_DATA_HOME}/tmux/tpm"
+    sh "${TMUX_PLUGIN_MANAGER_PATH}/tpm/bin/install_plugins"
+    sh "${XDG_DATA_HOME}/tmux/plugins/tpm/bin/install_plugins"
+
+    # Install / update ZSH plugins with Antigen
+    echo -e "${PURPLE}Installing ZSH Plugins${RESET}"
+    /bin/zsh -i -c "antigen update && antigen-apply"
+  fi
 
   # Apply general system, app and OS security preferences (prompt user first)
-  echo -e "${CYAN_B}Would you like to apply system preferences? (y/N)${RESET}"
+  echo -e "\n${CYAN_B}Would you like to apply system preferences? (y/N)${RESET}"
   read -t $PROMPT_TIMEOUT -n 1 -r ans_syspref
   if [[ $ans_syspref =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]]; then
     if [ "$SYSTEM_TYPE" = "Darwin" ]; then
-      echo -e "\n${PURPLE}Applying MacOS system preferences, ensure you've understood before proceeding${RESET}\n"
+      echo -e "\n${PURPLE}Applying MacOS system preferences,\
+      ensure you've understood before proceeding${RESET}\n"
       macos_settings_dir="$DOTFILES_DIR/scripts/macos-setup"
       for macScript in "macos-security.sh" "macos-preferences.sh" "macos-apps.sh"; do
-        chmod +x $macos_settings_dir/$macScript && $macos_settings_dir/$macScript --quick-exit
+        chmod +x $macos_settings_dir/$macScript && \
+        $macos_settings_dir/$macScript --quick-exit --yes-to-all
       done
     else
       echo -e "\n${PURPLE}Applying preferences to GNOME apps, ensure you've understood before proceeding${RESET}\n"
@@ -243,7 +300,8 @@ function intall_macos_packages () {
     read -t $PROMPT_TIMEOUT -n 1 -r ans_homebrewins
     if [[ $ans_homebrewins =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
       echo -en "🍺 ${PURPLE}Installing Homebrew...${RESET}\n"
-      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      brew_url='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
+      /bin/bash -c "$(curl -fsSL $brew_url)"
       export PATH=/opt/homebrew/bin:$PATH
     fi
   fi
@@ -294,7 +352,7 @@ function install_packages () {
   echo -e "\n${CYAN_B}Would you like to install / update system packages? (y/N)${RESET}"
   read -t $PROMPT_TIMEOUT -n 1 -r ans_syspackages
   if [[ ! $ans_syspackages =~ ^[Yy]$ ]] && [[ $AUTO_YES != true ]] ; then
-    echo -e "${PURPLE}Skipping package installs${RESET}"
+    echo -e "\n${PURPLE}Skipping package installs${RESET}"
     return
   fi
   if [ "$SYSTEM_TYPE" = "Darwin" ]; then
@@ -304,13 +362,13 @@ function install_packages () {
     # Arch Linux
     arch_pkg_install_script="${DOTFILES_DIR}/scripts/installs/arch-pacman.sh"
     chmod +x $arch_pkg_install_script
-    $arch_pkg_install_script $params
+    $arch_pkg_install_script $PARAMS
   fi
   # If running in Linux desktop mode, prompt to install desktop apps via Flatpak
   flatpak_script="${DOTFILES_DIR}/scripts/installs/flatpak.sh"
-  if [[ $(uname -s) == "Linux" ]] && [ ! -z $XDG_CURRENT_DESKTOP ] && [ -f $flatpak_script ]; then
+  if [[ $SYSTEM_TYPE == "Linux" ]] && [ ! -z $XDG_CURRENT_DESKTOP ] && [ -f $flatpak_script ]; then
     chmod +x $flatpak_script
-    $flatpak_script
+    $flatpak_script $PARAMS
   fi
 }
 
@@ -335,17 +393,24 @@ function finishing_up () {
   # Refresh ZSH sesssion
   SKIP_WELCOME=true || exec zsh
 
+  # Show popup
+  if command_exists terminal-notifier; then
+    terminal-notifier -group 'dotfiles' -title $TITLE  -subtitle 'All Tasks Complete' \
+    -message "Your dotfiles are now configured and ready to use 🥳" \
+    -appIcon ./.github/logo.png -contentImage ./.github/logo.png \
+    -remove 'ALL' -sound 'Sosumi' &> /dev/null
+  fi
+
   # Show press any key to exit
   echo -e "${CYAN_B}Press any key to exit.${RESET}\n"
   read -t $PROMPT_TIMEOUT -n 1 -s
 
-  # Unset re-used variables
-  unset PROMPT_TIMEOUT
-  unset AUTO_YES
-
   # Bye
   exit 0
 }
+
+# Trigger cleanup on exit
+trap cleanup EXIT
 
 # If --help flag passed in, just show the help menu
 if [[ $PARAMS == *"--help"* ]]; then

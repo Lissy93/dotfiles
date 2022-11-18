@@ -1,8 +1,11 @@
 <h1 align="center"><code>~/.Dotfiles</code></h1>
-<h2 align="center"><code>$HOME, sweet $HOME</code></h2>
-<p align="center"><i>My dotfiles for configuring Vim, ZSH, Tmux, Git, etc</i></p>
-<p align="center"><img width="400" src="https://i.ibb.co/rH30RbM/Dotfiles.png" /></p>
-
+<p align="center"><i>My dotfiles for configuring literally everything (automatically!)</i></p>
+<p align="center">
+  <a href="https://github.com/lissy93/dotfiles" title="Automate all the things!">
+    <img width="140" src="https://github.com/Lissy93/dotfiles/raw/master/.github/logo.png" />
+  </a>
+</p>
+<h3 align="center"><code>$HOME, sweet $HOME</code></h3>
 
 ## Contents
 - [Introduction to Dotfiles](#intro)
@@ -17,6 +20,7 @@
     - [Directory Structure](#directory-structure)
     - [Install Script](#install-script)
     - [Configuring](#configuring)
+    - [Colors](#color-theme)
     - [Aliases](#aliases)
     - [Packages](#packages)
     - [System Preferences](#system-preferences)
@@ -45,7 +49,7 @@ It's not hard to create your own dotfile repo, it's great fun and you'll learn a
 
 ### XDG Directories
 
-The location of most config files can be defined using the [XDG base directory specification](https://specifications.freedesktop.org/basedir-spec), which is honored by most apps. This lets you specify where config, log, cache and data files are stored, keeping your top-level home directory free from clutter. You can do this by setting environmental variables, usually within the [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/zsh/.zshenv) file.
+The location of most config files can be defined using the [XDG base directory specification](https://specifications.freedesktop.org/basedir-spec), which is honored by most apps. This lets you specify where config, log, cache and data files are stored, keeping your top-level home directory free from clutter. You can do this by setting environmental variables, usually within the [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh.zshenv) file.
 
 Variable | Location
 --- | ---
@@ -148,6 +152,8 @@ There's even more to check out at [webpro/awesome-dotfiles](https://github.com/w
 
 ## My Dotfiles
 
+<p align="center"><img width="380" src="https://i.ibb.co/rH30RbM/Dotfiles.png" /></p>
+
 ### Setup
 
 > **Warning**
@@ -189,16 +195,20 @@ Once the repo is cloned, you can modify whatever files you like before running t
 <pre>
 ~
 └──.
-   ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/bash">bash/</a>                 # Bash (shell) config
-   ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/tmux">tmux/</a>                 # Tmux (multiplexer) config
-   ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/vim">vim/</a>                  # Vim (text editor) config
-   ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/zsh">zsh/</a>                  # ZSH (shell) config
-   ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/config">config/</a>               # All other config files
+   ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/config">config/</a>               # All configuration files
+   │ ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/bash">bash/</a>               # Bash (shell) config
+   │ ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/tmux">tmux/</a>               # Tmux (multiplexer) config
+   │ ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/vim">vim/</a>                # Vim (text editor) config
+   │ ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/zsh">zsh/</a>                # ZSH (shell) config
+   │ ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/macos">macos/</a>              # Config files for Mac-specific apps
+   │ └── <a href="https://github.com/Lissy93/dotfiles/tree/master/desktop-apps">desktop-apps/</a>       # Config files for GUI apps
    ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/scripts">scripts/</a>              # Bash scripts for automating tasks
    │ ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/scripts/installs">installs/</a>           # Scripts for software installation
    │ │ ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/Brewfile">Brewfile</a>          # Package installs for MacOS via Homebrew
    │ │ ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/arch-pacman.sh">arch-pacman.sh</a>    # Package installs for Arch via Pacman
    │ │ └── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/flatpak.sh">flatpak.sh</a>        # Package installs for Linux desktops via Flatpak
+   │ ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/scripts/linux">linux/</a>              # Automated configuration for Linux
+   │ │ └── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/linux/dconf-prefs.sh">dconf-prefs.sh</a>    # Setting GNOME settings via dconf util
    │ └── <a href="https://github.com/Lissy93/dotfiles/tree/master/scripts/macos-setup">macos-setup/</a>        # Scripts for setting up Mac OS machines
    │   ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/macos-setup/macos-apps.sh">macos-apps.sh</a>     # Sets app preferences
    │   ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/macos-setup/macos-preferences.sh">macos-prefs.sh</a>    # Sets MacOS system preferences
@@ -221,7 +231,7 @@ The setup script ([`install.sh`](https://github.com/Lissy93/dotfiles/blob/master
 - **Setup**
   - Print welcome message, and a summary of proposed changes, and prompt user to continue
   - Ensure that core dependencies are met (git, zsh, vim)
-  - Set variables by reading any passed parameters, or fallback to sensible defaults (see [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/zsh/.zshenv))  
+  - Set variables by reading any passed parameters, or fallback to sensible defaults (see [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/.zshenv))  
 - **Dotfiles**
   - If dotfiles not yet present, will clone from git, otherwise pulls latest changes
   - Setup / update symlinks each file to it's correct location on disk
@@ -259,7 +269,11 @@ The install script can accept several flags and environmental variables to confi
 
 ### Configuring
 
-The locations for all symlinks are defined in [`symlinks.yaml`](https://github.com/Lissy93/dotfiles/blob/master/symlinks.yaml). These are managed using [Dotbot](https://github.com/anishathalye/dotbot), and will be applied whenever you run the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. The symlinks set locations based on XDG paths, all of which are defined in [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/zsh/.zshenv).
+The locations for all symlinks are defined in [`symlinks.yaml`](https://github.com/Lissy93/dotfiles/blob/master/symlinks.yaml). These are managed using [Dotbot](https://github.com/anishathalye/dotbot), and will be applied whenever you run the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. The symlinks set locations based on XDG paths, all of which are defined in [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/.zshenv).
+
+---
+
+## Color Theme
 
 ---
 
@@ -282,7 +296,7 @@ You can view a list of defined aliases by running `alias`, or search for a speci
 
 #### My Aliases
 
-All aliases in my dotfiles are categorised into files located in [`zsh/aliases/`](https://github.com/Lissy93/dotfiles/blob/master/zsh/aliases/) which are imported in [`zsh/.zshrc`](https://github.com/Lissy93/dotfiles/blob/master/zsh/.zshrc#L9-L14).
+All aliases in my dotfiles are categorised into files located in [`zsh/aliases/`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/) which are imported in [`zsh/.zshrc`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/.zshrc#L9-L14).
 
 The following section lists all (or most) the aliases by category:
 
@@ -290,7 +304,7 @@ The following section lists all (or most) the aliases by category:
 
 <summary><b>Git Aliases</b></summary>
 
-> [`zsh/aliases/git.zsh`](https://github.com/Lissy93/dotfiles/blob/master/zsh/aliases/git.zsh)
+> [`zsh/aliases/git.zsh`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/git.zsh)
 
 Alias | Description
 ---|---
@@ -351,7 +365,7 @@ Alias | Description
 
 <summary><b>Flutter Aliases</b></summary>
 
-> [`zsh/aliases/flutter.zsh`](https://github.com/Lissy93/dotfiles/blob/master/zsh/aliases/flutter.zsh)
+> [`zsh/aliases/flutter.zsh`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/flutter.zsh)
 
 Alias | Description
 ---|---
@@ -377,7 +391,7 @@ Alias | Description
 
 <summary><b>Node.js Aliases</b></summary>
 
-> [`zsh/aliases/node-js.zsh`](https://github.com/Lissy93/dotfiles/blob/master/zsh/aliases/node-js.zsh)
+> [`zsh/aliases/node-js.zsh`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/node-js.zsh)
 
 
 ##### Yarn
@@ -441,7 +455,7 @@ Alias | Description
 
 <summary><b>General Aliases</b></summary>
 
-> [`zsh/aliases/general.zsh`](https://github.com/Lissy93/dotfiles/blob/master/zsh/aliases/general.zsh)
+> [`zsh/aliases/general.zsh`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/general.zsh)
 
 
 ##### Single-Letter Frequently-Used Commands (only set if not already in use)
@@ -881,11 +895,11 @@ If you choose to run any of these scripts, take care to read it through first, t
 
 ### Vim
 
-The entry point for the Vim config is the [`vimrc`](https://github.com/Lissy93/dotfiles/blob/master/vim/vimrc), but the main editor settings are defined in [`vim/editor.vim`](https://github.com/Lissy93/dotfiles/blob/master/vim/editor.vim)
+The entry point for the Vim config is the [`vimrc`](https://github.com/Lissy93/dotfiles/blob/master/config/vim/vimrc), but the main editor settings are defined in [`vim/editor.vim`](https://github.com/Lissy93/dotfiles/blob/master/config/vim/editor.vim)
 
 #### Vim Plugins
 
-Vim plugins are managed using [Plug](https://github.com/junegunn/vim-plug) defined in [`vim/plugins.vim`](https://github.com/Lissy93/dotfiles/blob/master/vim/setup-vim-plug.vim).
+Vim plugins are managed using [Plug](https://github.com/junegunn/vim-plug) defined in [`vim/plugins.vim`](https://github.com/Lissy93/dotfiles/blob/master/config/vim/setup-vim-plug.vim).
 To install them from GitHub, run `:PlugInstall` (see [options](https://github.com/junegunn/vim-plug#commands)) from within Vim. They will also be installed or updated when you run the main dotfiles setup script ([`install.sh`](https://github.com/Lissy93/dotfiles/blob/d4b8426629e7fbbd6d17d0b87f0bb863d6618bfd/install.sh#L132-L134)).
 
 The following plugins are being used:
@@ -971,9 +985,9 @@ The following plugins are being used:
 ### Tmux
 
 
-Fairly standard Tmux configuration, strongly based off Tmux-sensible. Configuration is defined in [`.tmux.conf`](https://github.com/Lissy93/dotfiles/blob/master/tmux/tmux.conf)
+Fairly standard Tmux configuration, strongly based off Tmux-sensible. Configuration is defined in [`.tmux.conf`](https://github.com/Lissy93/dotfiles/blob/master/config/tmux/tmux.conf)
 
-Tmux plugins are managed using [TMP](https://github.com/tmux-plugins/tpm) and defined in [`.tmux.conf`](https://github.com/Lissy93/dotfiles/blob/master/tmux/tmux.conf). To install them from GitHub, run `prefix` + <kbd>I</kbd> from within Tmux, and they will be cloned int `~/.tmux/plugins/`.
+Tmux plugins are managed using [TMP](https://github.com/tmux-plugins/tpm) and defined in [`.tmux.conf`](https://github.com/Lissy93/dotfiles/blob/master/config/tmux/tmux.conf). To install them from GitHub, run `prefix` + <kbd>I</kbd> from within Tmux, and they will be cloned int `~/.tmux/plugins/`.
 
 ##### Plugins
 
@@ -992,7 +1006,7 @@ Tmux plugins are managed using [TMP](https://github.com/tmux-plugins/tpm) and de
 
 // TODO
 
-Git aliases for ZSH are located in [`/zsh/aliases/git.zsh`](https://github.com/Lissy93/dotfiles/blob/master/zsh/aliases/git.zsh), and are documented under the [Aliases](https://github.com/lissy93/dotfiles#my-aliases) section, above.
+Git aliases for ZSH are located in [`/zsh/aliases/git.zsh`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/git.zsh), and are documented under the [Aliases](https://github.com/lissy93/dotfiles#my-aliases) section, above.
 
 ---
 

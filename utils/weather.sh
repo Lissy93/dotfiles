@@ -1,15 +1,22 @@
 #!/usr/bin/env bash
-# Author: Alexander Epstein https://github.com/alexanderepstein
 
-currentVersion="1.23.0" #This version variable should not have a v but should contain all other characters ex Github release tag is v1.2.4 currentVersion is 1.2.4
-LANG="${LANG:-en}"
-locale=$(echo "$LANG" | cut -c1-2)
-unset configuredClient
+######################################################################
+# Weather - Prints current and forcasted weather in current location #
+######################################################################
+# Data fetched from wttr.in provided by @chubin                      #
+# This script is inspired by @alexanderepstein                       #
+#                                                                    #
+# Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com> #
+######################################################################
+
+scriptVersion="0.9.1"
+locale=$(echo "${LANG:-en}" | cut -c1-2) # Language to use
 if [[ $(echo "$locale" | grep -Eo "[a-z A-Z]*" | wc -c) != 3 ]]; then locale="en"; fi
+wttrHost="wttr.in"
 
-## This function determines which http get tool the system has installed and returns an error if there isnt one
-getConfiguredClient()
-{
+# Determines which HTTP get tool to use, based on what's installed
+getConfiguredClient() {
+  unset configuredClient
   if command -v curl &>/dev/null; then
     configuredClient="curl"
   elif command -v wget &>/dev/null; then
@@ -24,9 +31,8 @@ getConfiguredClient()
   fi
 }
 
-## Allows to call the users configured client without if statements everywhere
-httpGet()
-{
+# Make HTTP request, using installed HTTP client
+httpGet() {
   case "$configuredClient" in
     curl)  curl -A curl -s "$@" ;;
     wget)  wget -qO- "$@" ;;
@@ -35,8 +41,7 @@ httpGet()
   esac
 }
 
-getIPWeather()
-{
+getIPWeather() {
   country=$(httpGet ipinfo.io/country) > /dev/null ## grab the country
   if [[ $country == "US" ]]; then ## if were in the us id rather not use longitude and latitude so the output is nicer
     city=$(httpGet ipinfo.io/city) > /dev/null
@@ -44,26 +49,24 @@ getIPWeather()
     if [[ $(echo "$region" | wc -w) == 2 ]];then
       region=$(echo "$region" | grep -Eo "[A-Z]*" | tr -d "[:space:]")
     fi
-    httpGet $locale.wttr.in/"$city","$region""$1"
+    httpGet $locale.$wttrHost/"$city","$region""$1"
   else ## otherwise we are going to use longitude and latitude
     location=$(httpGet ipinfo.io/loc) > /dev/null
-    httpGet $locale.wttr.in/"$location""$1"
+    httpGet $locale.$wttrHost/"$location""$1"
   fi
 }
 
-getLocationWeather()
-{
+getLocationWeather() {
   args=$(echo "$@" | tr " " + )
-  httpGet $locale.wttr.in/"${args}"
+  httpGet $locale.$wttrHost/"${args}"
 }
 
-checkInternet()
-{
-  httpGet github.com > /dev/null 2>&1 || { echo "Error: no active internet connection" >&2; return 1; } # query github with a get request
+# Check connected to internet
+checkInternet() {
+  httpGet github.com > /dev/null 2>&1 || { echo "Error: no active internet connection" >&2; return 1; }
 }
 
-usage()
-{
+usage() {
   cat <<EOF
 Weather
 Description: Provides a 3 day forecast on your current location or a specified location.
@@ -93,10 +96,10 @@ while getopts "uvh" opt; do
     h)  usage
         exit 0
         ;;
-    v)  echo "Version $currentVersion"
+    v)  echo "Version $scriptVersion"
         exit 0
         ;;
-    u)  checkInternet || exit 1 # check if we have a valid internet connection if this isnt true the rest of the script will not work so stop here
+    u)  checkInternet || exit 1 # Check connection, exit if fail
         update || exit 1
         exit 0
         ;;

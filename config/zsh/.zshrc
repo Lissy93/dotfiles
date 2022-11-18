@@ -16,6 +16,7 @@ source ${zsh_dir}/aliases/alias-tips.zsh
 # Setup Antigen, and import plugins
 source ${zsh_dir}/helpers/setup-antigen.zsh
 source ${zsh_dir}/helpers/import-plugins.zsh
+source ${zsh_dir}/helpers/misc-stuff.zsh
 
 # Configure ZSH stuff
 source ${zsh_dir}/lib/colors.zsh
@@ -37,11 +38,27 @@ source ${utils_dir}/am-i-online.sh
 source ${utils_dir}/welcome-banner.sh
 source ${utils_dir}/color-map.sh
 
-# Left over tasks
-source ${zsh_dir}/helpers/misc-stuff.zsh
-
 # Import P10k config for command prompt, run `p10k configure` or edit
 [[ ! -f ${zsh_dir}/.p10k.zsh ]] || source ${zsh_dir}/.p10k.zsh
+
+# Add Brew to path, if installed and on MacOS
+if [ "$(uname -s)" = "Darwin" ] && [[ -d /opt/homebrew/bin ]]; then
+    export PATH=/opt/homebrew/bin:$PATH
+fi
+
+# If using iTerm on MacOS, import the shell integration
+if [ "$(uname -s)" = "Darwin" ] && [[ -f "${XDG_CONFIG_HOME}/zsh/.iterm2_shell_integration.zsh" ]]; then
+    source ${XDG_CONFIG_HOME}/iterm/shell-integration.zsh
+fi
+
+# And Android SDK to path, if within Library direcroty
+if [ "$(uname -s)" = "Darwin" ] && [[ -d "${HOME}/Library/Android/" ]]; then
+    export PATH="${HOME}/Library/Android/sdk/emulator:${PATH}"
+    export ANDROID_HOME="${HOME}/Library/Android/sdk"
+    export ANDROID_SDK_ROOT="${HOME}/Library/Android/sdk"
+    export ANDROID_AVD_HOME="${ANDROID_SDK_ROOT}/tools/emulator"
+    export NODE_BINARY="/usr/local/bin/node"
+fi
 
 # If not running in nested shell, then show welcome message :)
 if [[ "${SHLVL}" -lt 2 ]] && [[ -z "$SKIP_WELCOME" ]]; then

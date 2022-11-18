@@ -50,18 +50,18 @@ RUN \
 
 COPY ./ /home/${user}/.userspace/
 
+ENV DOTFILES_DIR="/home/${user}/.dotfiles"
+
 RUN \
-  git clone --recursive https://${vcsprovider}/${vcsowner}/${dotfiles} /home/${user}/.dotfiles && \
+  git clone --recursive https://${vcsprovider}/${vcsowner}/${dotfiles} ${DOTFILES_DIR} && \
   chown -R ${user}:${group} /home/${user}/.dotfiles && \
   chown -R ${user}:${group} /home/${user}/.userspace
 
-ENV DOTFILES_DIR="$HOME/.dotfiles"
-
-RUN chmod u+x /home/${user}/.dotfiles/install.sh
+RUN chmod u+x "${DOTFILES_DIR}/install.sh"
 
 USER ${user}
 
-RUN cd $HOME/.dotfiles && ./install.sh --auto-yes
+RUN cd $DOTFILES_DIR && $DOTFILES_DIR/install.sh --auto-yes
 
 ENV HISTFILE=/home/${user}/.cache/.zsh_history
 

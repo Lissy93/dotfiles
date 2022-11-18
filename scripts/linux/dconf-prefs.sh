@@ -19,6 +19,8 @@ WARN_1='\033[1;31m'
 WARN_2='\033[0;31m'
 RESET='\033[0m'
 ITAL='\e[3m'
+UNDAL='\e[4m'
+PALE='\e[2m'
 BOLD='\e[1m'
 
 PARAMS=$*
@@ -48,11 +50,11 @@ fi
 
 # Ask for user confirmation before proceeding (if skip flag isn't passed)
 if [[ ! $PARAMS == *"--yes-to-all"* ]]; then
-  echo -e "${PRIMARY_COLOR}Would you like to proceed? (y/N)${RESET_COLOR}"
+  echo -e "\n${PRIMARY_COLOR}Would you like to proceed? (y/N)${RESET}"
   read -t 15 -n 1 -r
   if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     echo -e "${ACCENT_COLOR}\nNo worries, nothing will be applied - feel free to come back another time."
-    echo -e "${PRIMARY_COLOR}Exiting...${RESET_COLOR}"
+    echo -e "${PRIMARY_COLOR}Exiting...${RESET}"
     exit 0
   else
     echo -e "\n"
@@ -85,6 +87,17 @@ mkdir -p $DCONF_BACKUP_PATH
 apply_dconf () {
   dconf_key=$1
   dconf_name=$2
+
+  # If --prompt-before-each flag is set, then ask users permission for each app
+  if [[ $PARAMS == *"--prompt-before-each"* ]]; then
+    echo -e -n "\n${PRIMARY_COLOR}Would you like to apply ${dconf_name} settings? (y/N) ${RESET}"
+    read -t 15 -n 1 -r
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+      echo -e "\n${ACCENT_COLOR}Skipping ${dconf_name} settings${RESET}"
+      return
+    fi
+    echo
+  fi
 
   # Check that a valid key is specified
   if [[ -z "$dconf_key" ]]; then

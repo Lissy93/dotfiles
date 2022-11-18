@@ -1,3 +1,14 @@
+######################################################################
+# MacOS Launchpad Layout (Lissy93/Dotfiles)                          #
+######################################################################
+# Folder structure and layout for organising the MacOS launchpad     #
+# Managed with lporg (brew install lporg)                            # 
+# To regenerate this file from current layout, run `lporg save`      #
+# To apply changes, run `lporg load ~/.config/launchpad.yml`         #
+#                                                                    #
+# Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com> #
+######################################################################
+
 apps:
   pages:
   - number: 1
@@ -14,6 +25,7 @@ apps:
         - Sourcetree
         - UTM
         - Visual Studio
+        - React Native Debugger
         - MacDown
     - folder: Work Coms
       pages:
@@ -69,20 +81,22 @@ apps:
         - AltTab
         - OpenInTerminal
         - Scroll Reverser
+        - amm
+        - Espanso
+        - Little Snitch
         - AnyBar
         - Shottr
-        - Little Snitch
         - Finicky
-        - Espanso
         - OnyX
         - CopyQ
-        - amm
         - PopClip
         - Mjolnir
         - LinearMouse
         - Übersicht
         - MacForge
         - QLMarkdown
+        - Santa
+        - Suspicious Package
     - folder: Other
       pages:
       - number: 1
@@ -182,3 +196,7 @@ apps:
     - Chromium
     - Visual Studio Code
     - iTerm
+widgets:
+  pages: []
+dock_items:
+desktop: {}
