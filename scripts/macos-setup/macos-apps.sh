@@ -342,7 +342,7 @@ log_msg "Enable secure entry for Terminal"
 defaults write com.apple.terminal SecureKeyboardEntry -bool true
 
 log_msg "Apply custom Terminal theme"
-theme=$(<config/desktop-apps/alicia-term.terminal)
+theme=$(<config/macos/alicia-term.terminal)
 plutil -replace Window\ Settings.Alicia-Term -xml "$theme" ~/Library/Preferences/com.apple.Terminal.plist
 defaults write com.apple.terminal 'Default Window Settings' -string Alicia-Term  
 defaults write com.apple.terminal 'Startup Window Settings' -string Alicia-Term
