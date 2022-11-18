@@ -227,6 +227,10 @@ function apply_preferences () {
       for macScript in "macos-security.sh" "macos-preferences.sh" "macos-apps.sh"; do
         chmod +x $macos_settings_dir/$macScript && $macos_settings_dir/$macScript --quick-exit
       done
+    else
+      echo -e "\n${PURPLE}Applying preferences to GNOME apps, ensure you've understood before proceeding${RESET}\n"
+      dconf_script="$DOTFILES_DIR/scripts/linux/dconf-prefs.sh"
+      chmod +x $dconf_script && $dconf_script
     fi
   fi
 }
