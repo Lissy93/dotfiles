@@ -147,7 +147,6 @@ brew 'bettercap'      # Network, scanning and moniroting
 brew 'nmap'           # Port scanning
 brew 'wrk'            # HTTP benchmarking
 cask 'burp-suite'     # Web security testing
-cask 'metasploit'     # Pen testing framework
 cask 'owasp-zap'      # Web app security scanner
 cask 'wireshark'      # Network analyzer + packet capture
 
