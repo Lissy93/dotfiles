@@ -194,30 +194,40 @@ function pre_setup_tasks () {
     echo -e "${YELLOW_B}XDG_DATA_HOME is not yet set. Will use ~/.local/share${RESET}"
     export XDG_DATA_HOME="${HOME}/.local/share"
   fi
+
+  # Ensure dotfiles source directory is set and valid
+  if [[ ! -d "$SRC_DIR" ]] && [[ ! -d "$DOTFILES_DIR" ]]; then
+    echo -e "${YELLOW_B}Destination direcory not set,"\
+    "defaulting to $HOME/.dotfiles\n"\
+    "${CYAN_B}To specify where you'd like dotfiles to be downloaded to,"\
+    "set the DOTFILES_DIR environmental variable, and re-run.${RESET}"
+    DOTFILES_DIR="${HOME}/.dotfiles"
+  fi
 }
 
 # Downloads / updates dotfiles and symlinks them
 function setup_dot_files () {
 
-  # Download / update dotfiles repo with git
-  if [[ ! -d "$DOTFILES_DIR" ]]
-  then
-    echo -e "${PURPLE}Dotfiles not yet present. \
-    Will download ${REPO_NAME} into ${DOTFILES_DIR}${RESET}"
-    mkdir -p "${DOTFILES_DIR}"
-    git clone --recursive ${DOTFILES_REPO} ${DOTFILES_DIR}
-  else
+  # If dotfiles not yet present, clone the repo
+  if [[ ! -d "$DOTFILES_DIR" ]]; then
+    echo -e "${PURPLE}Dotfiles not yet present."\
+    "Downloading ${REPO_NAME} into ${DOTFILES_DIR}${RESET}"
+    echo -e "${YELLOW_B}You can change where dotfiles will be saved to,"\
+    "by setting the DOTFILES_DIR env var${RESET}"
+    mkdir -p "${DOTFILES_DIR}" && \
+    git clone --recursive ${DOTFILES_REPO} ${DOTFILES_DIR} && \
+    cd "${DOTFILES_DIR}"
+  else # Dotfiles already downloaded, just fetch latest changes
     echo -e "${PURPLE}Pulling changes from ${REPO_NAME} into ${DOTFILES_DIR}${RESET}"
     cd "${DOTFILES_DIR}" && \
     git pull origin master && \
+    echo -e "${PURPLE}Updating submodules${RESET}" && \
     git submodule update --recursive --remote --init
   fi
 
   # If git clone / pull failed, then exit with error
-  ret=$?
-  if ! test "$ret" -eq 0
-  then
-    echo -e >&2 "${RED_B}Failed to fetch dotfiels $ret${RESET}"
+  if ! test "$?" -eq 0; then
+    echo -e >&2 "${RED_B}Failed to fetch dotfiels from git${RESET}"
     terminate
   fi
 
