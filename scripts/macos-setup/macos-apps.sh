@@ -489,6 +489,25 @@ defaults write org.m0k.transmission BlocklistAutoUpdate -bool true
 log_msg "Randomize port on launch"
 defaults write org.m0k.transmission RandomPort -bool true
 
+#################################
+# Restart affected applications #
+#################################
+log_section "Finishing Up"
+log_msg "Restarting afffecting apps"
+for app in "Activity Monitor" \
+	"Address Book" \
+	"Calendar" \
+	"Contacts" \
+	"Finder" \
+	"Mail" \
+	"Messages" \
+	"Photos" \
+	"Safari" \
+	"Terminal" \
+	"iCal"; do
+	killall "${app}" &> /dev/null
+done
+
 #####################################
 # Print finishing message, and exit #
 #####################################
