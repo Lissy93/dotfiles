@@ -130,4 +130,9 @@ apply_dconf '/org/gnome/calculator/' 'calculator'
 apply_dconf '/org/gnome/evolution/' 'evolution'
 apply_dconf '/org/gnome/gedit/preferences/' 'gedit'
 apply_dconf '/org/gnome/gthumb/' 'gthumb'
+apply_dconf '/org/gnome/shell/extensions/' 'gnome-extensions'
 apply_dconf '/org/gnome/todo/' 'todo'
+
+# Run update command
+echo -e "\n${PRIMARY_COLOR}Reloading dconf database${RESET}"
+sudo dconf update
