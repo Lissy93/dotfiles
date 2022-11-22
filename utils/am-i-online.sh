@@ -10,6 +10,10 @@ pre_success='  \033[1;92m✔'
 pre_failure='  \033[1;91m✗'
 post_string='\x1b[0m'
 
+function aio_http_host () {
+  wget -qO- github.com > /dev/null 2>&1 || { echo "Error: no active internet connection" >&2; return 1; }
+}
+
 # Checks if DNS gateway is online
 function aio_check-dns() {
   : >/dev/tcp/1.1.1.1/53 > /dev/null && \
@@ -19,7 +23,7 @@ function aio_check-dns() {
 
 # Checks if can ping default getway
 function aio_ping-gateway() { 
-  ping -q -c 1 `ip r | grep default | cut -d ' ' -f 3` > /dev/null && \
+  ping -q -c 1 `ip r | grep default | cut -d ' ' -f 3 | head -1` > /dev/null && \
   echo -e "${pre_success} Gateway Availible${post_string}" || \
   echo -e "${pre_failure} Gateway Unavailible${post_string}"
 }

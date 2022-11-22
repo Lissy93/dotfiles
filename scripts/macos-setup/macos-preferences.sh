@@ -37,7 +37,7 @@ RESET_COLOR='\033[0m'
 
 # Current and total taslks, used for progress updates
 current_event=0
-total_events=68
+total_events=70
 
 # Check system is compatible
 if [ ! "$(uname -s)" = "Darwin" ]; then
@@ -120,6 +120,9 @@ HIGHLIGHT_COLOR="0 0.8 0.7"
 
 # Quit System Preferences before starting
 osascript -e 'tell application "System Preferences" to quit'
+
+# Keep script alive
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 ###################
 # Set Device Info #
@@ -373,11 +376,14 @@ sudo mdutil -E / > /dev/null
 ###############################
 log_section "Dock and Launchpad"
 
+log_msg "Set dock position to left-hand side"
+defaults write com.apple.dock orientation left
+
 log_msg "Add highlight effect to dock stacks"
 defaults write com.apple.dock mouse-over-hilite-stack -bool true
 
 log_msg "Set item size within dock stacks"
-defaults write com.apple.dock tilesize -int 24
+defaults write com.apple.dock tilesize -int 48
 
 log_msg "Set dock to use genie animation"
 defaults write com.apple.dock mineffect -string "genie"
@@ -446,6 +452,8 @@ sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.a
 log_msg "Add Apple Watch simulator to Launchpad"
 sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator (Watch).app" "/Applications/Simulator (Watch).app"
 
+log_msg "Restarting dock"
+killall Dock
 
 #####################################
 # Print finishing message, and exit #

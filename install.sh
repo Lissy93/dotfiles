@@ -74,7 +74,7 @@ make_intro () {
   "${C2}(1) Pre-Setup Tasls\n"\
   "  ${C3}- Check that all requirements are met, and system is compatible\n"\
   "  ${C3}- Sets environmental variables from params, or uses sensible defaults\n"\
-  "  ${C3}- Output welcome message\n"\
+  "  ${C3}- Output welcome message and summary of changes\n"\
   "${C2}(2) Setup Dotfiles\n"\
   "  ${C3}- Clone or update dotfiles from git\n"\
   "  ${C3}- Symlinks dotfiles to correct locations\n"\
@@ -86,10 +86,11 @@ make_intro () {
   "  ${C3}- On Linux desktop systems, prompt to install desktop apps via Flatpak\n"\
   "  ${C3}- Checks that OS is up-to-date and criticial patches are installed\n"\
   "${C2}(4) Configure sytstem\n"\
-  "  ${C3}- Setup Vim, and install Vim plugins via Plug\n"\
-  "  ${C3}- Setup Tmux, and install Tmux plugins via TPM\n"\
-  "  ${C3}- Setup ZSH, and install ZSH plugins via Antigen\n"\
-  "  ${C3}- Prompt to configure OS user preferences\n"\
+  "  ${C3}- Setup Vim, and install / update Vim plugins via Plug\n"\
+  "  ${C3}- Setup Tmux, and install / update Tmux plugins via TPM\n"\
+  "  ${C3}- Setup ZSH, and install / update ZSH plugins via Antigen\n"\
+  "  ${C3}- Apply system settings (via NSDefaults on Mac, dconf on Linux)\n"\
+  "  ${C3}- Apply assets, wallpaper, fonts, screensaver, etc\n"\
   "${C2}(5) Finishing Up\n"\
   "  ${C3}- Refresh current terminal session\n"\
   "  ${C3}- Print summary of applied changes and time taken\n"\
@@ -102,7 +103,7 @@ make_intro () {
 cleanup () {
   # Reset tab color and title (iTerm2 only)
   echo -e "\033];\007\033]6;1;bg;*;default\a"
-Arch
+
   # Unset re-used variables
   unset PROMPT_TIMEOUT
   unset AUTO_YES
@@ -172,6 +173,11 @@ function pre_setup_tasks () {
   fi
   echo
 
+  # If pre-requsite packages not found, prompt to install
+  if ! command_exists git; then
+    bash <(curl -s  -L 'https://alicia.url.lol/prerequisite-installs') $PARAMS
+  fi
+
   # Verify required packages are installed
   system_verify "git" true
   system_verify "zsh" false
@@ -188,30 +194,40 @@ function pre_setup_tasks () {
     echo -e "${YELLOW_B}XDG_DATA_HOME is not yet set. Will use ~/.local/share${RESET}"
     export XDG_DATA_HOME="${HOME}/.local/share"
   fi
+
+  # Ensure dotfiles source directory is set and valid
+  if [[ ! -d "$SRC_DIR" ]] && [[ ! -d "$DOTFILES_DIR" ]]; then
+    echo -e "${YELLOW_B}Destination direcory not set,"\
+    "defaulting to $HOME/.dotfiles\n"\
+    "${CYAN_B}To specify where you'd like dotfiles to be downloaded to,"\
+    "set the DOTFILES_DIR environmental variable, and re-run.${RESET}"
+    DOTFILES_DIR="${HOME}/.dotfiles"
+  fi
 }
 
 # Downloads / updates dotfiles and symlinks them
 function setup_dot_files () {
 
-  # Download / update dotfiles repo with git
-  if [[ ! -d "$DOTFILES_DIR" ]]
-  then
-    echo -e "${PURPLE}Dotfiles not yet present. \
-    Will download ${REPO_NAME} into ${DOTFILES_DIR}${RESET}"
-    mkdir -p "${DOTFILES_DIR}"
-    git clone --recursive ${DOTFILES_REPO} ${DOTFILES_DIR}
-  else
+  # If dotfiles not yet present, clone the repo
+  if [[ ! -d "$DOTFILES_DIR" ]]; then
+    echo -e "${PURPLE}Dotfiles not yet present."\
+    "Downloading ${REPO_NAME} into ${DOTFILES_DIR}${RESET}"
+    echo -e "${YELLOW_B}You can change where dotfiles will be saved to,"\
+    "by setting the DOTFILES_DIR env var${RESET}"
+    mkdir -p "${DOTFILES_DIR}" && \
+    git clone --recursive ${DOTFILES_REPO} ${DOTFILES_DIR} && \
+    cd "${DOTFILES_DIR}"
+  else # Dotfiles already downloaded, just fetch latest changes
     echo -e "${PURPLE}Pulling changes from ${REPO_NAME} into ${DOTFILES_DIR}${RESET}"
     cd "${DOTFILES_DIR}" && \
     git pull origin master && \
+    echo -e "${PURPLE}Updating submodules${RESET}" && \
     git submodule update --recursive --remote --init
   fi
 
   # If git clone / pull failed, then exit with error
-  ret=$?
-  if ! test "$ret" -eq 0
-  then
-    echo -e >&2 "${RED_B}Failed to fetch dotfiels $ret${RESET}"
+  if ! test "$?" -eq 0; then
+    echo -e >&2 "${RED_B}Failed to fetch dotfiels from git${RESET}"
     terminate
   fi
 
@@ -268,6 +284,10 @@ function apply_preferences () {
         chmod +x $macos_settings_dir/$macScript && \
         $macos_settings_dir/$macScript --quick-exit --yes-to-all
       done
+    else
+      echo -e "\n${PURPLE}Applying preferences to GNOME apps, ensure you've understood before proceeding${RESET}\n"
+      dconf_script="$DOTFILES_DIR/scripts/linux/dconf-prefs.sh"
+      chmod +x $dconf_script && $dconf_script
     fi
   fi
 }
@@ -374,7 +394,12 @@ function finishing_up () {
   SKIP_WELCOME=true || exec zsh
 
   # Show popup
-  show_notification "All Tasks Complete" "Your dotfiles are now configured and ready to use 🥳"
+  if command_exists terminal-notifier; then
+    terminal-notifier -group 'dotfiles' -title $TITLE  -subtitle 'All Tasks Complete' \
+    -message "Your dotfiles are now configured and ready to use 🥳" \
+    -appIcon ./.github/logo.png -contentImage ./.github/logo.png \
+    -remove 'ALL' -sound 'Sosumi' &> /dev/null
+  fi
 
   # Show press any key to exit
   echo -e "${CYAN_B}Press any key to exit.${RESET}\n"

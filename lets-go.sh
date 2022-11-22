@@ -25,6 +25,11 @@ echo -e "\033[1;35m""Lissy93/Dotfiles Installation Script 🧰
 - Into \033[4;35m${DOTFILES_DIR}\033[0;35m
 Be sure you've read and understood the what will be applied.\033[0m\n"
 
+# If dependencies not met, install them
+if ! hash git 2> /dev/null; then
+  bash <(curl -s  -L 'https://alicia.url.lol/prerequisite-installs')
+fi
+
 # If dotfiles not yet present then clone
 if [[ ! -d "$DOTFILES_DIR" ]]; then
   mkdir -p "${DOTFILES_DIR}" && \

@@ -24,7 +24,9 @@ config
 
 
 Generic configs which are used across all systems (e.g. .gitconfig, .bashrc, .wgetrc)
-are stored in the root of the config directory, whereas files which are only used on
+are stored in the root of the config directory, whereas groups of config files, for like
+ZSH, Vim, Tmux etc are organized into directories.
+files which are only used on
 certain systems (like MacOS) or by certain applications (like Firefox's user.js) are
 kept in category-specific directories (e.g. macos, desktop-apps, gnome, etc).
 
@@ -33,5 +35,5 @@ Run the install.sh script to apply settings based on system type and user prefer
 
 Important: Take care to read through files thoroughly before applying any changes.
 
-For full documentation, see: https://github.com/Lissy93/dotfiles
+Full source and documentation: https://github.com/Lissy93/dotfiles
 Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com>

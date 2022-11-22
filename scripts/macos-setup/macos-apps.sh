@@ -341,6 +341,12 @@ defaults write com.apple.terminal StringEncodings -array 4
 log_msg "Enable secure entry for Terminal"
 defaults write com.apple.terminal SecureKeyboardEntry -bool true
 
+log_msg "Apply custom Terminal theme"
+theme=$(<config/macos/alicia-term.terminal)
+plutil -replace Window\ Settings.Alicia-Term -xml "$theme" ~/Library/Preferences/com.apple.Terminal.plist
+defaults write com.apple.terminal 'Default Window Settings' -string Alicia-Term  
+defaults write com.apple.terminal 'Startup Window Settings' -string Alicia-Term
+echo 'tell application "Terminal" to set current settings of first window to settings set "Alicia-Term"' | osascript
 
 ###############################################################################
 # Time Machine                                                                #
@@ -482,6 +488,25 @@ defaults write org.m0k.transmission BlocklistAutoUpdate -bool true
 
 log_msg "Randomize port on launch"
 defaults write org.m0k.transmission RandomPort -bool true
+
+#################################
+# Restart affected applications #
+#################################
+log_section "Finishing Up"
+log_msg "Restarting afffecting apps"
+for app in "Activity Monitor" \
+	"Address Book" \
+	"Calendar" \
+	"Contacts" \
+	"Finder" \
+	"Mail" \
+	"Messages" \
+	"Photos" \
+	"Safari" \
+	"Terminal" \
+	"iCal"; do
+	killall "${app}" &> /dev/null
+done
 
 #####################################
 # Print finishing message, and exit #

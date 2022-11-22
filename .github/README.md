@@ -1,8 +1,11 @@
 <h1 align="center"><code>~/.Dotfiles</code></h1>
-<h2 align="center"><code>$HOME, sweet $HOME</code></h2>
 <p align="center"><i>My dotfiles for configuring literally everything (automatically!)</i></p>
-<p align="center"><img width="400" src="https://i.ibb.co/rH30RbM/Dotfiles.png" /></p>
-
+<p align="center">
+  <a href="https://github.com/lissy93/dotfiles" title="Automate all the things!">
+    <img width="140" src="https://github.com/Lissy93/dotfiles/raw/master/.github/logo.png" />
+  </a>
+</p>
+<h3 align="center"><code>$HOME, sweet $HOME</code></h3>
 
 ## Contents
 - [Introduction to Dotfiles](#intro)
@@ -17,6 +20,7 @@
     - [Directory Structure](#directory-structure)
     - [Install Script](#install-script)
     - [Configuring](#configuring)
+    - [Colors](#color-theme)
     - [Aliases](#aliases)
     - [Packages](#packages)
     - [System Preferences](#system-preferences)
@@ -148,6 +152,8 @@ There's even more to check out at [webpro/awesome-dotfiles](https://github.com/w
 
 ## My Dotfiles
 
+<p align="center"><img width="380" src="https://i.ibb.co/rH30RbM/Dotfiles.png" /></p>
+
 ### Setup
 
 > **Warning**
@@ -264,6 +270,10 @@ The install script can accept several flags and environmental variables to confi
 ### Configuring
 
 The locations for all symlinks are defined in [`symlinks.yaml`](https://github.com/Lissy93/dotfiles/blob/master/symlinks.yaml). These are managed using [Dotbot](https://github.com/anishathalye/dotbot), and will be applied whenever you run the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. The symlinks set locations based on XDG paths, all of which are defined in [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/.zshenv).
+
+---
+
+## Color Theme
 
 ---
 
