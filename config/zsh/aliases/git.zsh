@@ -124,6 +124,9 @@ function clone {
 
   # Clone repo
   git clone $REPO_URL $target;
+  
+  # cd into newly cloned directory
+  cd "$(basename "$_" .git)"
 }
 
 # Sync fork against upstream repo
