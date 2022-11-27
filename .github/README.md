@@ -10,6 +10,7 @@
 ## Contents
 - [Introduction to Dotfiles](#intro)
     - [What are dotfiles?](#what-are-dotfiles)
+    - [Why do you need them?](#why-you-need-a-dotfile-system)
     - [XDG Directories](#xdg-directories)
     - [Containerized Userspace](#containerized-userspace)
     - [Security](#security)
@@ -44,6 +45,14 @@ You will often find yourself tweaking your configs over time, so that your syste
 Once everything's setup, you'll be able to SSH into a fresh system or reinstall your OS, then just run your script and go from zero to feeling at right at home within a minute or two.
 
 It's not hard to create your own dotfile repo, it's great fun and you'll learn a ton along the way!
+
+---
+
+### Why you need a Dotfile System?
+
+By using a dotfile system, you can set up a brand new machine in minutes, keep settings synced across multiple environments, easily roll-back changes, and never risk loosing your precious config files. 
+
+This is important, because as a developer, we usually have multiple machines (work / personal laptops, cloud servers, virtual machines, some GH codespaces, maybe a few Pis, etc). And you're much more productive when working from a familiar environment, with all your settings applied just how you like them. But it would be a pain to have to set each of these machines up manually. Even if you've only got a single device, how much time would you loose if your data became lost or corrupted?
 
 ---
 
