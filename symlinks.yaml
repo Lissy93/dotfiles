@@ -11,6 +11,7 @@
 
 # Symlink locations for files / directories
 - link:
+
     # Essential configs (ZSH, Vim, Tmux)
     ~/.zshenv: { path: config/zsh/.zshenv, force: true }
     ${XDG_CONFIG_HOME}/zsh: config/zsh
@@ -23,10 +24,10 @@
     ${XDG_DATA_HOME}/tmux/plugins/tpm: lib/tpm
     
     # Utility config files
-    ${XDG_CONFIG_HOME}/bash/.bashrc: config/.bashrc
-    ${XDG_CONFIG_HOME}/git/.gitconfig: config/.gitconfig
-    ${XDG_CONFIG_HOME}/.gitignore_global: config/.gitignore_global
-    ${XDG_CONFIG_HOME}/.wgetrc: config/.wgetrc
+    ${XDG_CONFIG_HOME}/bash/.bashrc: config/general/.bashrc
+    ${XDG_CONFIG_HOME}/git/.gitconfig: config/general/.gitconfig
+    ${XDG_CONFIG_HOME}/.gitignore_global: config/general/.gitignore_global
+    ${XDG_CONFIG_HOME}/.wgetrc: config/general/.wgetrc
 
     # Bash utils
     ${XDG_CONFIG_HOME}/utils: utils

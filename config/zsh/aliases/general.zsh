@@ -31,7 +31,7 @@ alias lm='ls -tA -1' # List files sorted by last modified
 alias lb='ls -lhSA' # List all files sorted by biggest
 alias lr='ls -R' # List files in sub-directories, recursivley
 alias lf='ls -A | grep' # Use grep to find files
-alias ln='find . -type f | wc -l' # Shows number of files
+alias lc='find . -type f | wc -l' # Shows number of files
 alias ld='ls -l | grep "^d"' # List directories only
 
 # If exa installed, then use exa for some ls commands

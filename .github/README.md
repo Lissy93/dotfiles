@@ -610,19 +610,19 @@ Alias | Description
 
 ### Packages
 
-The dotfile installation script can also, detect which system and environemnt you're running, and optionally prompt to install packages and applications.
+The dotfile installation script can also, detect which system and environemnt you're running, and optionally prompt to update and install listed packages and applications.
 
 Package lists are stored in [`scripts/installs/`](https://github.com/Lissy93/dotfiles/tree/master/installs) directory, with separate files for different OSs. The install script will [pick the appropriate file](https://github.com/Lissy93/dotfiles/blob/22c6a04fdb22c140448b7d15ef8187c3a424ab47/install.sh#L243-L260) based on your distro.
 
 You will be prompted before anything is installed. Be sure to remove / comment out anything you do not need before proceeding.
 
 - Linux (desktop): [`flatpak.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/flatpak.sh) - Desktop apps can be installed on Linux systems via [Flatpack](https://flatpak.org/)
-- Mac OS: [`.Brewfile`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/Brewfile) - Mac apps installed via [Homebrew](https://brew.sh/)
+- Mac OS: [`Brewfile`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/Brewfile) - Mac apps installed via [Homebrew](https://brew.sh/)
 - Arch (and Arch-based systems, like Manjaro): [`arch-pacman.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/arch-pacman.sh) - Arch CLI apps installed via [pacman](https://wiki.archlinux.org/title/Pacman)
-- Debian (and Debian-based systems, like Ubuntu): [`apt.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/apt.sh) - Debian CLI apps installed via [apt](https://wiki.debian.org/Apt)
-- Alpine: [`apk.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/apk.sh) - Alpine CLI apps installed via [apk](https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html)
+- Debian (and Debian-based systems, like Ubuntu): [`debian-apt.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/debian-apt.sh) - Debian CLI apps installed via [apt](https://wiki.debian.org/Apt)
+- Alpine: [`aplpine-apk.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/aplpine-apk.sh) - Alpine CLI apps installed via [apk](https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html)
 
-The following section lists different apps that may be installed for each category:
+The following section lists apps installed for each category:
 
 #### Command Line
 
