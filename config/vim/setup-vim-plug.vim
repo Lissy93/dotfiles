@@ -1,3 +1,10 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Sets up all Vim / Neovim Plugins via Vim Plug                      "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Installs and imports Vim Plug, updates and loads listed plugins    "
+" For more info, see docs at: https://github.com/lissy93/dotfiles    "
+" Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com> "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Set paths for plug.vim and directory for plugins
 if has('nvim')

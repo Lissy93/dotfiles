@@ -379,6 +379,9 @@ log_section "Dock and Launchpad"
 log_msg "Set dock position to left-hand side"
 defaults write com.apple.dock orientation left
 
+log_msg "Remove default apps from the dock"
+defaults write com.apple.dock persistent-apps -array
+
 log_msg "Add highlight effect to dock stacks"
 defaults write com.apple.dock mouse-over-hilite-stack -bool true
 
