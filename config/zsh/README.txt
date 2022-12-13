@@ -3,11 +3,6 @@ Lissy93/Dotfiles - ZSH Config ⚙️
 
 > My configuration files for Z Shell
 
-Full source and documentation: https://github.com/Lissy93/dotfiles
-Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com>
-
----
-
 config/zsh/
 ├── .p10k.zsh               Configuration for the PowerLevel10K ZSH prompt
 ├── .zlogin                 Startup tasks, executed when the shell is launched
@@ -34,3 +29,8 @@ config/zsh/
    ├── navigation.zsh       Settings for jumping around directories
    ├── surround.zsh         Match parentheses/quotes around strings
    └── term-title.zsh       Show current command as terminal title (Xterm)
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Full source and documentation: https://github.com/Lissy93/dotfiles ┃
+┃ Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com> ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
