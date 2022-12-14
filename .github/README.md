@@ -653,6 +653,7 @@ The following section lists apps installed for each category:
 - [`jq`](https://github.com/stedolan/jq) - JSON parser
 - [`most`](https://www.jedsoft.org/most/) - Multi-window scroll pager _(better less)_
 - [`procs`](https://github.com/dalance/procs) - Advanced process viewer _(better ps)_
+- [`rip`](https://github.com/nivekuil/rip) - Safe and ergonomic deletion tool _(better rm)_
 - [`ripgrep`](https://github.com/BurntSushi/ripgrep) - Searching within files _(better grep)_
 - [`rsync`](https://rsync.samba.org/) - Fast, incremental file transfer
 - [`scc`](https://github.com/boyter/scc) - Count lines of code _(better cloc)_
@@ -677,6 +678,7 @@ The following section lists apps installed for each category:
 - [`gping`](https://github.com/orf/gping) - Interactive ping tool, with graph
 - [`ncdu`](https://dev.yorhel.nl/ncdu) - Disk usage analyzer and monitor _(better du)_
 - [`speedtest-cli`](https://github.com/sivel/speedtest-cli) - Command line speed test utility
+- [`dog`](https://github.com/ogham/dog)  - DNS lookup client _(better dig)_
 
 </details>
 
@@ -700,6 +702,7 @@ The following section lists apps installed for each category:
 - [`httpie`](https://httpie.io/) - HTTP / API testing testing client
 - [`lazydocker`](https://github.com/jesseduffield/lazydocker) - Full Docker management app
 - [`lazygit`](https://github.com/jesseduffield/lazygit) - Full Git managemtne app
+- [`kdash`](https://github.com/kdash-rs/kdash/) - Kubernetes dashboard app
 
 </details>
 
