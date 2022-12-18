@@ -25,6 +25,7 @@
     - [Aliases](#aliases)
     - [Packages](#packages)
     - [System Preferences](#system-preferences)
+    - [Config Files](#config-files)
     - [ZSH](#zsh)
     - [Vim](#vim)
     - [Tmux](#tmux)
@@ -899,9 +900,29 @@ If you choose to run any of these scripts, take care to read it through first, t
 
 ---
 
+### Config Files
+
+All config files are located in [`./config/`](https://github.com/Lissy93/dotfiles/tree/master/config/).
+
+Configurations for ZSH, Tmux, Vim, and a few others are in dedicated sub-directories (covered in the section below). While all other, small config files are located in the [`./config/general`](https://github.com/Lissy93/dotfiles/tree/master/config/general) direcroty, and include:
+
+- [`.bashrc`](https://github.com/Lissy93/dotfiles/blob/master/config/general/.bashrc)
+- [`.curlrc`](https://github.com/Lissy93/dotfiles/blob/master/config/general/.curlrc)
+- [`.gemrc`](https://github.com/Lissy93/dotfiles/blob/master/config/general/.gemrc)
+- [`.gitconfig`](https://github.com/Lissy93/dotfiles/blob/master/config/general/.gitconfig)
+- [`.gitignore_global`](https://github.com/Lissy93/dotfiles/blob/master/config/general/.gitignore_global)
+- [`.wgetrc`](https://github.com/Lissy93/dotfiles/blob/master/config/general/.wgetrc)
+- [`dnscrypt-proxy.toml`](https://github.com/Lissy93/dotfiles/blob/master/config/general/dnscrypt-proxy.toml)
+- [`gpg.conf`](https://github.com/Lissy93/dotfiles/blob/master/config/general/gpg.conf)
+- [`starship.toml`](https://github.com/Lissy93/dotfiles/blob/master/config/general/starship.toml)
+
+---
+
 ### ZSH
 
-// TODO
+[ZSH](https://www.zsh.org/) (or Z shell) is a UNIX command interpriter (shell), similar to and compatible with Korn shell (KSH). Compared to Bash, it includes many useful features and enchanements, notably in the CLI editor, advanced behaviour customization options, filename globbing, recursive path expansion, completion, and it's easyily extandable through plugins. For more info about ZSH, see the [Introduction to ZSH Docs](https://zsh.sourceforge.io/FAQ/zshfaq01.html).
+
+My ZSH config is located in [`config/zsh/`](https://github.com/Lissy93/dotfiles/tree/master/config/zsh)
 
 ---
 
