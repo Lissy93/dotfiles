@@ -135,5 +135,8 @@ apply_dconf '/org/gnome/evolution/' 'evolution'     # Apply Evolution (mail clie
 apply_dconf '/org/gnome/gedit/preferences/' 'gedit' # Apply Gedit (text editor) settings
 apply_dconf '/org/gnome/gthumb/' 'gthumb'           # Apply gthumb (image editor) settings
 apply_dconf '/org/gnome/todo/' 'todo'               # Apply todo list app settings
+apply_dconf '/org/gnome/shell/extensions/' 'gnome-extensions'
 
-# EOF
+# Run update command
+echo -e "\n${PRIMARY_COLOR}Reloading dconf database${RESET}"
+sudo dconf update

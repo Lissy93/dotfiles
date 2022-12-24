@@ -11,22 +11,26 @@
 
 # Symlink locations for files / directories
 - link:
+
     # Essential configs (ZSH, Vim, Tmux)
     ~/.zshenv: { path: config/zsh/.zshenv, force: true }
     ${XDG_CONFIG_HOME}/zsh: config/zsh
     ${XDG_CONFIG_HOME}/vim: config/vim
     ${XDG_CONFIG_HOME}/nvim: config/vim
     ${XDG_CONFIG_HOME}/tmux: config/tmux
+    ${XDG_CONFIG_HOME}/fish: config/fish
 
-    ${XDG_CONFIG_HOME}/fish/config.fish: config/config.fish
     ${XDG_DATA_HOME}/tmux/tpm: lib/tpm
     ${XDG_DATA_HOME}/tmux/plugins/tpm: lib/tpm
     
     # Utility config files
-    ${XDG_CONFIG_HOME}/bash/.bashrc: config/.bashrc
-    ${XDG_CONFIG_HOME}/git/.gitconfig: config/.gitconfig
-    ${XDG_CONFIG_HOME}/.gitignore_global: config/.gitignore_global
-    ${XDG_CONFIG_HOME}/.wgetrc: config/.wgetrc
+    ${XDG_CONFIG_HOME}/bash/.bashrc: config/general/.bashrc
+    ${XDG_CONFIG_HOME}/git/.gitconfig: config/general/.gitconfig
+    ${XDG_CONFIG_HOME}/.gitignore_global: config/general/.gitignore_global
+    ${XDG_CONFIG_HOME}/.wgetrc: config/general/.wgetrc
+
+    # Desktop Apps
+    ${XDG_CONFIG_HOME}/alacritty.yml: config/desktop-apps/alacritty.yml
 
     # Bash utils
     ${XDG_CONFIG_HOME}/utils: utils

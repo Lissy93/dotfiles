@@ -10,6 +10,7 @@
 ## Contents
 - [Introduction to Dotfiles](#intro)
     - [What are dotfiles?](#what-are-dotfiles)
+    - [Why do you need them?](#why-you-need-a-dotfile-system)
     - [XDG Directories](#xdg-directories)
     - [Containerized Userspace](#containerized-userspace)
     - [Security](#security)
@@ -24,6 +25,7 @@
     - [Aliases](#aliases)
     - [Packages](#packages)
     - [System Preferences](#system-preferences)
+    - [Config Files](#config-files)
     - [ZSH](#zsh)
     - [Vim](#vim)
     - [Tmux](#tmux)
@@ -44,6 +46,14 @@ You will often find yourself tweaking your configs over time, so that your syste
 Once everything's setup, you'll be able to SSH into a fresh system or reinstall your OS, then just run your script and go from zero to feeling at right at home within a minute or two.
 
 It's not hard to create your own dotfile repo, it's great fun and you'll learn a ton along the way!
+
+---
+
+### Why you need a Dotfile System?
+
+By using a dotfile system, you can set up a brand new machine in minutes, keep settings synced across multiple environments, easily roll-back changes, and never risk loosing your precious config files. 
+
+This is important, because as a developer, we usually have multiple machines (work / personal laptops, cloud servers, virtual machines, some GH codespaces, maybe a few Pis, etc). And you're much more productive when working from a familiar environment, with all your settings applied just how you like them. But it would be a pain to have to set each of these machines up manually. Even if you've only got a single device, how much time would you loose if your data became lost or corrupted?
 
 ---
 
@@ -601,19 +611,19 @@ Alias | Description
 
 ### Packages
 
-The dotfile installation script can also, detect which system and environemnt you're running, and optionally prompt to install packages and applications.
+The dotfile installation script can also, detect which system and environemnt you're running, and optionally prompt to update and install listed packages and applications.
 
 Package lists are stored in [`scripts/installs/`](https://github.com/Lissy93/dotfiles/tree/master/installs) directory, with separate files for different OSs. The install script will [pick the appropriate file](https://github.com/Lissy93/dotfiles/blob/22c6a04fdb22c140448b7d15ef8187c3a424ab47/install.sh#L243-L260) based on your distro.
 
 You will be prompted before anything is installed. Be sure to remove / comment out anything you do not need before proceeding.
 
 - Linux (desktop): [`flatpak.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/flatpak.sh) - Desktop apps can be installed on Linux systems via [Flatpack](https://flatpak.org/)
-- Mac OS: [`.Brewfile`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/Brewfile) - Mac apps installed via [Homebrew](https://brew.sh/)
+- Mac OS: [`Brewfile`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/Brewfile) - Mac apps installed via [Homebrew](https://brew.sh/)
 - Arch (and Arch-based systems, like Manjaro): [`arch-pacman.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/arch-pacman.sh) - Arch CLI apps installed via [pacman](https://wiki.archlinux.org/title/Pacman)
-- Debian (and Debian-based systems, like Ubuntu): [`apt.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/apt.sh) - Debian CLI apps installed via [apt](https://wiki.debian.org/Apt)
-- Alpine: [`apk.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/apk.sh) - Alpine CLI apps installed via [apk](https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html)
+- Debian (and Debian-based systems, like Ubuntu): [`debian-apt.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/debian-apt.sh) - Debian CLI apps installed via [apt](https://wiki.debian.org/Apt)
+- Alpine: [`aplpine-apk.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/aplpine-apk.sh) - Alpine CLI apps installed via [apk](https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html)
 
-The following section lists different apps that may be installed for each category:
+The following section lists apps installed for each category:
 
 #### Command Line
 
@@ -644,6 +654,7 @@ The following section lists different apps that may be installed for each catego
 - [`jq`](https://github.com/stedolan/jq) - JSON parser
 - [`most`](https://www.jedsoft.org/most/) - Multi-window scroll pager _(better less)_
 - [`procs`](https://github.com/dalance/procs) - Advanced process viewer _(better ps)_
+- [`rip`](https://github.com/nivekuil/rip) - Safe and ergonomic deletion tool _(better rm)_
 - [`ripgrep`](https://github.com/BurntSushi/ripgrep) - Searching within files _(better grep)_
 - [`rsync`](https://rsync.samba.org/) - Fast, incremental file transfer
 - [`scc`](https://github.com/boyter/scc) - Count lines of code _(better cloc)_
@@ -668,6 +679,7 @@ The following section lists different apps that may be installed for each catego
 - [`gping`](https://github.com/orf/gping) - Interactive ping tool, with graph
 - [`ncdu`](https://dev.yorhel.nl/ncdu) - Disk usage analyzer and monitor _(better du)_
 - [`speedtest-cli`](https://github.com/sivel/speedtest-cli) - Command line speed test utility
+- [`dog`](https://github.com/ogham/dog)  - DNS lookup client _(better dig)_
 
 </details>
 
@@ -691,6 +703,7 @@ The following section lists different apps that may be installed for each catego
 - [`httpie`](https://httpie.io/) - HTTP / API testing testing client
 - [`lazydocker`](https://github.com/jesseduffield/lazydocker) - Full Docker management app
 - [`lazygit`](https://github.com/jesseduffield/lazygit) - Full Git managemtne app
+- [`kdash`](https://github.com/kdash-rs/kdash/) - Kubernetes dashboard app
 
 </details>
 
@@ -887,9 +900,29 @@ If you choose to run any of these scripts, take care to read it through first, t
 
 ---
 
+### Config Files
+
+All config files are located in [`./config/`](https://github.com/Lissy93/dotfiles/tree/master/config/).
+
+Configurations for ZSH, Tmux, Vim, and a few others are in dedicated sub-directories (covered in the section below). While all other, small config files are located in the [`./config/general`](https://github.com/Lissy93/dotfiles/tree/master/config/general) direcroty, and include:
+
+- [`.bashrc`](https://github.com/Lissy93/dotfiles/blob/master/config/general/.bashrc)
+- [`.curlrc`](https://github.com/Lissy93/dotfiles/blob/master/config/general/.curlrc)
+- [`.gemrc`](https://github.com/Lissy93/dotfiles/blob/master/config/general/.gemrc)
+- [`.gitconfig`](https://github.com/Lissy93/dotfiles/blob/master/config/general/.gitconfig)
+- [`.gitignore_global`](https://github.com/Lissy93/dotfiles/blob/master/config/general/.gitignore_global)
+- [`.wgetrc`](https://github.com/Lissy93/dotfiles/blob/master/config/general/.wgetrc)
+- [`dnscrypt-proxy.toml`](https://github.com/Lissy93/dotfiles/blob/master/config/general/dnscrypt-proxy.toml)
+- [`gpg.conf`](https://github.com/Lissy93/dotfiles/blob/master/config/general/gpg.conf)
+- [`starship.toml`](https://github.com/Lissy93/dotfiles/blob/master/config/general/starship.toml)
+
+---
+
 ### ZSH
 
-// TODO
+[ZSH](https://www.zsh.org/) (or Z shell) is a UNIX command interpriter (shell), similar to and compatible with Korn shell (KSH). Compared to Bash, it includes many useful features and enchanements, notably in the CLI editor, advanced behaviour customization options, filename globbing, recursive path expansion, completion, and it's easyily extandable through plugins. For more info about ZSH, see the [Introduction to ZSH Docs](https://zsh.sourceforge.io/FAQ/zshfaq01.html).
+
+My ZSH config is located in [`config/zsh/`](https://github.com/Lissy93/dotfiles/tree/master/config/zsh)
 
 ---
 
@@ -1110,3 +1143,29 @@ bash <(curl -s https://raw.githubusercontent.com/Lissy93/dotfiles/master/utils/w
 
 
 ---
+
+---
+
+
+<!-- License + Copyright -->
+<p  align="center">
+  <i>© <a href="https://aliciasykes.com">Alicia Sykes</a> 2022</i><br>
+  <i>Licensed under <a href="https://gist.github.com/Lissy93/143d2ee01ccc5c052a17">MIT</a></i><br>
+  <a href="https://github.com/lissy93"><img src="https://i.ibb.co/4KtpYxb/octocat-clean-mini.png" /></a><br>
+  <sup>Thanks for visiting :)</sup>
+</p>
+
+<!-- Dinosaur -->
+<!-- 
+                        . - ~ ~ ~ - .
+      ..     _      .-~               ~-.
+     //|     \ `..~                      `.
+    || |      }  }              /       \  \
+(\   \\ \~^..'                 |         }  \
+ \`.-~  o      /       }       |        /    \
+ (__          |       /        |       /      `.
+  `- - ~ ~ -._|      /_ - ~ ~ ^|      /- _      `.
+              |     /          |     /     ~-.     ~- _
+              |_____|          |_____|         ~ - . _ _~_-_
+-->
+

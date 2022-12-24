@@ -55,6 +55,7 @@ flatpak_apps=(
   'org.audacityteam.Audacity' # Sound editor
   'org.blender.Blender'       # 3D modeling
   'org.darktable.Darktable'   # Video editor
+  'org.flameshot.Flameshot'   # Screenshot tool
   'org.gimp.GIMP'             # Picture editor
   'org.inkscape.Inkscape'     # Vector editor
   'org.shotcut.Shotcut'       # Video editor
