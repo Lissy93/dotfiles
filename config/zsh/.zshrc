@@ -60,6 +60,11 @@ if [ "$(uname -s)" = "Darwin" ] && [[ -d "${HOME}/Library/Android/" ]]; then
     export NODE_BINARY="/usr/local/bin/node"
 fi
 
+# Add Zoxide (for cd, quick jump) to shell
+if hash zoxide 2> /dev/null; then
+    eval "$(zoxide init zsh)"
+fi
+
 # If not running in nested shell, then show welcome message :)
 if [[ "${SHLVL}" -lt 2 ]] && [[ -z "$SKIP_WELCOME" ]]; then
   welcome
