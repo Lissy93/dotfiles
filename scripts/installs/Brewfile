@@ -67,10 +67,10 @@ brew 'zoxide'       # Auto-learning navigation (better cd)
 brew 'bmon'         # Bandwidth utilization monitor 
 brew 'ctop'         # Container metrics and monitoring
 brew 'bpytop'       # Resource monitoring (like htop)
+brew 'dua-cli'      # Disk usage analyzer and monitor (better du)
 brew 'glances'      # Resource monitor + web and API
 brew 'goaccess'     # Web log analyzer and viewer
 brew 'gping'        # Interactive ping tool, with graph
-brew 'ncdu'         # Disk usage analyzer and monitor (better du)
 brew 'speedtest-cli'# Command line speed test utility
 
 # CLI Productivity Apps
