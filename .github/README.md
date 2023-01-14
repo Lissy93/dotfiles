@@ -613,7 +613,7 @@ Alias | Description
 
 The dotfile installation script can also, detect which system and environemnt you're running, and optionally prompt to update and install listed packages and applications.
 
-Package lists are stored in [`scripts/installs/`](https://github.com/Lissy93/dotfiles/tree/master/installs) directory, with separate files for different OSs. The install script will [pick the appropriate file](https://github.com/Lissy93/dotfiles/blob/22c6a04fdb22c140448b7d15ef8187c3a424ab47/install.sh#L243-L260) based on your distro.
+Package lists are stored in [`scripts/installs/`](https://github.com/Lissy93/dotfiles/tree/master/scripts/installs) directory, with separate files for different OSs. The install script will [pick the appropriate file](https://github.com/Lissy93/dotfiles/blob/22c6a04fdb22c140448b7d15ef8187c3a424ab47/install.sh#L243-L260) based on your distro.
 
 You will be prompted before anything is installed. Be sure to remove / comment out anything you do not need before proceeding.
 
