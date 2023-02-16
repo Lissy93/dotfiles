@@ -34,6 +34,7 @@ flatpak_apps=(
   'org.jitsi.jitsi-meet'      # Encrypted video calls
   'org.mozilla.Thunderbird'   # Email + calendar client
   'org.signal.Signal'         # Private messenger, mobile
+  'im.pidgin.Pidgin'          # Extendable XMPP chat client
   'com.slack.Slack'           # Work and team messaging
   'com.github.eneshecan.WhatsAppForLinux' # WhatApp client
 
@@ -44,10 +45,13 @@ flatpak_apps=(
   'org.gnome.Cheese'          # Webcam client
   'org.libretro.RetroArch'    # Retro game emulation
   'org.videolan.VLC'          # Media player
+  'com.github.johnfactotum.Foliate' # E-book reader
+  'tech.feliciano.pocket-casts' # Podcast client
 
   # Creativity
   'com.ultimaker.cura'        # 3D slicing
   'com.obsproject.Studio'     # Video streaming
+  'com.jgraph.drawio.desktop' # UML + Diagram tool
   'com.transmissionbt.Transmission' # Torrent downloader
   'com.uploadedlobster.peek'  # Screen recorder
   'fr.handbrake.ghb'          # Video transcoder
@@ -60,13 +64,14 @@ flatpak_apps=(
   'org.inkscape.Inkscape'     # Vector editor
   'org.shotcut.Shotcut'       # Video editor
   'org.synfig.SynfigStudio'   # 2D animation
-
+  
   # Software development
   'com.visualstudio.code'     # Extendable IDE
   'com.getpostman.Postman'    # API development
   'cc.arduino.IDE2'           # IOT development
   'com.axosoft.GitKraken'     # GUI git client
   'com.google.AndroidStudio'  # Android dev IDE
+  'flathub org.gnome.GHex'    # Hex and binary inspector
   'io.podman_desktop.PodmanDesktop' # Docker / Podman UI
   
   # Security testing
@@ -76,16 +81,22 @@ flatpak_apps=(
 
   # Settings and system utils
   'com.borgbase.Vorta'        # Borg backup client
+  'org.kde.kleopatra'         # GPG key and certificate manager
+  'io.github.jacalz.rymdport' # Encrypted file transfers, via Wormhole
+  'org.bleachbit.BleachBit'   # Disk cleaner and log remover
+  'it.mijorus.smile'            # Emoji picker
 
-  # Browsers
-  'org.mozilla.firefox'
-  'com.github.Eloston.UngoogledChromium'
-  'com.github.micahflee.torbrowser-launcher'
+  # Browsers and internet
+  'org.mozilla.firefox'       # Firefox web browser (primary)
+  'com.github.Eloston.UngoogledChromium' # Chomium-based borwser (secondary)
+  'com.github.micahflee.torbrowser-launcher' # Tor browser
+  'org.filezillaproject.Filezilla' # FTP client
 
   # Office
   'org.libreoffice.LibreOffice' # Office suite
-  'org.cvfosammmm.Setzer'       # LaTeX editor
-
+  'net.xm1math.Texmaker'        # LaTeX editor
+  'md.obsidian.Obsidian'        # Markdown editor
+  
   # Personal
   'ch.protonmail.protonmail-bridge' # ProtonMail bridge
   'com.belmoussaoui.Authenticator'  # OTP authenticator
