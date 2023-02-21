@@ -95,12 +95,14 @@ alias gj='jump-to-git-root'
 function clone {
   default_service='github.com' # Used if full URL isn't specified
   default_username='lissy93' # Used if repo org / username isn't specified
+  use_ssh=true # Use SSH instead of HTTPS
   user_input=$1
   target=${2:-''}
   # Help flag passed, show manual and exit  
   if [[ $user_input == --help ]] || [[ $user_input == -h ]]; then
-    echo -e 'This will clone a git repo';
-    echo -e 'Either specify repo name, user/repo, or a full URL'
+    echo -e 'This will clone a git repo, and cd into it.';
+    echo -e 'Either specify repo name, oe user/repo, or a full URL.'
+    echo -e 'If no target directory is specified, the repo name will be used.'
     echo -e 'E.g. `$ clone lissy93/dotfiles`'
     return;
   # No input specified, prompt user
@@ -108,7 +110,6 @@ function clone {
     echo 'Enter a user/repo or full URL: ';
     read user_input;
   fi
-  echo "$target"
   # Determine input type, and make clone url
   if [[ $user_input == git@* || $user_input == *://* ]]
   then
@@ -116,10 +117,18 @@ function clone {
     REPO_URL=$user_input;
   elif [[ $user_input == */* ]]; then
     # Username/repo was provided
-    REPO_URL="https://$default_service/$user_input.git";
+    if [ "$use_ssh" = true ] ; then
+      REPO_URL="git@$default_service:$user_input.git";
+    else
+      REPO_URL="https://$default_service/$user_input.git";
+    fi
   else
     # Just repo name was provided
-    REPO_URL="https://$default_service/$default_username/$user_input.git";
+    if [ "$use_ssh" = true ] ; then
+      REPO_URL="git@$default_service:$default_username/$user_input.git";
+    else
+      REPO_URL="https://$default_service/$default_username/$user_input.git";
+    fi
   fi
 
   # Clone repo
@@ -127,6 +136,13 @@ function clone {
   
   # cd into newly cloned directory
   cd "$(basename "$_" .git)"
+
+  # Print results
+  if test "$?" -eq 0; then
+    echo -e "☑️  \033[1;96mCloned $REPO_URL into $(pwd), and cd'd into it.\033[0m"
+  else
+    echo -e "❌ \033[1;91mFailed to clone $REPO_URL\033[0m"
+  fi
 }
 
 # Sync fork against upstream repo

@@ -21,14 +21,8 @@ getConfiguredClient () {
   fi
 }
 
-<<<<<<< HEAD
-## Allows to call the users configured client without if statements everywhere
-httpGet()
-{
-=======
 # Call appropriate http get method
 httpGet() {
->>>>>>> fe6ffbba54ca34778e1f4245466e1efc3394b896
   case "$configuredClient" in
     curl)  curl -A curl -s "$@" ;;
     wget)  wget -qO- "$@" ;;

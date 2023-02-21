@@ -27,7 +27,6 @@ pacman_apps=(
   'aria2'         # Resuming download util (better wget)
   'bat'           # Output highlighting (better cat)
   'broot'         # Interactive directory navigation
-  'cloc'          # Count lines of code in file / dir
   'ctags'         # Indexing of file info + headers
   'diff-so-fancy' # Readable file compares (better diff)
   'duf'           # Get info on mounted disks (better df)
@@ -44,6 +43,7 @@ pacman_apps=(
   'thefuck'       # Auto-correct miss-typed commands
   'tealdeer'      # Reader for command docs (better man)
   'tree'          # Directory listings as tree structure
+  'tokei'         # Count lines of code (better cloc)
   'trash-cli'     # Record and restore removed files
   'xsel'          # Copy paste access to the X clipboard
   'zoxide'        # Auto-learning navigation (better cd)

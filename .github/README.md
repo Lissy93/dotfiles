@@ -59,7 +59,9 @@ This is important, because as a developer, we usually have multiple machines (wo
 
 ### XDG Directories
 
-The location of most config files can be defined using the [XDG base directory specification](https://specifications.freedesktop.org/basedir-spec), which is honored by most apps. This lets you specify where config, log, cache and data files are stored, keeping your top-level home directory free from clutter. You can do this by setting environmental variables, usually within the [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh.zshenv) file.
+The location of config files can usually be defined using the [XDG base directory specification](https://specifications.freedesktop.org/basedir-spec), which is honored by most apps. This lets you specify where config, log, cache and data files are stored, keeping your top-level home directory free from clutter. You can do this by setting environmental variables, usually within the [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh.zshenv) file.
+
+For example, in my setup I've [set these variables](https://github.com/Lissy93/dotfiles/blob/e839ab2d77f0be0d09b4f4ba3503c8b69ad925f3/config/zsh/.zshenv#L6=L10) to:
 
 Variable | Location
 --- | ---
@@ -77,17 +79,21 @@ You can also containerize your dotfiles, meaning with a single command, you can 
 
 This is awesome for a number of reasons: 1) Super minimal dependency installation on the host 2) Blazing fast, as you can pull your built image from a registry, instead of compiling everything locally 3) Cross-platform compatibility, whatever your host OS is, you can always have a familiar Linux system in the container 4) Security, you can control which host resources are accessible within each container
 
-For this, I'm using an Alpine-based Docker container defined in the [`Dockerfile`](https://github.com/Lissy93/dotfiles/blob/master/Dockerfile), to try it out, just run `docker run lissy93/dotfiles`.
+There's several methods of doing this, like having a Docker container or spinning up VMs with a predefined config (with something like [Vagrant](https://www.vagrantup.com/) or a [NixOS](https://nixos.org/)-based config).
 
-Other options could include spinning up VMs with a predefined config, either using something like [Vagrant](https://www.vagrantup.com/) or a [NixOS](https://nixos.org/)-based config.
+I went with an Alpine-based Docker container defined in the [`Dockerfile`](https://github.com/Lissy93/dotfiles/blob/master/Dockerfile). To try it out, just run `docker run lissy93/dotfiles`.
 
 ---
 
 ### Security
 
-Something that is important to keep in mind, is security. Often you may have some personal info included in some of your dotfiles. Before storing anything on the internet, double check there's no sensitive info, SSH keys, API keys or plaintext passwords. If you're using git, then any files you wouldn't want to be commited, can just be listed in your [`.gitignore`](https://git-scm.com/docs/gitignore). If any .gitignore'd files are imported by other files, be sure to check they exist, so you don't get errors when cloning onto a fresh system.
+Something that is important to keep in mind, is security. Often you may have some personal info included in some of your dotfiles. Before storing anything on the internet, double check there's no sensitive info (think SSH keys, API keys or plaintext passwords). There's several solutions for managing sensitve info.
 
-Another solution, is to encrypt sensitive info. A great tool for this is [`pass`](https://www.passwordstore.org/) as it makes GPG-encrypting passwords very easy ([this article](https://www.outcoldman.com/en/archive/2015/09/17/keep-sensitive-data-encrypted-in-dotfiles/) outlines how), or you could also just use plain old GPG (as outlined in [this article](https://www.abdullah.today/encrypted-dotfiles/)).
+The simplest is just to have a [`.gitignore`](https://git-scm.com/docs/gitignore), so no private files get committed. Be sure to make sure your setup doesn't depend on those files though, or you'll get an error while setting up a fresh system.
+
+Another option, is to encrypt sensitive info. A great tool for this is [`pass`](https://www.passwordstore.org/) as it makes GPG-encrypting passwords very easy ([this article](https://www.outcoldman.com/en/archive/2015/09/17/keep-sensitive-data-encrypted-in-dotfiles/) outlines how), or you could also just use plain old GPG (as outlined in [this article](https://www.abdullah.today/encrypted-dotfiles/)).
+
+I went with [git-crypt](https://github.com/AGWA/git-crypt), a GPG-based solution designed specifically for git repos. There's fallback (safe) plaintext versions, to prevent any errors if the GPG keys aren't present.
 
 ---
 
@@ -143,7 +149,7 @@ To learn more, DistroTube made an excellent [video about bare git repos](https:/
 
 #### Dotfile Dependencies
 
-In terms of managing dependencies, using either [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) or [git subtree](https://github.com/git/git/blob/master/contrib/subtree/git-subtree.txt) will let you keep dependencies in your project, while also separate from your own code and easily updatable.
+In terms of managing dependencies, using either [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) or [git subtree](https://github.com/git/git/blob/master/contrib/subtree/git-subtree.txt) will let you keep dependencies in your project, while also separate from your own code and easily updatable. But again, you could do this yourself with a simple script.
 
 
 ---
@@ -156,7 +162,7 @@ By all means feel free to take what you want from mine. I've taken care to ensur
 
 If you're looking for some more example dotfile repos to get you started, I can highly recommend taking a look at: [@holman/dotfiles](https://github.com/holman/dotfiles), [@nickjj/dotfiles](https://github.com/nickjj/dotfiles), [@caarlos0/dotfiles](https://github.com/caarlos0/dotfiles), [@cowboy/dotfiles](https://github.com/cowboy/dotfiles), [@drduh/config](https://github.com/drduh/config).
 
-There's even more to check out at [webpro/awesome-dotfiles](https://github.com/webpro/awesome-dotfiles), [dotfiles.github.io](https://dotfiles.github.io/) and [r/unixporn](https://www.reddit.com/r/unixporn/).
+And for some more inspiration, check out [webpro/awesome-dotfiles](https://github.com/webpro/awesome-dotfiles), [dotfiles.github.io](https://dotfiles.github.io/) and [r/unixporn](https://www.reddit.com/r/unixporn/).
 
 ---
 
@@ -613,7 +619,7 @@ Alias | Description
 
 The dotfile installation script can also, detect which system and environemnt you're running, and optionally prompt to update and install listed packages and applications.
 
-Package lists are stored in [`scripts/installs/`](https://github.com/Lissy93/dotfiles/tree/master/installs) directory, with separate files for different OSs. The install script will [pick the appropriate file](https://github.com/Lissy93/dotfiles/blob/22c6a04fdb22c140448b7d15ef8187c3a424ab47/install.sh#L243-L260) based on your distro.
+Package lists are stored in [`scripts/installs/`](https://github.com/Lissy93/dotfiles/tree/master/scripts/installs) directory, with separate files for different OSs. The install script will [pick the appropriate file](https://github.com/Lissy93/dotfiles/blob/22c6a04fdb22c140448b7d15ef8187c3a424ab47/install.sh#L243-L260) based on your distro.
 
 You will be prompted before anything is installed. Be sure to remove / comment out anything you do not need before proceeding.
 
@@ -654,6 +660,7 @@ The following section lists apps installed for each category:
 - [`jq`](https://github.com/stedolan/jq) - JSON parser
 - [`most`](https://www.jedsoft.org/most/) - Multi-window scroll pager _(better less)_
 - [`procs`](https://github.com/dalance/procs) - Advanced process viewer _(better ps)_
+- [`rip`](https://github.com/nivekuil/rip) - Safe and ergonomic deletion tool _(better rm)_
 - [`ripgrep`](https://github.com/BurntSushi/ripgrep) - Searching within files _(better grep)_
 - [`rsync`](https://rsync.samba.org/) - Fast, incremental file transfer
 - [`scc`](https://github.com/boyter/scc) - Count lines of code _(better cloc)_
@@ -678,6 +685,7 @@ The following section lists apps installed for each category:
 - [`gping`](https://github.com/orf/gping) - Interactive ping tool, with graph
 - [`ncdu`](https://dev.yorhel.nl/ncdu) - Disk usage analyzer and monitor _(better du)_
 - [`speedtest-cli`](https://github.com/sivel/speedtest-cli) - Command line speed test utility
+- [`dog`](https://github.com/ogham/dog)  - DNS lookup client _(better dig)_
 
 </details>
 
@@ -701,6 +709,7 @@ The following section lists apps installed for each category:
 - [`httpie`](https://httpie.io/) - HTTP / API testing testing client
 - [`lazydocker`](https://github.com/jesseduffield/lazydocker) - Full Docker management app
 - [`lazygit`](https://github.com/jesseduffield/lazygit) - Full Git managemtne app
+- [`kdash`](https://github.com/kdash-rs/kdash/) - Kubernetes dashboard app
 
 </details>
 
@@ -1140,3 +1149,29 @@ bash <(curl -s https://raw.githubusercontent.com/Lissy93/dotfiles/master/utils/w
 
 
 ---
+
+---
+
+
+<!-- License + Copyright -->
+<p  align="center">
+  <i>© <a href="https://aliciasykes.com">Alicia Sykes</a> 2022</i><br>
+  <i>Licensed under <a href="https://gist.github.com/Lissy93/143d2ee01ccc5c052a17">MIT</a></i><br>
+  <a href="https://github.com/lissy93"><img src="https://i.ibb.co/4KtpYxb/octocat-clean-mini.png" /></a><br>
+  <sup>Thanks for visiting :)</sup>
+</p>
+
+<!-- Dinosaur -->
+<!-- 
+                        . - ~ ~ ~ - .
+      ..     _      .-~               ~-.
+     //|     \ `..~                      `.
+    || |      }  }              /       \  \
+(\   \\ \~^..'                 |         }  \
+ \`.-~  o      /       }       |        /    \
+ (__          |       /        |       /      `.
+  `- - ~ ~ -._|      /_ - ~ ~ ^|      /- _      `.
+              |     /          |     /     ~-.     ~- _
+              |_____|          |_____|         ~ - . _ _~_-_
+-->
+

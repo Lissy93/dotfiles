@@ -29,6 +29,9 @@
     ${XDG_CONFIG_HOME}/.gitignore_global: config/general/.gitignore_global
     ${XDG_CONFIG_HOME}/.wgetrc: config/general/.wgetrc
 
+    # Desktop Apps
+    ${XDG_CONFIG_HOME}/alacritty.yml: config/desktop-apps/alacritty.yml
+
     # Bash utils
     ${XDG_CONFIG_HOME}/utils: utils
 

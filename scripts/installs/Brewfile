@@ -54,10 +54,10 @@ brew 'most'         # Multi-window scroll pager (better less)
 brew 'procs'        # Advanced process viewer (better ps)
 brew 'ripgrep'      # Searching within files (better grep)
 brew 'rsync'        # Fast incremental file transfer
-brew 'scc'          # Count lines of code (better cloc)
 brew 'sd'           # RegEx find and replace (better sed)
 brew 'thefuck'      # Auto-correct miss-typed commands
 brew 'tldr'         # Community-maintained docs (better man)
+brew 'tokei'        # Count lines of code (better cloc)
 brew 'tree'         # Directory listings as tree structure
 brew 'trash-cli'    # Record and restore removed files
 brew 'watch'        # Run commands periorically
@@ -69,10 +69,10 @@ brew 'bmon'         # Bandwidth utilization monitor
 brew 'ctop'         # Container metrics and monitoring
 brew 'dog'          # DNS lookup client (better dig)
 brew 'bpytop'       # Resource monitoring (like htop)
+brew 'dua-cli'      # Disk usage analyzer and monitor (better du)
 brew 'glances'      # Resource monitor + web and API
 brew 'goaccess'     # Web log analyzer and viewer
 brew 'gping'        # Interactive ping tool, with graph
-brew 'ncdu'         # Disk usage analyzer and monitor (better du)
 brew 'speedtest-cli'# Command line speed test utility
 
 # CLI Productivity Apps

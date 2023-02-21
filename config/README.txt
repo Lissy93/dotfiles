@@ -9,8 +9,10 @@ Run the install.sh script to apply settings based on system type and user prefer
 Important: Take care to read through files thoroughly before applying any changes
 And always make a backup of your pre-existing config files before over-writing them
 
-Full source and documentation: https://github.com/Lissy93/dotfiles
-Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com>
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Source: https://github.com/Lissy93/dotfiles/tree/master/scripts    ┃
+┃ Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com> ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
 ---
 

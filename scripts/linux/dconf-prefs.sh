@@ -1,29 +1,30 @@
 #!/bin/bash
 
 ########################################################################
+# Sets app preferences on Linux via dconf                              #
+########################################################################
 # Uses dconf to apply application preferences on Linux GNOME desktops  #
-# Creates a backup of current settings, then prompt to load new config #
+# Reads source files from ./config/gnome/*.dconf ($DCONF_SOURCE_DIR)   #
+# Creates a backup of current settings, then loads + saves new config  #
 # IMPORTANT: Be sure to read files through thoughouly before executing #
 ########################################################################
 # Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com>   #
 ########################################################################
 
 # Color variables
-PRIMARY_COLOR='\033[1;33m'
-ACCENT_COLOR='\033[0;34m'
-INFO_COLOR='\033[0;30m'
-INFO_COLOR_U='\033[4;30m'
-SUCCESS_COLOR='\033[0;32m'
+PRIMARY_COLOR='\033[1;34m'
+ACCENT_COLOR='\033[0;96m'
 ERROR_COLOR='\033[1;31m'
-WARN_1='\033[1;31m'
-WARN_2='\033[0;31m'
+WARN_COLOR='\033[0;33m'
+SUCCESS_COLOR='\033[0;32m'
 RESET='\033[0m'
 ITAL='\e[3m'
-UNDAL='\e[4m'
 PALE='\e[2m'
-BOLD='\e[1m'
+UNDAL='\e[4m'
 
+# Set config variables
 PARAMS=$*
+FILE_EXT='dconf'
 
 show_help () {
   echo -e "${PRIMARY_COLOR}🐧 Linux Desktop Preferences${RESET_COLOR}\n"\
@@ -32,12 +33,14 @@ show_help () {
   "./config/gnome and applied to the dconf database in  ~/.config/dconf/[user]\n"\
   "Before any changes are made, existing settings are backed up to ~/.cache/dconf-backups/\n"\
   "\n The following applications will be configured:\n"\
+  " - Terminal\n"\
   " - Calculator\n"\
   " - Evolution\n"\
   " - Geddit\n"\
   " - gThumb\n"\
   " - Todo App\n"\
-  "\n${BOLD}⚠ Be sure that you've read and unserstood which changes will be applied before proceeding${RESET}\n"
+  "\n${WARN_COLOR}⚠ Be sure that you've read and unserstood which"\
+  "changes will be applied before proceeding${RESET}\n"
 }
 
 # If --help flag passed in, just show the help menu
@@ -53,7 +56,8 @@ if [[ ! $PARAMS == *"--yes-to-all"* ]]; then
   echo -e "\n${PRIMARY_COLOR}Would you like to proceed? (y/N)${RESET}"
   read -t 15 -n 1 -r
   if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-    echo -e "${ACCENT_COLOR}\nNo worries, nothing will be applied - feel free to come back another time."
+    echo -e "${ACCENT_COLOR}\nNo worries, nothing will be applied"\
+    "- feel free to come back another time."
     echo -e "${PRIMARY_COLOR}Exiting...${RESET}"
     exit 0
   else
@@ -77,7 +81,7 @@ fi
 # Set locations for where to store backups, and where to read new configs from
 DCONF_BACKUP_DIR="${DCONF_BACKUP_DIR:-${XDG_CACHE_HOME}/dconf-backups}"
 DCONF_BACKUP_FILE=${DCONF_BACKUP_FILE:-"backup_"`date +"%Y-%m-%d_%H-%M-%S"`}
-DCONF_SOURCE_DIR="$(cd "$(dirname "$0")" && pwd)/../../config/gnome"
+DCONF_SOURCE_DIR="${DOTFILES_DIR:-"$(cd "$(dirname "$0")" && pwd)/../.."}/config/gnome"
 
 # Create directory to store backups
 DCONF_BACKUP_PATH="${DCONF_BACKUP_DIR}/${DCONF_BACKUP_FILE}"
@@ -106,7 +110,7 @@ apply_dconf () {
   fi
 
   # Check source file exists
-  if [ ! -f "$DCONF_SOURCE_DIR/$dconf_name.toml" ]; then
+  if [ ! -f "$DCONF_SOURCE_DIR/$dconf_name.$FILE_EXT" ]; then
     echo -e "${ERROR_COLOR}⚠ Error, the specified config file for"\
     "'${dconf_name}' doesn't exist in ${DCONF_SOURCE_DIR}${RESET}"
     return
@@ -114,24 +118,24 @@ apply_dconf () {
 
   # Make backup of existing settings
   echo -e "${PRIMARY_COLOR}Applying ${dconf_name} config${RESET}"
-  dconf dump $dconf_key > "${DCONF_BACKUP_PATH}/${dconf_name}.toml"
+  dconf dump $dconf_key > "${DCONF_BACKUP_PATH}/${dconf_name}.$FILE_EXT"
 
   # Apply new settings from file
-  echo -e "${ACCENT_COLOR}✓ ${dconf_name} settings succesfully applies to ${dconf_key}${RESET}"
-  dconf load $dconf_key < $DCONF_SOURCE_DIR/${dconf_name}.toml
+  echo -e "${SUCCESS_COLOR}✓ ${dconf_name} settings succesfully applies to ${dconf_key}${RESET}"
+  dconf load $dconf_key < $DCONF_SOURCE_DIR/${dconf_name}.$FILE_EXT
   
   # Print instructions on reverting changes
-  echo -e "${ACCENT_COLOR}${ITAL}To revert, run $"\
-  "dconf load $dconf_key < $DCONF_BACKUP_PATH/${dconf_name}.toml${RESET}\n"
+  echo -e "${ACCENT_COLOR}${ITAL}${PALE}To revert, run $"\
+  "${UNDAL}dconf load $dconf_key < $DCONF_BACKUP_PATH/${dconf_name}.$FILE_EXT${RESET}\n"
 }
 
 # For the following dconf keys, apply settings in from the specified files
-apply_dconf '/org/gnome/calculator/' 'calculator'
-apply_dconf '/org/gnome/evolution/' 'evolution'
-apply_dconf '/org/gnome/gedit/preferences/' 'gedit'
-apply_dconf '/org/gnome/gthumb/' 'gthumb'
+apply_dconf '/org/gnome/calculator/' 'calculator'   # Apply calculator settings
+apply_dconf '/org/gnome/evolution/' 'evolution'     # Apply Evolution (mail client) settings
+apply_dconf '/org/gnome/gedit/preferences/' 'gedit' # Apply Gedit (text editor) settings
+apply_dconf '/org/gnome/gthumb/' 'gthumb'           # Apply gthumb (image editor) settings
+apply_dconf '/org/gnome/todo/' 'todo'               # Apply todo list app settings
 apply_dconf '/org/gnome/shell/extensions/' 'gnome-extensions'
-apply_dconf '/org/gnome/todo/' 'todo'
 
 # Run update command
 echo -e "\n${PRIMARY_COLOR}Reloading dconf database${RESET}"
