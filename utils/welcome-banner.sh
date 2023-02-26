@@ -41,7 +41,7 @@ function welcome_greeting () {
 function welcome_sysinfo () {
   if hash neofetch 2>/dev/null; then
     neofetch --shell_version off \
-      --disable shell resolution de wm wm_theme theme icons terminal \
+      --disable kernel distro shell resolution de wm wm_theme theme icons terminal \
       --backend off \
       --colors 4 8 4 4 8 6 \
       --color_blocks off \
@@ -51,14 +51,14 @@ function welcome_sysinfo () {
 
 # Print todays info: Date, IP, weather, etc
 function welcome_today () {
-  timeout=0.5
+  timeout=1
   echo -e "\033[1;34mToday\n------"
 
   # Print date time
   echo -e "$COLOR_S$(date '+🗓️  Date: %A, %B %d, %Y at %H:%M')"
 
   # Print local weather
-  curl -s -m $timeout "wttr.in?format=%cWeather:+%C+%t,+%p+%w"
+  curl -s -m $timeout "https://wttr.in?format=%cWeather:+%C+%t,+%p+%w"
   echo -e "${RESET}"
 
   # Print IP address
