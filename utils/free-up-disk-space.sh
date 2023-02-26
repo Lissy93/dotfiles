@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ######################################################################
 # 📊 Free up disk space                                              #
@@ -31,17 +31,40 @@ PLAIN_B='\033[1;37m'
 RESET='\033[0m'
 GREEN='\033[0;32m'
 PURPLE='\033[0;35m'
+PURPLE_B='\033[1;35m'
 
+# Herlper func, to check if a command exists
+function fuds_command_exists () {
+  command -v "$1" &> /dev/null
+}
+
+# Helper func, to check if a file or directory exists
+function fuds_file_or_dir_exists () {
+  [ -e "$1" ]
+}
+
+# Helper func, to detect if running on a Mac
+function fuds_is_macos () {
+  fuds_command_exists "sw_vers"
+}
+
+# Prints the title
+function fuds_print_title () {
+  echo -e "${GREEN_B}"
+  if fuds_command_exists "figlet" ; then
+    figlet "Free Up Disk Space"
+  else
+    echo "Free Up Disk Space"
+  fi
+  echo -e "${RESET}"
+}
+
+# Finds and outputs used, total and free disk space
 function fuds_check_space () {
-  convert_to_gb() { echo "$(($1/1048576))" ; }
-  storage_used="$(df --output=used / | tail -n 1)"
-  storage_free="$(df --output=avail / | tail -n 1)"
-  storage_total="$(($storage_used + $storage_free))"
-  math_str="${storage_used} / ${storage_total} * 100"
-  storage_percent="$(echo "${math_str}" |  bc -l)"
-  echo "Disk ${storage_percent%%.*}% full"
-  echo "You're using $(convert_to_gb $storage_used) GB out of $(convert_to_gb $storage_total) GB."\
-  "($(convert_to_gb $storage_free) GB free)."
+  diskMsg=$(df -H | awk '$NF=="/"{
+  printf("You'\''re using %sB out of %sB total\n", $3, $2) }')
+  diskMsg2=$(df -H | awk '$NF=="/"{ printf("There'\''s %sB of free space remaining\n", $4) }')
+  echo -e "$PURPLE_B$diskMsg$PURPLE\n$diskMsg2$RESET"
 }
 
 function fuds_clean_pacman () {
@@ -103,10 +126,11 @@ function fuds_remove_broken () {
 }
 
 function fuds_show_help () {
-  echo "Usage: free-up-disk-space [OPTION]"
-  echo "Free up disk space on *nix based systems"
-  echo ""
-  echo "Options:"
+  fuds_print_title
+
+  echo -e "${PURPLE_B}Free up disk space on *nix based systems\n"
+  echo -e "Usage:${PURPLE} free-up-disk-space [OPTION]"
+  echo -e "${PURPLE_B}Options:${PURPLE}"
   echo "  -h, --help    Show this help message"
   echo "  -r, --run     Run all tasks"
   echo "  -p, --pacman  Clean pacman cache and remove orphaned packages"
@@ -119,69 +143,89 @@ function fuds_show_help () {
   echo "  -d, --dups    Find and delete duplicated files"
   echo "  -b, --broken  Remove broken symlinks and empty files + folders"
   echo ""
-  echo "Examples:"
+  echo -e "${PURPLE_B}Examples:${PURPLE}"
   echo "  free-up-disk-space -r"
   echo "  free-up-disk-space -p -f -a -s -j -t -c -d -b"
 }
 
 function free_up_disk_space () {
+
+  # Print title
+  fuds_print_title
+
   # Check available disk space
   fuds_check_space
   
   # Prompt to clean pacman cache
-  echo -e "\n${CYAN_B}Would you like to clean pacman cache? (y/N)${RESET}"
-  read -n 1 -r ans_clean_pacman
-  if [[ $ans_clean_pacman =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
-    fuds_clean_pacman
+  if fuds_command_exists "pacman" ; then
+    echo -e "\n${CYAN_B}Would you like to clean pacman cache? (y/N)${RESET}"
+    read -n 1 -r ans_clean_pacman
+    if [[ $ans_clean_pacman =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
+      fuds_clean_pacman
+    fi
   fi
 
   # Prompt to remove unused Flatpak packages
-  echo -e "\n${CYAN_B}Would you like to remove unused Flatpak packages? (y/N)${RESET}"
-  read -n 1 -r ans_clean_flatpak
-  if [[ $ans_clean_flatpak =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
-    fuds_clean_flatpak
+  if fuds_command_exists "flatpak" ; then
+    echo -e "\n${CYAN_B}Would you like to remove unused Flatpak packages? (y/N)${RESET}"
+    read -n 1 -r ans_clean_flatpak
+    if [[ $ans_clean_flatpak =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
+      fuds_clean_flatpak
+    fi
   fi
 
   # Prompt to remove obsolete packages
-  echo -e "\n${CYAN_B}Would you like to remove obsolete packages? (y/N)${RESET}"
-  read -n 1 -r ans_clean_apt
-  if [[ $ans_clean_apt =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
-    fuds_clean_apt
+  if fuds_command_exists "apt" ; then
+    echo -e "\n${CYAN_B}Would you like to remove obsolete packages? (y/N)${RESET}"
+    read -n 1 -r ans_clean_apt
+    if [[ $ans_clean_apt =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
+      fuds_clean_apt
+    fi
   fi
 
   # Prompt to remove disabled snaps
-  echo -e "\n${CYAN_B}Would you like to remove disabled snaps? (y/N)${RESET}"
-  read -n 1 -r ans_remove_dead_snaps
-  if [[ $ans_remove_dead_snaps =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
-    fuds_remove_dead_snaps
+  if fuds_command_exists "snap" ; then
+    echo -e "\n${CYAN_B}Would you like to remove disabled snaps? (y/N)${RESET}"
+    read -n 1 -r ans_remove_dead_snaps
+    if [[ $ans_remove_dead_snaps =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
+      fuds_remove_dead_snaps
+    fi
   fi
 
   # Prompt to configure journal logs
-  echo -e  "\n${CYAN_B}Would you like to configure journal logs? (y/N)${RESET}"
-  read -n 1 -r ans_journal_configure
-  if [[ $ans_journal_configure =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
-    fuds_journal_configure
+  if fuds_command_exists "journalctl" ; then
+    echo -e "\n${CYAN_B}Would you like to configure journal logs? (y/N)${RESET}"
+    read -n 1 -r ans_journal_configure
+    if [[ $ans_journal_configure =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
+      fuds_journal_configure
+    fi
   fi
 
   # Prompt to empty trash
-  echo -e "\n${CYAN_B}Would you like to empty trash? (y/N)${RESET}"
-  read -n 1 -r ans_empty_trash
-  if [[ $ans_empty_trash =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
-    fuds_empty_trash
+  if fuds_file_or_dir_exists "$HOME/.local/share/Trash" ; then
+    echo -e "\n${CYAN_B}Would you like to empty trash? (y/N)${RESET}"
+    read -n 1 -r ans_empty_trash
+    if [[ $ans_empty_trash =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
+      fuds_empty_trash
+    fi
   fi
 
   # Prompt to remove thumbnails and other caches
-  echo -e "\n${CYAN_B}Would you like to remove thumbnails and other caches? (y/N)${RESET}"
-  read -n 1 -r ans_clear_caches
-  if [[ $ans_clear_caches =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
-    fuds_clear_caches
+  if fuds_file_or_dir_exists "$HOME/.cache/thumbnails" ; then
+    echo -e "\n${CYAN_B}Would you like to remove thumbnails and other caches? (y/N)${RESET}"
+    read -n 1 -r ans_clear_caches
+    if [[ $ans_clear_caches =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
+      fuds_clear_caches
+    fi
   fi
 
   # Prompt to find and delete duplicated files
-  echo -e "\n${CYAN_B}Would you like to find and delete duplicated files? (y/N)${RESET}"
-  read -n 1 -r ans_remove_duplicates
-  if [[ $ans_remove_duplicates =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
-    fuds_remove_duplicates
+  if fuds_command_exists "fdupes" ; then
+    echo -e "\n${CYAN_B}Would you like to find and delete duplicated files? (y/N)${RESET}"
+    read -n 1 -r ans_remove_duplicates
+    if [[ $ans_remove_duplicates =~ ^[Yy]$ ]] || [[ $AUTO_YES = true ]] ; then
+      fuds_remove_duplicates
+    fi
   fi
 
   # Prompt to remove broken symlinks and empty files + folders
@@ -192,37 +236,38 @@ function free_up_disk_space () {
   fi
 }
 
+function fuds_start () {
+    # Show help menu
+  if [[ $@ == *"--help"* ]]; then
+    fuds_show_help
+  elif [ -z $@ ] || [[ $@ == *"--run"* ]]; then
+    # Begin the guided process
+    free_up_disk_space
+  else
+    # Run specific tasks, based on which flags are present
+    if [[ $@ == *"--pacman"* ]]; then fuds_clean_pacman; fi
+    if [[ $@ == *"--flatpak"* ]]; then fuds_clean_flatpak; fi
+    if [[ $@ == *"--apt"* ]]; then fuds_clean_apt; fi
+    if [[ $@ == *"--snaps"* ]]; then fuds_remove_dead_snaps; fi
+    if [[ $@ == *"--journal"* ]]; then fuds_journal_configure; fi
+    if [[ $@ == *"--trash"* ]]; then fuds_empty_trash; fi
+    if [[ $@ == *"--caches"* ]]; then fuds_clear_caches; fi
+    if [[ $@ == *"--dups"* ]]; then fuds_remove_duplicates; fi
+    if [[ $@ == *"--broken"* ]]; then fuds_remove_broken; fi
+  fi
+  # New line and reset afterwards
+  echo -e "\n${RESET}"
+}
+
 # Determine if file is being run directly or sourced
 ([[ -n $ZSH_EVAL_CONTEXT && $ZSH_EVAL_CONTEXT =~ :file$ ]] || 
   [[ -n $KSH_VERSION && $(cd "$(dirname -- "$0")" &&
     printf '%s' "${PWD%/}/")$(basename -- "$0") != "${.sh.file}" ]] || 
   [[ -n $BASH_VERSION ]] && (return 0 2>/dev/null)) && sourced=1 || sourced=0
 
-# If script being called directly, invoke transfer or show help
+# Either start now (if exectuted directly) or export the function (if sourced)
 if [ $sourced -eq 0 ]; then
-  if [[ $@ == *"--help"* ]]; then
-    fuds_show_help
-  elif [[ $@ == *"--pacman"*]]; then
-    fuds_clean_pacman
-  elif [[ $@ == *"--flatpak"*]]; then
-    fuds_clean_flatpak
-  elif [[ $@ == *"--apt"*]]; then
-    fuds_clean_apt
-  elif [[ $@ == *"--snaps"*]]; then
-    fuds_remove_dead_snaps
-  elif [[ $@ == *"--journal"*]]; then
-    fuds_journal_configure
-  elif [[ $@ == *"--trash"*]]; then
-    fuds_empty_trash
-  elif [[ $@ == *"--caches"*]]; then
-    fuds_clear_caches
-  elif [[ $@ == *"--dups"*]]; then
-    fuds_remove_duplicates
-  elif [[ $@ == *"--broken"*]]; then
-    fuds_remove_broken
-  elif [[ $@ == *"--run"*]]; then
-    free_up_disk_space
-  else
-    free_up_disk_space
-  fi
+  fuds_start $@
+else
+  alias free-up-disk-space='fuds_start $@'
 fi

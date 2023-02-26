@@ -23,6 +23,7 @@ tap 'browsh-org/homebrew-browsh'
 tap 'espanso/espanso'
 tap 'jesseduffield/lazygit'
 tap 'koekeishiya/formulae'
+tap 'kdash-rs/kdash'
 
 #############################################################
 # Command Line                                              #
@@ -66,6 +67,7 @@ brew 'zoxide'       # Auto-learning navigation (better cd)
 # CLI Monitoring and Performance Apps
 brew 'bmon'         # Bandwidth utilization monitor 
 brew 'ctop'         # Container metrics and monitoring
+brew 'dog'          # DNS lookup client (better dig)
 brew 'bpytop'       # Resource monitoring (like htop)
 brew 'dua-cli'      # Disk usage analyzer and monitor (better du)
 brew 'glances'      # Resource monitor + web and API
@@ -78,6 +80,8 @@ brew 'aspell'       # Spell check
 brew 'browsh'       # Web browser, in terminal
 brew 'buku'         # Bookmark manager
 brew 'cmus'         # Music player
+brew 'cointop'      # Crypto prices and portfolio
+brew 'ddgr'         # Web search, via DuckDuckGo
 brew 'khal'         # Calendar client
 brew 'mutt'         # Email client
 brew 'newsboat'     # RSS / ATOM reader
@@ -89,6 +93,7 @@ brew 'task'         # Todo + task management
 brew 'httpie'       # HTTP / API testing testing client
 brew 'lazydocker'   # Full Docker management app
 brew 'lazygit'      # Full Git managemtne app
+brew 'kdash'        # Kubernetes management
 
 # CLI External Sercvices
 cask 'ngrok'        # Reverse proxy for sharing localhost

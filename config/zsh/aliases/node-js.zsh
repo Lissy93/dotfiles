@@ -69,9 +69,13 @@ alias yarn-nuke='reinstall_modules'
 # Prints out versions of core Node.js packages
 print_node_versions () {
   versions=''
+  format_verion_number () {
+    echo "$($1 --version 2>&1 | head -n 1 | sed 's/[^0-9.]*//g')"
+  }
+
   get_version () {
     if hash $1 2> /dev/null || command -v $1 >/dev/null; then
-      versions="$versions\e[36m\e[1m $2: \033[0m$($1 --version)\n\033[0m"
+      versions="$versions\e[36m\e[1m $2: \033[0m$(format_verion_number $1) \n\033[0m"
     else
       versions="$versions\e[33m\e[1m $2: \033[0m\033[3m Not installed\n\033[0m"
     fi
@@ -84,6 +88,11 @@ print_node_versions () {
   get_version 'npm' 'NPM'
   get_version 'yarn' 'Yarn'
   get_version 'nvm' 'NVM'
+  get_version 'ni' 'ni'
+  get_version 'pnpm' 'pnpm'
+  get_version 'tsc' 'TypeScript'
+  get_version 'bun' 'Bun'
+  get_version 'deno' 'Deno'
   get_version 'git' 'Git'
   echo -e $versions
 }
