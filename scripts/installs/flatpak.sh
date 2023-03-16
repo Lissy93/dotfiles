@@ -88,7 +88,7 @@ flatpak_apps=(
 
   # Browsers and internet
   'org.mozilla.firefox'       # Firefox web browser (primary)
-  'com.github.Eloston.UngoogledChromium' # Chomium-based borwser (secondary)
+  'com.github.Eloston.UngoogledChromium' # Chromium-based borwser (secondary)
   'com.github.micahflee.torbrowser-launcher' # Tor browser
   'org.filezillaproject.Filezilla' # FTP client
 

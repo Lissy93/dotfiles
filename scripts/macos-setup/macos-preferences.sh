@@ -10,7 +10,7 @@
 # Options:                                                                   #
 #   --silent     - Don't log any status outputs                              #
 #   --skip-intro - Skip the warning and intro section                        #
-#   --yes-to-all - Don't ptompt user to agree to changes                     #
+#   --yes-to-all - Don't prompt user to agree to changes                     #
 #                                                                            #
 # Licensed under MIT -  (C) Alicia Sykes 2022 <https://aliciasykes.com>      #
 ##############################################################################
@@ -241,7 +241,7 @@ sudo pmset -b sleep 30
 log_msg "Set system to not sleep automatically when on mains power"
 sudo pmset -c sleep 0
 
-log_msg "Require password immediatley after sleep or screensaver"
+log_msg "Require password immediately after sleep or screensaver"
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
 
@@ -262,7 +262,7 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo Hos
 ##############################
 log_section "Sound and Display"
 
-log_msg "Increase sound quality for Bluetooth devivces"
+log_msg "Increase sound quality for Bluetooth devices"
 defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
 
 log_msg "Enable subpixel font rendering on non-Apple LCDs"
@@ -406,7 +406,7 @@ defaults write com.apple.dock launchanim -bool true
 log_msg "Set opening animation speed"
 defaults write com.apple.dock expose-animation-duration -float 1
 
-log_msg "Disable auntomatic rearanging of spaces"
+log_msg "Disable auntomatic rearranging of spaces"
 defaults write com.apple.dock mru-spaces -bool false
 
 log_msg "Set dock to auto-hide by default"

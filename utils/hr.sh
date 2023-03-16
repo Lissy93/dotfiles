@@ -38,7 +38,7 @@ hr() {
     printf '%s' "${PWD%/}/")$(basename -- "$0") != "${.sh.file}" ]] || 
  [[ -n $BASH_VERSION ]] && (return 0 2>/dev/null)) && sourced=1 || sourced=0
 
-# Either instantiate immediatley, or set alias for later
+# Either instantiate immediately, or set alias for later
 if [ $sourced -eq 0 ]; then
   [ "$0" == "$BASH_SOURCE" ] && hr "$@"
 else

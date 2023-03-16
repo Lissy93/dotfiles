@@ -1,7 +1,7 @@
 #!/bin/sh -
 # Quick utility to aid in keeping clutter down in the $HOME directory
 # Lists statistics about number of files, auto-cleans certain files,
-# and prompts user wheather they'd like to each remaining dotfile in turn
+# and prompts user whether they'd like to each remaining dotfile in turn
 
 set -u
 

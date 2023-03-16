@@ -83,7 +83,7 @@ function welcome() {
     printf '%s' "${PWD%/}/")$(basename -- "$0") != "${.sh.file}" ]] || 
   [[ -n $BASH_VERSION ]] && (return 0 2>/dev/null)) && sourced=1 || sourced=0
 
-# If script being called directly run immediatley
+# If script being called directly run immediately
 if [ $sourced -eq 0 ]; then
   welcome $@
 fi

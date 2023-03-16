@@ -5,7 +5,7 @@
 ################################################################
 # Installs listed packages on Arch-based systems via Pacman    #
 # Also updates the cache database and existing applications    #
-# Confirms apps arn't installed via different package manager  #
+# Confirms apps aren't installed via different package manager #
 # Doesn't include desktop apps, that're managed via Flatpak    #
 # Apps are sorted by category, and arranged alphabetically     #
 # Be sure to delete / comment out anything you do not need     #
@@ -69,7 +69,7 @@ pacman_apps=(
   # CLI Fun
   'cowsay'        # Outputs message with ASCII art cow
   'figlet'        # Outputs text as 3D ASCII word art
-  'lolcat'        # Rainbow coloured terminal output
+  'lolcat'        # Rainbow colored terminal output
   'neofetch'      # Show off distro and system info
 )
 

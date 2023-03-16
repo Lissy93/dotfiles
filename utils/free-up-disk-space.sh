@@ -5,7 +5,7 @@
 ######################################################################
 # Series of commands for freeing up disk space on *nix based systems #
 # Will ask for user permission before executing or deleting anything #
-# Info about current disk usage, and recomendations is printed prior #
+# Info about current disk usage and recommendations is printed prior #
 # Tasks are split into 3 categories: recommended, optional, hardcore #
 #                                                                    #
 # Includes the following tasks:                                      #
@@ -13,7 +13,7 @@
 # - Removing orphaned and unused packages and binaries               #
 # - Setting logging preferences and removing old logs                #
 # - Removing local cache files for the current user                  #
-# - Deleting broken symlinks and empty files + folers                #
+# - Deleting broken symlinks and empty files + folder                #
 # - Finding and deleting duplicated large files                      #
 #                                                                    #
 # IMPORTANT: Before running, read through everything very carefully! #
@@ -265,7 +265,7 @@ function fuds_start () {
     printf '%s' "${PWD%/}/")$(basename -- "$0") != "${.sh.file}" ]] || 
   [[ -n $BASH_VERSION ]] && (return 0 2>/dev/null)) && sourced=1 || sourced=0
 
-# Either start now (if exectuted directly) or export the function (if sourced)
+# Either start now (if executed directly) or export the function (if sourced)
 if [ $sourced -eq 0 ]; then
   fuds_start $@
 else
