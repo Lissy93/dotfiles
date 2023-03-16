@@ -13,7 +13,7 @@
 # - Removing orphaned and unused packages and binaries               #
 # - Setting logging preferences and removing old logs                #
 # - Removing local cache files for the current user                  #
-# - Deleting broken symlinks and empty files + folder                #
+# - Deleting broken symlinks and empty files + folders               #
 # - Finding and deleting duplicated large files                      #
 #                                                                    #
 # IMPORTANT: Before running, read through everything very carefully! #
