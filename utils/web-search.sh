@@ -5,7 +5,7 @@
 # Bash functions for launching a web search  #
 #                                            #
 # Usage:                                     #
-# -Either source this file, or run directley #
+# -Either source this file, or run directly  #
 # -Run with --help for full list of options  #
 #                                            #
 # Licensed under MIT, (C) Alicia Sykes 2022  #
@@ -95,7 +95,7 @@ ws_grepapp() {
   ws_make_search 'https://grep.app/search?q=' $@
 }
 
-# Lists availible search options
+# Lists available search options
 web_search() {
   # If help flag specified, show help
   [[ $@ == *"--help"* || $@ == "help" ]] && show_ws_help && return

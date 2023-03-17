@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##############################################################################
-# Security improvments for Mac OS systems                                    #
+# Security improvements for Mac OS systems                                   #
 # Covers Siri, firewall, account security, connections and network protocols #
 #                                                                            #
 # CAUTION: This script will apply changes to your OS X system configuration  #
@@ -10,7 +10,7 @@
 # Options:                                                                   #
 #   --silent     - Don't log any status outputs                              #
 #   --skip-intro - Skip the warning and intro section                        #
-#   --yes-to-all - Don't ptompt user to agree to changes                     #
+#   --yes-to-all - Don't prompt user to agree to changes                     #
 #                                                                            #
 # Licensed under MIT -  (C) Alicia Sykes 2022 <https://aliciasykes.com>      #
 ##############################################################################
@@ -79,8 +79,7 @@ if [[ ! $params == *"--skip-intro"* ]]; then
       echo -e "${PRIMARY_COLOR}Exiting...${RESET_COLOR}"
       exit 0
     fi
-  fi
-  
+  fi  
 fi
 
 # Check have got admin privilages
@@ -158,12 +157,11 @@ defaults write com.apple.finder ShowPathbar -bool true
 log_msg "Display full POSIX path as Finder window title"
 defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
-log_msg "Expand the General, Open and Privlages file info panes"
+log_msg "Expand the General, Open and Privileges file info panes"
 defaults write com.apple.finder FXInfoPanesExpanded -dict \
 	General -bool true \
 	OpenWith -bool true \
 	Privileges -bool true
-
 
 log_msg "Keep directories at top of search results"
 defaults write com.apple.finder _FXSortFoldersFirst -bool true
@@ -327,7 +325,7 @@ defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -stri
 log_msg "Sort by newest to oldest"
 defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "yes"
 
-log_msg "Disable inline attatchment viewing"
+log_msg "Disable inline attachment viewing"
 defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
 
 ################
@@ -493,7 +491,7 @@ defaults write org.m0k.transmission RandomPort -bool true
 # Restart affected applications #
 #################################
 log_section "Finishing Up"
-log_msg "Restarting afffecting apps"
+log_msg "Restarting affecting apps"
 for app in "Activity Monitor" \
 	"Address Book" \
 	"Calendar" \

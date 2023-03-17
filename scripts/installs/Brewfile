@@ -92,7 +92,7 @@ brew 'task'         # Todo + task management
 # CLI Development Suits
 brew 'httpie'       # HTTP / API testing testing client
 brew 'lazydocker'   # Full Docker management app
-brew 'lazygit'      # Full Git managemtne app
+brew 'lazygit'      # Full Git management app
 brew 'kdash'        # Kubernetes management
 
 # CLI External Sercvices
@@ -104,7 +104,7 @@ brew 'navi'         # Browse, search, read cheat sheets
 # CLI Fun
 brew 'cowsay'       # Have an ASCII cow say your message
 brew 'figlet'       # Output text as big ASCII art text
-brew 'lolcat'       # Make console output raibow colored
+brew 'lolcat'       # Make console output rainbow colored
 brew 'neofetch'     # Show system data and ditstro info
 brew 'pipes-sh'     # Cool terminal pipe screen saver
 brew 'pv'           # Pipe viewer, with animation options
@@ -130,7 +130,7 @@ brew 'luarocks'       # Package manager for Lua
 brew 'node'           # Node.js
 brew 'nvm'            # Switching node versions
 brew 'openjdk'        # Java development kit
-brew 'python'         # Python interpriter
+brew 'python'         # Python interpreter
 brew 'rust'           # Rust language
 cask 'android-sdk'    # Android software dev kit
 
@@ -141,14 +141,14 @@ brew 'docker'         # Containers
 # Development Utils
 brew 'gh'             # Interact with GitHub PRs, issues, repos
 brew 'git-extras'     # Extra git commands for common tasks
-brew 'scrcpy'         # Display and control Andrdroid devices
+brew 'scrcpy'         # Display and control Android devices
 brew 'terminal-notifier' # Trigger Mac notifications from terminal
 brew 'tig'            # Text-mode interface for git
 brew 'ttygif'         # Generate GIF from terminal commands + output
 brew 'watchman'       # Watch for changes and reload dev server
 
 # Network and Security Testing
-brew 'bettercap'      # Network, scanning and moniroting
+brew 'bettercap'      # Network, scanning and monitoring
 brew 'nmap'           # Port scanning
 brew 'wrk'            # HTTP benchmarking
 cask 'burp-suite'     # Web security testing
@@ -226,7 +226,7 @@ cask 'webpquicklook',  args: { require_sha: false } # QL for WebP image files
 
 # Mac OS Mods and Imrovments
 cask 'alt-tab'        # Much better alt-tab window switcher
-cask 'anybar'         # Custom programatic menubar icons
+cask 'anybar'         # Custom programmatic menubar icons
 cask 'copyq'          # Clipboard manager (cross platform)
 cask 'espanso'        # Live text expander (cross-platform)
 cask 'finicky'        # Website-specific default browser
