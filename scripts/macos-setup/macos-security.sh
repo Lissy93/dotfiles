@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##############################################################################
-# Security improvments for Mac OS systems                                    #
+# Security improvements for Mac OS systems                                   #
 # Covers Siri, firewall, account security, connections and network protocols #
 #                                                                            #
 # CAUTION: This script will apply changes to your OS X system configuration  #
@@ -10,7 +10,7 @@
 # Options:                                                                   #
 #   --silent     - Don't log any status outputs                              #
 #   --skip-intro - Skip the warning and intro section                        #
-#   --yes-to-all - Don't ptompt user to agree to changes                     #
+#   --yes-to-all - Don't prompt user to agree to changes                     #
 #                                                                            #
 # Licensed under MIT -  (C) Alicia Sykes 2022 <https://aliciasykes.com>      #
 ##############################################################################

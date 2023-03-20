@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Utilities for checking terminal color support, and printing color pallete
+# Utilities for checking terminal color support, and printing color palette
 
 TEXT_COL="\033[1;30m"
 RESET='\033[0m'
@@ -37,7 +37,7 @@ function color_chooser () {
     printf '%s' "${PWD%/}/")$(basename -- "$0") != "${.sh.file}" ]] || 
   [[ -n $BASH_VERSION ]] && (return 0 2>/dev/null)) && sourced=1 || sourced=0
 
-# If script being called directly run immediatley, otherwise register aliases
+# If script being called directly run immediately, otherwise register aliases
 if [ $sourced -eq 0 ]; then
   check_color_support
   color_map_16_bit

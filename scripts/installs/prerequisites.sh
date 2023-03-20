@@ -5,7 +5,7 @@
 ######################################################################
 # Installs essential pre-requsite packages, when using new systems   #
 # Intended to be run before install.sh, if packages not yet present. #
-# All other package inatslls are managed in system-specific scripts  #
+# All other package installs are managed in system-specific scripts  #
 # For docs and more info, see: https://github.com/lissy93/dotfiles   #
 # IMPORTANT: Before running, read through everything very carefully! #
 ######################################################################
@@ -29,7 +29,7 @@ RESET='\033[0m'
 function print_usage () {
   echo -e "${PURPLE}Prerequisite Dependency Installation Script${LIGHT}\n"\
   "There's a few packages that are needed in order to continue with setting up dotfiles.\n"\
-  "This script will detect distro, and use appropriate package manager to install apps.\n"\
+  "This script will detect distro and use appropriate package manager to install apps.\n"\
   "Elavated permissions may be required. Ensure you've read the script before proceeding."\
   "\n${RESET}"
 }
