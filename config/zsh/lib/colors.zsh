@@ -13,11 +13,11 @@ fi
 
 
 # Add auto color to certain commands
-alias vdir="vdir --color=auto"      # Colorize 'vdir' command.
-alias grep="grep --color=auto -i"   # Colorize 'grep' command and ignore case.
-alias fgrep="grep --color=auto -i"  # Colorize 'fgrep' command and ignore case.
-alias egrep="grep --color=auto -i"  # Colorize 'egrep' command and ignore case.
-alias diff="diff --color=auto"      # Colorize 'diff' command.
+# alias vdir="vdir --color=auto"      # Colorize 'vdir' command.
+# alias grep="grep --color=auto -i"   # Colorize 'grep' command and ignore case.
+# alias fgrep="grep --color=auto -i"  # Colorize 'fgrep' command and ignore case.
+# alias egrep="grep --color=auto -i"  # Colorize 'egrep' command and ignore case.
+# alias diff="diff --color=auto"      # Colorize 'diff' command.
 
 # Color strings for basic file types
 # FILE 01;34 # regular file
