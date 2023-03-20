@@ -112,7 +112,6 @@ alias npmp='npm publish'
 # Location of NVM, will inherit from .zshenv if set
 NVM_DIR=${NVM_DIR:-$XDG_DATA_HOME/nvm}
 
-
 # On first time using Node command, import NVM if present and not yet sourced
 function source_nvm node npm yarn $NVM_LAZY_CMD {
   if [ -f "$NVM_DIR/nvm.sh" ] && ! which nvm &> /dev/null; then
@@ -170,13 +169,13 @@ launch-url() {
     echo -e "\033[1;96m🌐 URL: \033[0;96m\e[4m$1\e[0m"
     return;
   fi
-  echo $open_command
+  echo $open_command $1
 }
 
 # Open Node.js docs, either specific page or show all
 function node-docs {
   local section=${1:-all}
-  launch-url "https://nodejs.org/docs/$(node --version)/api/$section.html"
+  $(launch-url "https://nodejs.org/docs/$(node --version)/api/$section.html")
 }
 
 # Launches npmjs.com on the page of a specific module
@@ -192,7 +191,7 @@ open-npm () {
   # Print messages
   echo -e "\033[1;96m📦 Opening in browser: \033[0;96m\e[4m$npm_url\e[0m"
   # And launch!
-  launch-url $npm_url
+  $(launch-url $npm_url)
 }
 
 alias npmo='open-npm'
