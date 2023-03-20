@@ -114,7 +114,7 @@ web_search() {
   # Otherwise show menu input for search engines
   choices=(
     duckduckgo wikipedia google github stackoverflow
-    wolframalpha reddit maps 'help' quit
+    wolframalpha reddit maps grepapp 'help' quit
     )
   PS3='❯ '
   echo -e "\033[1;95mSelect a Search Option\033[0;35m"
@@ -129,11 +129,12 @@ web_search() {
       reddit) ws_reddit $@; return;;
       maps) ws_maps $@; return;;
       grepapp) ws_grepapp $@; return;;
-      help) show_ws_help;;
-      quit) break ;;
+      help) show_ws_help; break;;
+      quit) echo -e "\033[0;93mBye 👋\e[0m"; break ;;
       *)
         echo -e "\033[0;93mInvalid option: '$REPLY'\e[0m"
         echo -e "\033[0;33mEnter the number corresponding to one of the above options\e[0m"
+        break
       ;;
     esac
   done
@@ -183,7 +184,7 @@ show_ws_help() {
   echo -e '  \033[0;35mReddit: \x1b[2m$ ws reddit or ($ wsrdt)\e[0m'
   echo -e '  \033[0;35mMaps: \x1b[2m$ ws maps or ($ wsmap)\e[0m'
   echo -e '  \033[0;35mGoogle: \x1b[2m$ ws google or ($ wsggl)\e[0m'
-  echo -e '  \033[0;35mGoogle: \x1b[2m$ ws grepapp or ($ wsgra)\e[0m'
+  echo -e '  \033[0;35mGrep.App: \x1b[2m$ ws grepapp or ($ wsgra)\e[0m'
   echo -e '\e[0m'
 }
 

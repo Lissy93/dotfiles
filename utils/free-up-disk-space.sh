@@ -50,7 +50,7 @@ function fuds_is_macos () {
 
 # Prints the title
 function fuds_print_title () {
-  echo -e "${GREEN_B}"
+  echo -e "${CYAN_B}"
   if fuds_command_exists "figlet" ; then
     figlet "Free Up Disk Space"
   else
@@ -129,7 +129,7 @@ function fuds_show_help () {
   fuds_print_title
 
   echo -e "${PURPLE_B}Free up disk space on *nix based systems\n"
-  echo -e "Usage:${PURPLE} free-up-disk-space [OPTION]"
+  echo -e "Usage:${PURPLE} free-up-disk-space [OPTION]\n"
   echo -e "${PURPLE_B}Options:${PURPLE}"
   echo "  -h, --help    Show this help message"
   echo "  -r, --run     Run all tasks"
@@ -144,8 +144,14 @@ function fuds_show_help () {
   echo "  -b, --broken  Remove broken symlinks and empty files + folders"
   echo ""
   echo -e "${PURPLE_B}Examples:${PURPLE}"
-  echo "  free-up-disk-space -r"
+  echo "  free-up-disk-space"
   echo "  free-up-disk-space -p -f -a -s -j -t -c -d -b"
+  echo "  free-up-disk-space --apt --snap --auto-yes"
+  echo ""
+  echo -e "${PURPLE_B}Note:"
+  echo -e "  ${PURPLE}Some methods are not available for all operating systems"
+  echo -e "  By default, it will automatically detect which options are available"
+  echo -e "  You will be prompted before any changes are made (unless --auto-yes is used)${RESET}"
 }
 
 function free_up_disk_space () {
@@ -240,20 +246,20 @@ function fuds_start () {
     # Show help menu
   if [[ $@ == *"--help"* ]]; then
     fuds_show_help
-  elif [ -z $@ ] || [[ $@ == *"--run"* ]]; then
+  elif [ -z $@ ] || [[ $@ == *"--run"* ]] || [[ $@ == *"-r"* ]]; then
     # Begin the guided process
     free_up_disk_space
   else
     # Run specific tasks, based on which flags are present
-    if [[ $@ == *"--pacman"* ]]; then fuds_clean_pacman; fi
-    if [[ $@ == *"--flatpak"* ]]; then fuds_clean_flatpak; fi
-    if [[ $@ == *"--apt"* ]]; then fuds_clean_apt; fi
-    if [[ $@ == *"--snaps"* ]]; then fuds_remove_dead_snaps; fi
-    if [[ $@ == *"--journal"* ]]; then fuds_journal_configure; fi
-    if [[ $@ == *"--trash"* ]]; then fuds_empty_trash; fi
-    if [[ $@ == *"--caches"* ]]; then fuds_clear_caches; fi
-    if [[ $@ == *"--dups"* ]]; then fuds_remove_duplicates; fi
-    if [[ $@ == *"--broken"* ]]; then fuds_remove_broken; fi
+    if [[ $@ == *"-p"* ]] || [[ $@ == *"--pacman"* ]];  then fuds_clean_pacman; fi
+    if [[ $@ == *"-f"* ]] || [[ $@ == *"--flatpak"* ]]; then fuds_clean_flatpak; fi
+    if [[ $@ == *"-a"* ]] || [[ $@ == *"--apt"* ]];     then fuds_clean_apt; fi
+    if [[ $@ == *"-s"* ]] || [[ $@ == *"--snaps"* ]];   then fuds_remove_dead_snaps; fi
+    if [[ $@ == *"-j"* ]] || [[ $@ == *"--journal"* ]]; then fuds_journal_configure; fi
+    if [[ $@ == *"-t"* ]] || [[ $@ == *"--trash"* ]];   then fuds_empty_trash; fi
+    if [[ $@ == *"-c"* ]] || [[ $@ == *"--caches"* ]];  then fuds_clear_caches; fi
+    if [[ $@ == *"-d"* ]] || [[ $@ == *"--dups"* ]];    then fuds_remove_duplicates; fi
+    if [[ $@ == *"-b"* ]] || [[ $@ == *"--broken"* ]];  then fuds_remove_broken; fi
   fi
   # New line and reset afterwards
   echo -e "\n${RESET}"
@@ -269,5 +275,7 @@ function fuds_start () {
 if [ $sourced -eq 0 ]; then
   fuds_start $@
 else
+  alias fuds='fuds_start $@'
+  alias makespace='fuds_start $@'
   alias free-up-disk-space='fuds_start $@'
 fi
