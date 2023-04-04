@@ -73,6 +73,19 @@ debian_apps=(
   'neofetch'      # Show off distro and system info
 )
 
+debian_repos=(
+  'main'
+  'universe'
+  'restricted'
+  'multiverse'
+)
+
+# Following packages not found by apt, need to fix:
+# aria2, bat, broot, diff-so-fancy, duf, hyperfine,
+# just, procs, ripgrep, sd, tealdeer, tokei, trash-cli,
+# zoxide, clamav, cryptsetup, gnupg, lynis, btop, gping.
+
+
 # Colors
 PURPLE='\033[0;35m'
 YELLOW='\033[0;93m'
@@ -108,6 +121,17 @@ fi
 if ! hash apt 2> /dev/null; then
   echo "${YELLOW_B}apt doesn't seem to be present on your system. Exiting...${RESET}"
   exit 1
+fi
+
+# Enable upstream package repositories
+echo -e "${CYAN_B}Would you like to enable listed repos? (y/N)${RESET}\n"
+read -t $PROMPT_TIMEOUT -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+  for repo in ${debian_repos[@]}; do
+    echo -e "${PURPLE}Enabling ${repo} repo...${RESET}"
+    sudo add-apt-repository $repo
+  done
 fi
 
 # Prompt user to update package database
