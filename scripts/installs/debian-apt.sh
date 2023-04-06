@@ -3,7 +3,7 @@
 ################################################################
 # 📜 Debian/ Ubuntu, apt Package Install / Update Script       #
 ################################################################
-# Installs listed packages on Debian-based systems via Pacman  #
+# Installs listed packages on Debian-based systems via apt-get #
 # Also updates the cache database and existing applications    #
 # Confirms apps aren't installed via different package manager #
 # Doesn't include desktop apps, that're managed via Flatpak    #
@@ -73,11 +73,16 @@ debian_apps=(
   'neofetch'      # Show off distro and system info
 )
 
-debian_repos=(
+ubuntu_repos=(
   'main'
   'universe'
   'restricted'
   'multiverse'
+)
+
+debian_repos=(
+  'main'
+  'contrib'
 )
 
 # Following packages not found by apt, need to fix:
@@ -128,10 +133,22 @@ echo -e "${CYAN_B}Would you like to enable listed repos? (y/N)${RESET}\n"
 read -t $PROMPT_TIMEOUT -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  for repo in ${debian_repos[@]}; do
-    echo -e "${PURPLE}Enabling ${repo} repo...${RESET}"
-    sudo add-apt-repository $repo
-  done
+  if ! hash add-apt-repository 2> /dev/null; then
+    sudo apt install --reinstall software-properties-common
+  fi
+  # If Ubuntu, add Ubuntu repos
+  if lsb_release -a 2>/dev/null | grep -q 'Ubuntu'; then
+    for repo in ${ubuntu_repos[@]}; do
+      echo -e "${PURPLE}Enabling ${repo} repo...${RESET}"
+      sudo add-apt-repository $repo
+    done
+  else
+    # Otherwise, add Debian repos
+    for repo in ${debian_repos[@]}; do
+      echo -e "${PURPLE}Enabling ${repo} repo...${RESET}"
+      sudo add-apt-repository $repo
+    done
+  fi
 fi
 
 # Prompt user to update package database
