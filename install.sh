@@ -363,6 +363,11 @@ function install_packages () {
     arch_pkg_install_script="${DOTFILES_DIR}/scripts/installs/arch-pacman.sh"
     chmod +x $arch_pkg_install_script
     $arch_pkg_install_script $PARAMS
+  elif [ -f "/etc/debian_version" ]; then
+    # Debian / Ubuntu
+    debian_pkg_install_script="${DOTFILES_DIR}/scripts/installs/debian-apt.sh"
+    chmod +x $debian_pkg_install_script
+    $debian_pkg_install_script $PARAMS
   fi
   # If running in Linux desktop mode, prompt to install desktop apps via Flatpak
   flatpak_script="${DOTFILES_DIR}/scripts/installs/flatpak.sh"
