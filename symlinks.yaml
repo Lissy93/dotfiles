@@ -16,7 +16,7 @@
     ~/.zshenv: { path: config/zsh/.zshenv, force: true }
     ${XDG_CONFIG_HOME}/zsh: config/zsh
     ${XDG_CONFIG_HOME}/vim: config/vim
-    ${XDG_CONFIG_HOME}/nvim: config/vim
+    ${XDG_CONFIG_HOME}/nvim: config/nvim
     ${XDG_CONFIG_HOME}/tmux: config/tmux
     ${XDG_CONFIG_HOME}/fish: config/fish
 
@@ -27,7 +27,7 @@
     ${XDG_CONFIG_HOME}/bash/.bashrc: config/general/.bashrc
     ${XDG_CONFIG_HOME}/git/.gitconfig: config/general/.gitconfig
     ${XDG_CONFIG_HOME}/.gitignore_global: config/general/.gitignore_global
-    ${XDG_CONFIG_HOME}/.wgetrc: config/general/.wgetrc
+    ${XDG_CONFIG_HOME}/wget/.wgetrc: config/general/.wgetrc
 
     # Desktop Apps
     ${XDG_CONFIG_HOME}/alacritty.yml: config/desktop-apps/alacritty.yml
