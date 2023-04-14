@@ -155,8 +155,9 @@ cask 'burp-suite'     # Web security testing
 cask 'owasp-zap'      # Web app security scanner
 cask 'wireshark'      # Network analyzer + packet capture
 
-# Security Utilities
+# Security Utilities and Data Encryption
 brew 'bcrypt'         # Encryption utility, using blowfish
+brew 'borgbackup'     # Encrypted, deduplicated backups
 brew 'clamav'         # Open source virus scanning suite
 brew 'dnscrypt-proxy' # Proxy for using encrypted DNS
 cask 'gpg-suite'      # PGP encryption for emails and files
@@ -195,6 +196,7 @@ cask 'ledger-live'    # Crypto hardware wallet manager
 cask 'mountain-duck'  # Mount remote storage locations
 cask 'protonmail-bridge' # Decrypt ProtonMail emails
 cask 'protonvpn'      # Client app for ProtonVPN
+cask 'vorta'          # GUI for BorgBackup
 
 # Browsers
 cask 'firefox'
