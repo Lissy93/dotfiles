@@ -144,6 +144,16 @@ install_nvm () {
   nvm install v16.16.0
 }
 
+# Helper function to install Yarn
+install_yarn () {
+  if hash 'yarn' 2> /dev/null; then
+    echo -e "\033[0;33mYarn already installed, skipping...\033[0m"
+  else
+    echo -e "\033[0;33mInstalling Yarn...\033[0m"
+    npm install --global yarn
+  fi
+}
+
 # NVM commands
 alias nvmi='nvm install'
 alias nvmu='nvm use'
