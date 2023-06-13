@@ -124,7 +124,7 @@ echo -e "${CYAN_B}Would you like to update package database? (y/N)${RESET}\n"
 read -t $PROMPT_TIMEOUT -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  echo -e "${PURPLE}Updating dadatbase...${RESET}"
+  echo -e "${PURPLE}Updating database...${RESET}"
   sudo pacman -Syy --noconfirm
 fi
 

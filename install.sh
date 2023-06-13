@@ -84,8 +84,8 @@ make_intro () {
   "  ${C3}- On Arch Linux, updates and installs packages via Pacman\n"\
   "  ${C3}- On Debian Linux, updates and installs packages via apt get\n"\
   "  ${C3}- On Linux desktop systems, prompt to install desktop apps via Flatpak\n"\
-  "  ${C3}- Checks that OS is up-to-date and criticial patches are installed\n"\
-  "${C2}(4) Configure sytstem\n"\
+  "  ${C3}- Checks that OS is up-to-date and critical patches are installed\n"\
+  "${C2}(4) Configure system\n"\
   "  ${C3}- Setup Vim, and install / update Vim plugins via Plug\n"\
   "  ${C3}- Setup Tmux, and install / update Tmux plugins via TPM\n"\
   "  ${C3}- Setup ZSH, and install / update ZSH plugins via Antigen\n"\
@@ -227,7 +227,7 @@ function setup_dot_files () {
 
   # If git clone / pull failed, then exit with error
   if ! test "$?" -eq 0; then
-    echo -e >&2 "${RED_B}Failed to fetch dotfiels from git${RESET}"
+    echo -e >&2 "${RED_B}Failed to fetch dotfiles from git${RESET}"
     terminate
   fi
 
@@ -425,7 +425,7 @@ fi
 
 # Let's Begin!
 pre_setup_tasks   # Print start message, and check requirements are met
-setup_dot_files   # Clone / updatae dotfiles, and create the symlinks
+setup_dot_files   # Clone / update dotfiles, and create the symlinks
 install_packages  # Prompt to install / update OS-specific packages
 apply_preferences # Apply settings for individual applications
 finishing_up      # Refresh current session, print summary and exit
