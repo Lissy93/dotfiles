@@ -17,28 +17,6 @@ utils_dir="${XDG_CONFIG_HOME}/utils"
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# MacOS-specific services
-if [ "$(uname -s)" = "Darwin" ]; then
-  # Add Brew to path, if it's installed
-  if [[ -d /opt/homebrew/bin ]]; then
-    export PATH=/opt/homebrew/bin:$PATH
-  fi
-
-  # If using iTerm, import the shell integration if availible
-  if [[ -f "${XDG_CONFIG_HOME}/zsh/.iterm2_shell_integration.zsh" ]]; then
-    source "${XDG_CONFIG_HOME}/zsh/.iterm2_shell_integration.zsh"
-  fi
-
-  # Append the Android SDK locations to path
-  if [[ -d "${HOME}/Library/Android/" ]]; then
-    export PATH="${HOME}/Library/Android/sdk/emulator:${PATH}"
-    export ANDROID_HOME="${HOME}/Library/Android/sdk"
-    export ANDROID_SDK_ROOT="${HOME}/Library/Android/sdk"
-    export ANDROID_AVD_HOME="${ANDROID_SDK_ROOT}/tools/emulator"
-    export NODE_BINARY="/usr/local/bin/node"
-  fi
-fi
-
 # Source all ZSH config files (if present)
 if [[ -d $zsh_dir ]]; then
   # Import alias files
@@ -99,6 +77,16 @@ if [ "$(uname -s)" = "Darwin" ]; then
     export ANDROID_AVD_HOME="${ANDROID_SDK_ROOT}/tools/emulator"
     export NODE_BINARY="/usr/local/bin/node"
   fi
+fi
+
+# If using Tilix, import the shell integration if availible
+if [ $TILIX_ID ] || [ $VTE_VERSION ] && [[ -f "/etc/profile.d/vte.sh" ]]; then
+  source /etc/profile.d/vte.sh
+fi
+
+# Append Cargo to path, if it's installed
+if [[ -d "$HOME/.cargo/bin" ]]; then
+  export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
 # Add Zoxide (for cd, quick jump) to shell
