@@ -39,7 +39,7 @@ winget_apps=(
   'Keybase.Keybase'
   'KeePassXCTeam.KeePassXC'
 
-  # Netowking
+  # Networking
   'WiresharkFoundation.Wireshark'
   'angryziber.AngryIPScanner'
   

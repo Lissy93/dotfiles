@@ -4,7 +4,7 @@
 # Linux Desktop Application Installations via Flatpak                #
 ######################################################################
 # This script will:                                                  #
-# - Check that Flatpak is installed / promt to install               #
+# - Check that Flatpak is installed / prompt to install               #
 # - Update currently installed Flatpak apps from FlatHub             #
 # - Check app not already installed via system package manager       #
 # - Then install any not-yet-installed that are apps listed          #
