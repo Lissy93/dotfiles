@@ -79,6 +79,13 @@ if [ "$(uname -s)" = "Darwin" ]; then
   fi
 fi
 
+# If using Pyenv, import the shell integration if availible
+if [[ -d "$PYENV_ROOT" ]]; then
+  command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
+
 # If using Tilix, import the shell integration if availible
 if [ $TILIX_ID ] || [ $VTE_VERSION ] && [[ -f "/etc/profile.d/vte.sh" ]]; then
   source /etc/profile.d/vte.sh

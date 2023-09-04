@@ -34,6 +34,7 @@ export XINITRC="${XDG_CONFIG_HOME}/X11/xinitrc"
 export XSERVERRC="${XDG_CONFIG_HOME}/X11/xserverrc"
 export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 export ZLIB="${ZDOTDIR}/lib"
+export PYENV_ROOT="$HOME/.pyenv"
 
 # source $XDG_CONFIG_HOME/zsh/.zshrc
 
