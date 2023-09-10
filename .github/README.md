@@ -143,7 +143,7 @@ dotfiles commit -m "A short message"
 dotfiles push
 ```
 
-Both [Chezmoi](https://github.com/twpayne/chezmoi/) and [YADM](https://github.com/TheLocehiliosan/yadm) are a dotfile management tools, which wrap bare git repo functionality, adding some additional QoL features.
+Both [Chezmoi](https://github.com/twpayne/chezmoi/) and [YADM](https://github.com/TheLocehiliosan/yadm) are dotfile management tools, which wrap bare git repo functionality, adding some additional QoL features.
 
 To learn more, DistroTube made an excellent [video about bare git repos](https://www.youtube.com/watch?v=tBoLDpTWVOM), and Marcel Krčah has written [a post](https://marcel.is/managing-dotfiles-with-git-bare-repo/) outlining the benefits.
 
@@ -279,7 +279,7 @@ The install script can accept several flags and environmental variables to confi
   - `--no-clear` - Doesn't clear the screen before starting (useful if being run by another app)
 - **Env Vars**
   - `REPO_NAME` - The repository name to pull, e.g. `Lissy93/Dotfiles`
-  - `DOTFILES_DIR` - The directory to clone source dotfiles into
+  - `DOTFILES_DIR` - The directory to clone source dotfiles into, e.g. `~/.dotfiles`
 
 ---
 
