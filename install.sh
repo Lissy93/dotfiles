@@ -70,8 +70,8 @@ make_banner () {
 make_intro () {
   C2="\033[0;35m"
   C3="\x1b[2m"
-  echo -e "${CYAN_B}The seup script will do the following:${RESET}\n"\
-  "${C2}(1) Pre-Setup Tasls\n"\
+  echo -e "${CYAN_B}The setup script will do the following:${RESET}\n"\
+  "${C2}(1) Pre-Setup Tasks\n"\
   "  ${C3}- Check that all requirements are met, and system is compatible\n"\
   "  ${C3}- Sets environmental variables from params, or uses sensible defaults\n"\
   "  ${C3}- Output welcome message and summary of changes\n"\
@@ -80,7 +80,7 @@ make_intro () {
   "  ${C3}- Symlinks dotfiles to correct locations\n"\
   "${C2}(3) Install packages\n"\
   "  ${C3}- On MacOS, prompt to install Homebrew if not present\n"\
-  "  ${C3}- On MacOS, updates and installs apps liseted in Brewfile\n"\
+  "  ${C3}- On MacOS, updates and installs apps listed in Brewfile\n"\
   "  ${C3}- On Arch Linux, updates and installs packages via Pacman\n"\
   "  ${C3}- On Debian Linux, updates and installs packages via apt get\n"\
   "  ${C3}- On Linux desktop systems, prompt to install desktop apps via Flatpak\n"\
