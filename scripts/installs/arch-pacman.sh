@@ -52,7 +52,7 @@ pacman_apps=(
   'go'            # Go Lang
   'rustup'        # Crab Language
   'python-pip'    # Snake Language
-  'nodejs'
+  'nodejs'        # Devil Language
   'npm'
 
   # Security Utilities
