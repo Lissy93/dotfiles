@@ -23,6 +23,7 @@ if [[ -d $zsh_dir ]]; then
   source ${zsh_dir}/aliases/general.zsh
   source ${zsh_dir}/aliases/git.zsh
   source ${zsh_dir}/aliases/node-js.zsh
+  source ${zsh_dir}/aliases/rust.zsh
   source ${zsh_dir}/aliases/flutter.zsh
   source ${zsh_dir}/aliases/alias-tips.zsh
 
