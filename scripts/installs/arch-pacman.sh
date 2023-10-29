@@ -96,7 +96,7 @@ if [[ $* == *"--auto-yes"* ]]; then
 fi
 
 # Print intro message
-echo -e "${PURPLE}Starting Arch package install / update script"
+echo -e "\n${PURPLE}Starting Arch package install / update script"
 echo -e "${LIGHT}The following script is for Arch / Arch-based headless systems, and will"
 echo -e "update database, upgrade packages, clear cache then install all listed CLI apps."
 echo -e "${YELLOW}Before proceeding, ensure your happy with all the packages listed in \e[4m${0##*/}"
