@@ -8,6 +8,14 @@
 # Checks all dependencies are met, and prompts to install if missing #
 # For docs and more info, see: https://github.com/lissy93/dotfiles   #
 #                                                                    #
+# OPTIONS:                                                           #
+#   --auto-yes: Skip all prompts, and auto-accept all changes        #
+#   --no-clear: Don't clear the screen before running                #
+#                                                                    #
+# ENVIRONMENTAL VARIABLES:                                           #
+#   DOTFILES_DIR: Where to save dotfiles to (default: ~/.dotfiles)   #
+#   DOTFILES_REPO: Git repo to USE (default: Lissy93/Dotfiles)       #
+#                                                                    #
 # IMPORTANT: Before running, read through everything very carefully! #
 #                                                                    #
 # Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com> #
