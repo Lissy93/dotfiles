@@ -406,9 +406,8 @@ Alias | Description
 
 <summary><b>Rust / Cargo Aliases</b></summary>
 
-> [`zsh/aliases/rust.zsh`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/rust.zsh)
-
-### Rust Development Aliases and Helper Functions Documentation
+> [`zsh/aliases/rust.zsh`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/rust.zsh) <br>
+> Aliases and shortcuts for frequently used Rust and Cargo commands and common tasks
 
 #### Cargo Basic Commands
 
