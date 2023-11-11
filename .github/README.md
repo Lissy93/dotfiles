@@ -402,6 +402,61 @@ Alias | Description
 
 </details>
 
+<summary><b>Rust / Cargo Aliases</b></summary>
+
+> [`zsh/aliases/rust.zsh`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/rust.zsh)
+
+### Rust Development Aliases and Helper Functions Documentation
+
+#### Cargo Basic Commands
+
+Alias | Description
+---|---
+`cr` | `cargo run` - Compiles and runs the current project
+`cb` | `cargo build` - Compiles the current project
+`ct` | `cargo test` - Runs tests for the current project
+
+#### Extended Cargo Commands
+
+Alias | Description
+---|---
+`carc` | `cargo clean` - Removes the target directory
+`caru` | `cargo update` - Updates dependencies as recorded in the local lock file
+`carch` | `cargo check` - Checks the current project to see if it compiles without producing an executable
+`carcl` | `cargo clippy` - Lints the project with Clippy
+`card` | `cargo doc` - Builds documentation for the current project
+`carbr` | `cargo build --release` - Compiles the project with optimizations
+`carrr` | `cargo run --release` - Runs the project with optimizations
+`carws` | `cargo workspace` - Manages workspace-level tasks
+`carwsl` | `cargo workspace list` - Lists all members of the current workspace
+`carad` | `cargo add` - Adds a dependency to a Cargo.toml manifest file
+`carrm` | `cargo rm` - Removes a dependency from a Cargo.toml manifest file
+`carp` | `cargo publish` - Packages and uploads the project to crates.io
+`carau` | `cargo audit` - Audits Cargo.lock for crates with security vulnerabilities
+`cargen` | `cargo generate --git` - Generates a new project from a Git repository template
+`carfmt` | `cargo fmt` - Formats the code in the current project
+
+#### Rustup Commands
+
+Alias | Description
+---|---
+`ru-update` | `rustup update` - Updates the Rust toolchain
+`ru-default` | `rustup default` - Sets a default Rust toolchain
+
+#### Helper Functions and Other Aliases
+
+Function / Alias | Description
+---|---
+`new_rust_project` | Function to create a new Rust project with the specified name
+`search_crates` | Function to search crates.io for a given query
+`rustdoc` | Opens the Rust documentation in the default web browser
+`rustbook` | Opens 'The Rust Programming Language' book in the default web browser
+`update_rust` | Updates the Rust toolchain and all installed components
+`rvalgrind` | Runs Rust programs with Valgrind for memory leak analysis (if Valgrind is installed)
+`clean_rust_workspace` | Cleans up the target directory in all workspaces
+
+</details>
+
 
 <details>
 
