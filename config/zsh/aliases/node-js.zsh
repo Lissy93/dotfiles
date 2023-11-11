@@ -86,6 +86,7 @@ print_node_versions () {
   # Print versions of core Node things
   get_version 'node' 'Node.js'
   get_version 'npm' 'NPM'
+  get_version 'corepack' 'Corepack'
   get_version 'yarn' 'Yarn'
   get_version 'nvm' 'NVM'
   get_version 'ni' 'ni'
@@ -122,6 +123,27 @@ function source_nvm node npm yarn $NVM_LAZY_CMD {
   unfunction node npm yarn source_nvm $NVM_LAZY_CMD
   hash "$0" 2> /dev/null && command "$0" "$@"
 }
+
+# Helper function to enable Corepack / use Yarn
+enable_corepack () {
+  if ! hash 'yarn' 2> /dev/null && hash 'corepack' 2> /dev/null; then
+    echo -e "\033[1;93mEnabling Corepack...\033[0m"
+    corepack enable
+  else
+    echo -e "\033[1;31mCorepack already enabled, skipping...\033[0m"
+  fi
+}
+
+# Wrapper function for Yarn, which sets up Yarn if it's not yet found
+yarn_wrapper () {
+  if ! hash 'yarn' 2> /dev/null; then
+    echo "Yarn not found, enabling Corepack..."
+    enable_corepack
+  fi
+  yarn "$@"
+}
+
+alias yarn='yarn_wrapper'
 
 # Helper function to install NVM
 install_nvm () {
