@@ -30,7 +30,51 @@ alias yc='yarn autoclean'
 alias yk='yarn check'
 alias yh='yarn help'
 
-# Nuke - Remove node_modules and the lock file, then reinstall
+# Aliases for older NPM projects
+alias npmi='npm install'
+alias npmu='npm uninstall'
+alias npmr='npm run'
+alias npms='npm start'
+alias npmt='npm test'
+alias npml='npm run lint'
+alias npmd='npm run dev'
+alias npmp='npm publish'
+
+# NVM commands
+alias nvmi='nvm install'
+alias nvmu='nvm use'
+alias nvml='nvm ls'
+alias nvmr='nvm run'
+alias nvme='nvm exec'
+alias nvmw='nvm which'
+alias nvmlr='nvm ls-remote'
+alias nvmlts='nvm install --lts && nvm use --lts'
+alias nvmlatest='nvm install node --latest-npm && nvm use node'
+alias nvmsetup='install_nvm'
+
+# Special Node commands
+alias npmscripts='cat package.json | jq .scripts' # Print availible scripts for the current project
+alias docker-node='docker run -it --rm -v "$(pwd)":/usr/src/app -w /usr/src/app node' # Run Node using Docker
+alias nodesize='du -sh node_modules' # Print size of node_modules folder
+
+# Shortcuts for helpfer functions defined below
+alias yv='print_node_versions' # Print versions of Node.js and related packages
+alias yarn-nuke='reinstall_modules' # Fully remove and reinstall node_modules
+alias repo='open_repo' # Opens the current remote Git repository in the browser
+alias npmo='open-npm' # Open given NPM module in browser
+alias nodeo='node-docs' # Open Node.js docs for specific function in browser
+
+# Enable auto-Node version switching, based on .nvmrc file in current directory
+autoload -U add-zsh-hook
+load-nvmrc() {
+  local nvmrc_path=".nvmrc"
+  if [[ -f $nvmrc_path ]]; then
+    nvm use
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+
+# Nuke - Helper to remove node_modules and the lock file, then reinstall
 reinstall_modules () {
   if read -q "choice?Remove and reinstall all node_modules? (y/N)"; then
     echo
@@ -64,8 +108,6 @@ reinstall_modules () {
   fi
 }
 
-alias yarn-nuke='reinstall_modules'
-
 # Prints out versions of core Node.js packages
 print_node_versions () {
   versions=''
@@ -97,18 +139,6 @@ print_node_versions () {
   get_version 'git' 'Git'
   echo -e $versions
 }
-
-alias yv='print_node_versions'
-
-# Legacy support for NPM
-alias npmi='npm install'
-alias npmu='npm uninstall'
-alias npmr='npm run'
-alias npms='npm start'
-alias npmt='npm test'
-alias npml='npm run lint'
-alias npmd='npm run dev'
-alias npmp='npm publish'
 
 # Location of NVM, will inherit from .zshenv if set
 NVM_DIR=${NVM_DIR:-$XDG_DATA_HOME/nvm}
@@ -166,28 +196,6 @@ install_nvm () {
   nvm install v16.16.0
 }
 
-# Helper function to install Yarn
-install_yarn () {
-  if hash 'yarn' 2> /dev/null; then
-    echo -e "\033[0;33mYarn already installed, skipping...\033[0m"
-  else
-    echo -e "\033[0;33mInstalling Yarn...\033[0m"
-    npm install --global yarn
-  fi
-}
-
-# NVM commands
-alias nvmi='nvm install'
-alias nvmu='nvm use'
-alias nvml='nvm ls'
-alias nvmr='nvm run'
-alias nvme='nvm exec'
-alias nvmw='nvm which'
-alias nvmlr='nvm ls-remote'
-alias nvmlts='nvm install --lts && nvm use --lts'
-alias nvmlatest='nvm install node --latest-npm && nvm use node'
-alias nvmsetup='install_nvm'
-
 # Helper function that gets supported open method for system
 launch-url() {
   if hash open 2> /dev/null; then
@@ -226,4 +234,14 @@ open-npm () {
   $(launch-url $npm_url)
 }
 
-alias npmo='open-npm'
+open_repo() {
+    local repo_url=$(git config --get remote.origin.url)
+    if [[ $repo_url != "" ]]; then
+        repo_url=${repo_url/git@/https://}
+        repo_url=${repo_url/.git/}
+        repo_url=${repo_url/:/\/}
+        $(launch-url $repo_url)
+    else
+        echo "No remote repository found."
+    fi
+}
