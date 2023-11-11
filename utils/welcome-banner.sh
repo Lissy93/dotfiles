@@ -41,7 +41,7 @@ function welcome_greeting () {
 function welcome_sysinfo () {
   if hash neofetch 2>/dev/null; then
     neofetch --shell_version off \
-      --disable kernel distro shell resolution de wm wm_theme theme icons terminal \
+      --disable kernel distro shell resolution de wm wm_theme theme icons term packages \
       --backend off \
       --colors 4 8 4 4 8 6 \
       --color_blocks off \
@@ -51,7 +51,7 @@ function welcome_sysinfo () {
 
 # Print todays info: Date, IP, weather, etc
 function welcome_today () {
-  timeout=1
+  timeout=0.5
   echo -e "\033[1;34mToday\n------"
 
   # Print date time
