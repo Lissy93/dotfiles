@@ -402,6 +402,8 @@ Alias | Description
 
 </details>
 
+<details>
+
 <summary><b>Rust / Cargo Aliases</b></summary>
 
 > [`zsh/aliases/rust.zsh`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/rust.zsh)
