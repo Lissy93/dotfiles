@@ -409,60 +409,89 @@ Alias | Description
 
 > [`zsh/aliases/node-js.zsh`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/node-js.zsh)
 
+These short-hand aliases and helper functions speed up running common commands and tasks for web development, within Node / JavaScript projects.
 
-##### Yarn
+
+- After `cd`-ing into a directory which contains an `.nvmrc` file (to specify Node version), NVM will automatically switch to that version. Run `nvmlts` / `nvmlatest` to go back to LTS/latest Node version
+- If you try an use Yarn, and corepack isn't yet configured, Corepack will be enabled, and Yarn installed
+- Running `yv` will print a neatly formatted summary of the versions of core packages (Node, NPM, Yarn, NVM, Git, etc..) currently being used
+
+
+#### Helper Functions
+
+Function | Description
+---|---
+`yarn-nuke` | Removes and reinstalls all `node_modules` and associated lock files
+`print_node_versions` | Displays installed versions of Node.js and related packages
+`source_nvm` | Initializes NVM when using Node.js commands
+`enable_corepack` | Enables Corepack to use Yarn if not already installed
+`yarn_wrapper` | Wrapper function for Yarn, setting up Yarn if it's not yet found
+`install_nvm` | Installs or updates NVM
+`launch-url` | Opens a given URL using the system's default method
+`node-docs` | Opens Node.js documentation for a specific API section
+`open-npm` | Opens a specified module's page on npmjs.com
+`open_repo` | Opens the current Git repository's remote URL in a web browser
+
+#### Special Node Commands
 
 Alias | Description
 ---|---
-`ys` | `yarn start`
-`yt` | `yarn test`
-`yb` | `yarn build`
-`yl` | `yarn lint`
-`yd` | `yarn dev`
-`yp` | `yarn publish`
-`yr` | `yarn run`
-`ya` | `yarn add`
-`ye` | `yarn remove`
-`yi` | `yarn install`
-`yg` | `yarn upgrade`
-`yu` | `yarn update`
-`yf` | `yarn info`
-`yz` | `yarn audit`
-`yc` | `yarn autoclean`
-`yk` | `yarn check`
-`yh` | `yarn help`
-`yarn-nuke` | Removes node_modules, yarn.lock, package-lock.json and does a full fresh reinstall of dependencies
-`yv` | Prints out the current version of Node.js, Yarn, NPM, NVM and git
+`npmscripts` | Prints available scripts from the current project's package.json
+`docker-node` | Runs Node.js using Docker, mounting the current directory
+`nodesize` | Prints the size of the `node_modules` folder
 
-##### NPM
+#### Yarn
 
 Alias | Description
 ---|---
-`npmi` | `npm install`
-`npmu` | `npm uninstall`
-`npmr` | `npm run`
-`npms` | `npm start`
-`npmt` | `npm test`
-`npml` | `npm run lint`
-`npmd` | `npm run dev`
-`npmp` | `npm publish`
-`npmo` | Opens NPM docs, either for the current package, or a specific dependency passes as param
+`ys` | `yarn start` - Runs the start command as defined in the package.json
+`yt` | `yarn test` - Runs tests associated with the project
+`yb` | `yarn build` - Builds the project
+`yl` | `yarn lint` - Runs the linting tool on the project codebase
+`yd` | `yarn dev` - Starts the development server
+`yp` | `yarn publish` - Publishes the package to the registry
+`yr` | `yarn run` - Runs a defined package script
+`ya` | `yarn add` - Installs a given dependency
+`ye` | `yarn remove` - Removes a specified dependency
+`yi` | `yarn install` - Installs project dependencies
+`yg` | `yarn upgrade` - Upgrades project dependencies
+`yu` | `yarn update` - Updates project dependencies
+`yf` | `yarn info` - Shows information about a package
+`yz` | `yarn audit` - Audits package dependencies for security vulnerabilities
+`yc` | `yarn autoclean` - Cleans and removes unnecessary dependencies
+`yk` | `yarn check` - Verifies the integrity of dependencies
+`yh` | `yarn help` - Displays help information about Yarn
+`yarn-nuke` | Removes `node_modules`, `yarn.lock`, `package-lock.json` and does a full fresh reinstall of dependencies
+`yv` | Prints out the current version of Node.js, Yarn, NPM, NVM, and Git
 
-##### NVM
+#### NPM
 
 Alias | Description
 ---|---
-`nvmi` | `nvm install`
-`nvmu` | `nvm use`
-`nvml` | `nvm ls`
-`nvmr` | `nvm run`
-`nvme` | `nvm exec`
-`nvmw` | `nvm which`
-`nvmlr` | `nvm ls-remote`
-`nvmlts` | `nvm install --lts && nvm use --lts`
-`nvmlatest` | `nvm install node --latest-npm && nvm use node`
-`nvmsetup` | Runs the NVM installation script, and sets up the NVM environment
+`npmi` | `npm install` - Installs project dependencies
+`npmu` | `npm uninstall` - Uninstalls a specified dependency
+`npmr` | `npm run` - Runs a defined script in package.json
+`npms` | `npm start` - Runs the start script from package.json
+`npmt` | `npm test` - Runs tests in the project
+`npml` | `npm run lint` - Runs the linting tool on the project codebase
+`npmd` | `npm run dev` - Runs the development server
+`npmp` | `npm publish` - Publishes the package to the npm registry
+`npmo` | Opens NPM documentation for a specific module or the package's homepage
 
+#### NVM
+
+Alias | Description
+---|---
+`nvmi` | `nvm install` - Installs a specified version of Node.js
+`nvmu` | `nvm use` - Switches to a specific Node.js version
+`nvml` | `nvm ls` - Lists installed Node.js versions
+`nvmr` | `nvm run` - Runs a given version of Node.js
+`nvme` | `nvm exec` - Executes a command using a specified version of Node.js
+`nvmw` | `nvm which` - Identifies which version of Node.js is being used
+`nvmlr` | `nvm ls-remote` - Lists Node.js versions available for installation
+`nvmlts` | Installs and uses the latest LTS version of Node.js
+`nvmlatest` | Installs the latest version of Node.js with the latest npm
+`nvmsetup` | Installs or updates NVM (Node Version Manager)
 
 </details>
 
