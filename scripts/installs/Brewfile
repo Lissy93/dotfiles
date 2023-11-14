@@ -238,7 +238,6 @@ brew 'lporg'          # Backup and restore launchpad layout
 brew 'm-cli'          # All in one MacOS management CLI app
 cask 'mjolnir'        # Util for loading Lua automations
 cask 'openinterminal' # Finder button, opens directory in terminal
-cask 'popclip'        # Popup options for text on highlight
 cask 'raycast', args: { require_sha: false }  # Spotlight alternative
 cask 'santa'          # Binary authorization for security
 cask 'shottr'         # Better screenshot utility
