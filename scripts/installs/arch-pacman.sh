@@ -54,6 +54,8 @@ pacman_apps=(
   'python-pip'    # Snake Language
   'nodejs'        # Devil Language
   'npm'
+  'crystal'       # Crystal Language
+  'shards'        # Package manager for Crystal
 
   # Security Utilities
   'clamav'        # Open source virus scanning suite
