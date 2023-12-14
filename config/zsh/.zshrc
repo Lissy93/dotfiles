@@ -17,7 +17,7 @@ utils_dir="${XDG_CONFIG_HOME}/utils"
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# Import utility functions
+# Import utility functions (if present)
 if [[ -d $utils_dir ]]; then
   source ${utils_dir}/transfer.sh
   source ${utils_dir}/matrix.sh
@@ -28,7 +28,7 @@ if [[ -d $utils_dir ]]; then
   source ${utils_dir}/color-map.sh
 fi
 
-# Import P10k config for command prompt, run `p10k configure` or edit
+# Import P10k config for command prompt
 [[ ! -f ${zsh_dir}/.p10k.zsh ]] || source ${zsh_dir}/.p10k.zsh
 
 # MacOS-specific services
@@ -83,10 +83,11 @@ if [[ -d $zsh_dir ]]; then
 fi
 
 # If using Pyenv, import the shell integration if availible
-if [[ -d "$PYENV_ROOT" ]]; then
-  command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
+if [[ -d "$PYENV_ROOT" ]] && \
+  command -v pyenv >/dev/null 2>&1 && \
+  command -v pyenv-virtualenv-init >/dev/null; then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
 fi
 
 # If using Tilix, import the shell integration if availible
@@ -105,6 +106,7 @@ if hash zoxide 2> /dev/null; then
 fi
 
 # If not running in nested shell, then show welcome message :)
-if [[ "${SHLVL}" -lt 2 ]] && [[ -z "$SKIP_WELCOME" ]]; then
+if [[ "${SHLVL}" -lt 2 ]] && \
+  { [[ -z "$SKIP_WELCOME" ]] || [[ "$SKIP_WELCOME" == "false" ]]; }; then
   welcome
 fi
