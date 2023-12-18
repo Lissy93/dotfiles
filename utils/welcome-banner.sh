@@ -17,8 +17,9 @@ RESET='\033[0m'
 
 # Print time-based personalized message, using figlet & lolcat if availible
 function welcome_greeting () {
-  h=`date +%H`
-  if [ $h -lt 04 ] || [[ $h -gt 22 ]];
+  h=$(date +%H)
+  h=$((10#$h))
+  if [ $h -lt 4 ] || [ $h -gt 22 ];
     then greeting="Good Night"
   elif [ $h -lt 12 ];
     then greeting="Good morning"
@@ -37,6 +38,7 @@ function welcome_greeting () {
   fi
 }
 
+
 # Print system information with neofetch, if it's installed
 function welcome_sysinfo () {
   if hash neofetch 2>/dev/null; then
@@ -53,6 +55,10 @@ function welcome_sysinfo () {
 function welcome_today () {
   timeout=0.5
   echo -e "\033[1;34mToday\n------"
+
+  # Print last login in the format: "Last Login: Day Month Date HH:MM on tty"
+  last_login=$(last | grep "^$USER " | head -1 | awk '{print "⏲️  Last Login: "$4" "$5" "$6" "$7" on "$2}')
+  echo -e "${COLOR_S}${last_login}"
 
   # Print date time
   echo -e "$COLOR_S$(date '+🗓️  Date: %A, %B %d, %Y at %H:%M')"

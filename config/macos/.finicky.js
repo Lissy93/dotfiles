@@ -11,7 +11,9 @@ module.exports = {
   ],
   handlers: [
     { // Open work non-coding stuff in Chromium
-      browser: "/Applications/Chromium.app",
+      // browser: "/Applications/Chromium.app",
+      // We must use Chrome, because IT is evil.
+      browser: "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome",
       match: [
         "*.google.com/*",
         "*and-digital.okta.com/*",
@@ -22,6 +24,7 @@ module.exports = {
         "*luna.and-digital.com/*",
         "*miro.com/*",
         "*zoom.com/*",
+        "*.atlassian.net/*"
       ],
     },
     { // Open coding stuff in Firefox
