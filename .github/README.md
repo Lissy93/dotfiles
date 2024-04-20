@@ -111,7 +111,7 @@ Symlinks let you maintain all your dotfiles in a working directory, and then lin
 For example, if your dotfiles are in `~/Documents/dotfiles`, you could create a zshrc file there, and link it with:
 
 ```bash
-ln -s ~/Documents/dotfiles/zsh/.zshrc ~/.zshrc
+ln -s ~/Documents/dotfiles/config/zsh/.zshrc ~/.zshrc
 ``` 
 
 This would obviously get cumbersome very quickly if you had a lot of files, so you would really want to automate this process. You could either create your own script to do this, or use a tool specifically designed for this.
