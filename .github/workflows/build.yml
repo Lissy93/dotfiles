@@ -10,4 +10,4 @@ jobs:
       - run: |
           mkdir -p ~/dotfiles-install-dir
       - run: |
-          HOME=~/dotfiles-install-dir ./install
+          HOME=~/dotfiles-install-dir ./install.sh
