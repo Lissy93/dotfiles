@@ -100,6 +100,12 @@ if [[ -d "$HOME/.cargo/bin" ]]; then
   export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
+# Append Deno to path, if it's installed
+if [[ -d "$HOME/.deno" ]]; then
+  export DENO_INSTALL="$HOME/.deno"
+  export PATH="$DENO_INSTALL/bin:$PATH"
+fi
+
 # Add Zoxide (for cd, quick jump) to shell
 if hash zoxide 2> /dev/null; then
     eval "$(zoxide init zsh)"
@@ -110,3 +116,6 @@ if [[ "${SHLVL}" -lt 2 ]] && \
   { [[ -z "$SKIP_WELCOME" ]] || [[ "$SKIP_WELCOME" == "false" ]]; }; then
   welcome
 fi
+
+# bun completions
+[ -s "/home/alicia/.bun/_bun" ] && source "/home/alicia/.bun/_bun"
