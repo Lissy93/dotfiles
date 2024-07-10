@@ -22,6 +22,7 @@ debian_apps=(
   'ranger'        # Directory browser
   'tmux'          # Term multiplexer
   'wget'          # Download files
+  'zsh'           # Shell of choice
 
   # CLI Power Basics
   'aria2'         # Resuming download util (better wget)
@@ -50,6 +51,8 @@ debian_apps=(
 
   # Languages, compilers, runtimes, etc
   'golang'
+  'nodejs'
+  'npm'
 
   # Security Utilities
   'clamav'        # Open source virus scanning suite
