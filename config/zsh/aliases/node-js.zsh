@@ -1,5 +1,3 @@
-
-
 ######################################################################
 # ZSH aliases and helper functions for Node.js / web development     #
 # Includes aliases for yarn, npn, nvm, npx, node, react, etc         #
@@ -53,11 +51,11 @@ alias nvmlatest='nvm install node --latest-npm && nvm use node'
 alias nvmsetup='install_nvm'
 
 # Special Node commands
-alias npmscripts='cat package.json | jq .scripts' # Print availible scripts for the current project
+alias npmscripts='cat package.json | jq .scripts' # Print available scripts for the current project
 alias docker-node='docker run -it --rm -v "$(pwd)":/usr/src/app -w /usr/src/app node' # Run Node using Docker
 alias nodesize='du -sh node_modules' # Print size of node_modules folder
 
-# Shortcuts for helpfer functions defined below
+# Shortcuts for helper functions defined below
 alias yv='print_node_versions' # Print versions of Node.js and related packages
 alias yarn-nuke='reinstall_modules' # Fully remove and reinstall node_modules
 alias repo='open_repo' # Opens the current remote Git repository in the browser
@@ -82,7 +80,7 @@ reinstall_modules () {
     # Check file exists, remove it and print message
     check-and-remove() {
       if [ -d "$project_dir/$1" ]; then
-        echo -e "\e[35mRemoveing $1...\e[0m"
+        echo -e "\e[35mRemoving $1...\e[0m"
         rm -rf "$project_dir/$1"
       fi
     }
@@ -100,7 +98,7 @@ reinstall_modules () {
       echo -e "\e[35mReinstalling with NPM...\e[0m"
       npm install
     else
-      echo -e "🚫\033[0;91m Unable to proceed, yarn/ npm not installed\e[0m"
+      echo -e "🚫\033[0;91m Unable to proceed, yarn/npm not installed\e[0m"
     fi
   else
     # Cancelled by user
@@ -141,12 +139,12 @@ print_node_versions () {
 }
 
 # Location of NVM, will inherit from .zshenv if set
-NVM_DIR=${NVM_DIR:-$XDG_DATA_HOME/nvm}
+NVM_DIR=${NVM_DIR:-$HOME/.nvm}
 
 # On first time using Node command, import NVM if present and not yet sourced
 function source_nvm node npm yarn $NVM_LAZY_CMD {
   if [ -f "$NVM_DIR/nvm.sh" ] && ! which nvm &> /dev/null; then
-    echo -e "\033[1;93mInitialising NVM...\033[0m"
+    echo -e "\033[1;93mInitializing NVM...\033[0m"
     source "${NVM_DIR}/nvm.sh"
     nvm use default
   fi
@@ -180,11 +178,11 @@ install_nvm () {
   nvm_repo='https://github.com/nvm-sh/nvm.git'
   if [ -d "$NVM_DIR" ]; then # Already installed, update
     cd $NVM_DIR && git pull
-  else # Not yet installed, promt user to confirm before proceeding
+  else # Not yet installed, prompt user to confirm before proceeding
     if read -q "choice?Install NVM now? (y/N)"; then
       echo -e "\nInstalling..."
       git clone $nvm_repo $NVM_DIR
-      cd $NVM_DIR && git checkout v0.39.1
+      cd $NVM_DIR && git checkout v0.39.3
     else
       echo -e "\nAborting..."
       return
@@ -193,7 +191,7 @@ install_nvm () {
   # All done, import / re-import NVM script
   source "${NVM_DIR}/nvm.sh"
   # Then install Node LTS
-  nvm install v16.16.0
+  nvm install --lts
 }
 
 # Helper function that gets supported open method for system
