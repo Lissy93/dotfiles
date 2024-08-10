@@ -67,7 +67,7 @@ autoload -U add-zsh-hook
 load-nvmrc() {
   local nvmrc_path=".nvmrc"
   if [[ -f $nvmrc_path ]]; then
-    nvm use
+    nvm use --lts
   fi
 }
 add-zsh-hook chpwd load-nvmrc
