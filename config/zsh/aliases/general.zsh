@@ -19,6 +19,7 @@ if alias_not_used i; then; alias i='id'; fi
 if alias_not_used j; then; alias j='jobs'; fi
 if alias_not_used l; then; alias l='ls'; fi
 if alias_not_used m; then; alias m='man'; fi
+if alias_not_used n; then; alias m='nc'; fi
 if alias_not_used p; then; alias p='pwd'; fi
 if alias_not_used s; then; alias s='sudo'; fi
 if alias_not_used t; then; alias t='touch'; fi
@@ -119,6 +120,18 @@ alias h='history' # Shows full history
 alias h-search='fc -El 0 | grep' # Searchses for a word in terminal history
 alias top-history='history 0 | awk '{print $2}' | sort | uniq -c | sort -n -r | head' 
 alias histrg='history -500 | rg' # Rip grep search recent history
+
+# Fuzzy search through command history with Ctrl+R
+if [[ ! "$terminfo[kcuu1]" ]]; then
+  bindkey '^R' fzf-history-widget
+fi
+
+fzf-history-widget() {
+  local selected_command=$(fc -rl 1 | fzf --height 40% --reverse --tac | sed -E 's/ *[0-9]+\*? +//')
+  LBUFFER="$selected_command"
+  zle redisplay
+}
+zle -N fzf-history-widget
 
 # Clearing terminal
 if command_exists hr ; then
