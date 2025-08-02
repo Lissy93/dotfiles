@@ -1,4 +1,0 @@
-[interactive]
-	diffFilter = diff-so-fancy --patch
-[pull]
-	rebase = false

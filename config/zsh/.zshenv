@@ -17,12 +17,12 @@ export PAGER="less"
 
 ## Respect XDG directories
 export ADOTDIR="${XDG_CACHE_HOME}/zsh/antigen"
+export TMUX_CONF="${XDG_CONFIG_HOME}/tmux/tmux.conf"
 export OPENSSL_DIR="/usr/local/ssl"
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
 export CURL_HOME="${XDG_CONFIG_HOME}/curl"
 export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
 # export GIT_CONFIG="${XDG_CONFIG_HOME}/git/.gitconfig"
-# export GIT_CONFIG="${HOME}/.gitconfig"
 export KDEHOME="${XDG_CONFIG_HOME}/kde"
 export LESSHISTFILE="-" # Disable less history.
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME}/pass"
