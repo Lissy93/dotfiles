@@ -119,3 +119,4 @@ fi
 
 # bun completions
 [ -s "/home/alicia/.bun/_bun" ] && source "/home/alicia/.bun/_bun"
+. "/home/alicia/.deno/env"
