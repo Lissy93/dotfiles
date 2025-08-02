@@ -67,6 +67,8 @@ function gplfs() {
 
 alias gx='cd $(git rev-parse --show-toplevel)'
 
+alias git-today='git log --since=midnight --oneline | wc -l'
+
 # Navigate back to project root (where .git is)
 function jump-to-git-root {
   local _root_dir="$(git rev-parse --show-toplevel 2>/dev/null)"
