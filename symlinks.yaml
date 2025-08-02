@@ -25,7 +25,7 @@
     
     # Utility config files
     ${XDG_CONFIG_HOME}/.bashrc: config/general/.bashrc
-    ${XDG_CONFIG_HOME}/git/.gitconfig: config/general/.gitconfig
+    ${HOME}/.gitconfig: config/general/.gitconfig
     ${XDG_CONFIG_HOME}/.gitignore_global: config/general/.gitignore_global
     ${XDG_CONFIG_HOME}/wget/.wgetrc: config/general/.wgetrc
 

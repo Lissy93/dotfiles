@@ -5,7 +5,7 @@
 	email = alicia@omg.lol
 	username = lissy93
 [init]
-	defaultBranch = master
+	defaultBranch = main
 [pull]
 	rebase = false
 [core]
@@ -270,15 +270,3 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Users/alicia/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
-[remote "origin"]
-	url = https://github.com/Homebrew/brew
-	fetch = +refs/heads/*:refs/remotes/origin/*
-[homebrew]
-	analyticsmessage = true
-	caskanalyticsmessage = true
